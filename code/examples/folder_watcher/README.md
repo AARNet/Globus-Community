@@ -85,7 +85,7 @@ Task ID: ZZZZZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZZZZZZZZ2
 ```
 The script will run indefinitely until terminated with Ctrl-C.
 
-Note that the script can also be launched to run in the background with a command like the following:
+Note that the script can also be launched to run in the background with output redirected to files using a command like the following:
 ```
-./globus_folder_watcher.sh &
+./globus_folder_watcher.sh >> globus_folder_watcher.log 2>> globus_folder_watcher.err &
 ```

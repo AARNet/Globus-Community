@@ -4,9 +4,11 @@ By default, Globus will use all available bandwidth on the network for transfers
 
 If you’d like to throttle the speed at which the files are transferred, you can enable rate limiting on the sending server using tc. This method uses packet marking, and packets can be tagged by IP address, port number, or both. This means it is possible to throttle outbound Globus traffic to a single recipient or all recipients.
 
+Note that this operation is not implemented as an all-in-one script. It is strongly suggested that you test each command interactively to make sure each one works as expected on your operating system. Once you have confirmed the correct operation, you can build your own scripts.
+
 ## Limitations
 
-- This method only limits outbound data. To limit inbound data, you need to change configuration on the sending service or a network gateway device. 
+- This method only limits outbound data. To limit inbound data, you need to change configuration on the sending service or a network gateway device.
 
 - The tc commands are not persistent and must be re-applied at boot time.
 
