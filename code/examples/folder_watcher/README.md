@@ -9,17 +9,11 @@ The inotifywait command used in this example may not work with NFS-mounted volum
 ## Prerequisites
 
 - The UUIDs of both the source and destination collections.
-
 - Packages installed on the sending server:
-
   - The Globus Command Line Interface (CLI) package.
-
   - The inotify-tools package is installed (for the inotifywait folder watching command).
-
 - Account permissions:
-
   - Administrator privileges on the sending server.
-
   - Globus permissions to read files from the source directory on the sending endpoint and write files to the destination directory on the receiving endpoint (requires Globus login operation).
 
 ## Procedure to enable the folder watcher
@@ -29,13 +23,9 @@ The inotifywait command used in this example may not work with NFS-mounted volum
 Copy the ```globus_folder_watcher.sh``` script in this directory to your machine, replacing the placeholders in the script below with your own values:
 
 - ```\<SOURCE>```: The UUID for the sending server.
-
 - ```\<DESTINATION>```: The UUID for the destination server.
-
 - ```\<SEND-DIR>```: The root directory for the source collection.
-
 - ```\<SOURCE-DIR>```: The source directory to be watched, in the source collection.
-
 - ```\<DEST-DIR>```: The destination directory to which source directory files will be sent, in the destination collection.
 
 We recommend this script be run in the background for production use, but this will demonstrate the output to stdout.
