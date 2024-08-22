@@ -20,11 +20,11 @@ Note that this operation is not implemented as an all-in-one script. It is stron
 
 **Note: These instructions are specific to a server running Ubuntu 22.04. If you are running a different Linux distribution or operating system, you may need to update the commands accordingly.**
 
-Run these commands at the sending server’s command line, replacing the following placeholders in the commands below with your own values:
+Run the commands below at the sending server’s command line, replacing the following placeholders in the commands with your own values:
 
-- ```<NIC_DEVICE>```: Your NIC device name, for example enp79s0np0.
+- ```<NIC_DEVICE>```: Your NIC device name, for example ```enp79s0np0```.
 - ```<DESTINATION_IP>```: the destination IP address to which file transfers will be throttled.
-- ```<LIMIT>```: the throttle rate, for example 1mbit.
+- ```<LIMIT>```: the throttled rate in tc format, for example ```1mbit```.
 
 Note Do NOT change the port ranges for Globus (443 and 50000-51000).
 
@@ -51,7 +51,13 @@ sudo nft list table mangle
 
 ## Procedure to disable rate limiting
 
-Run the following commands on the sending server’s command line:
+Run the following commands on the sending server’s command line, replacing the following placeholders in the commands with your own values:
+
+- ```<NIC_DEVICE>```: Your NIC device name, for example ```enp79s0np0```.
+- ```<DESTINATION_IP>```: the destination IP address to which file transfers will be throttled.
+- ```<LIMIT>```: the throttled rate in tc format, for example ```1mbit```.
+
+Note Do NOT change the port ranges for Globus (443 and 50000-51000).
 
 ```
 # Delete iptables rules

@@ -42,4 +42,9 @@ Note that the contents of these collections will NOT be readable or writeable by
 
 ## Custom Collections for write testing - available on request
 
-AARnet can create custom writeable collections for specific users to test uploads. Please contact your AARNet representative if you need to do this.
+For obvious security reasons, AARNet must restrict the users able to upload to our Globus test collections. AARnet can, however, create custom writeable collections for specific users to test uploads from their own endpoints as required. Please contact your AARNet representative if you need to do this.
+
+## Third-Party Globus Collections (Non-AARNet)
+There are some publicly-accessible third-party Globus collections which contain test data or live datasets that may be of interest to users. It is important to realise that some of these collections are intended for archival purposes and are not optimised for high transfer speeds.
+- [ESnet CERN DTN (Anonymous read-only testing)](https://app.globus.org/file-manager?destination_id=531643be-e83e-4ebc-a0d1-d459b48432e7&destination_path=%2Ftest3%2F&origin_id=722751ce-1264-43b8-9160-a9272f746d78&two_pane=true)
+- [EMBL-EBI Public Data](https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=%2Fbiostudies%2F)
