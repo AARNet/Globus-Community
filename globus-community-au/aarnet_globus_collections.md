@@ -7,7 +7,11 @@ The collections are published from servers with 100GB/s network interfaces and f
 
 These fixed collections are intended to demonstrate anonymous download or transfer by all users with or without a Globus account.
 
-Note that the contents of these collections will be visible to ALL users, and not writeable by anyone.
+The ```standard_test_files``` directory contains a suite of test files copied from CERN that will be useful for testing transfer performance with different sizes and numbers of files.
+
+The ```RWTEST``` directory contains the files in the Public, Anonymously-readable Test Collections writeable for AARNet Demonstrators.
+
+Note that the contents of these collections will be visible to ALL users, and not directly writeable by anyone, including by AARNet Demonstrators.
 
 - [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2F&two_pane=false)
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2F&two_pane=false)
@@ -17,7 +21,7 @@ Note that the contents of these collections will be visible to ALL users, and no
 
 These collections are intended for AARNet demonstrators to show how files can be uploaded securely by permitted groups and users, and made available for anonymous download or transfer by all users with or without a Globus account.
 
-Note that the contents of these collections will be readable by ALL users, but only writeable by the AARNet Demonstrators group.
+Note that the contents of these collections will be readable by ALL users, but only writeable by the AARNet Demonstrators group. Contents of these collections may change or be deleted without warning.
 
 - [AARNet Melbourne Read-write Test Collection #1](https://app.globus.org/file-manager?origin_id=cd03197a-3ac5-4152-adbc-2dd7cf719a6f&origin_path=%2F&two_pane=false)
 - [AARNet Melbourne Read-write Test Collection #2](https://app.globus.org/file-manager?origin_id=006f4bd3-24f7-42c7-9f2a-151f28845338&origin_path=%2F&two_pane=false)
