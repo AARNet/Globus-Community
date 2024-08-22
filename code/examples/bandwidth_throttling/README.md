@@ -20,9 +20,9 @@ If you’d like to throttle the speed at which the files are transferred, you ca
 
 Run these commands at the sending server’s command line, replacing the following placeholders in the commands below with your own values:
 
-- ```\<NIC_DEVICE>```: Your NIC device name, for example enp79s0np0.
-- ```\<DESTINATION_IP>```: the destination IP address to which file transfers will be throttled.
-- ```\<LIMIT>```: the throttle rate, for example 1mbit.
+- ```<NIC_DEVICE>```: Your NIC device name, for example enp79s0np0.
+- ```<DESTINATION_IP>```: the destination IP address to which file transfers will be throttled.
+- ```<LIMIT>```: the throttle rate, for example 1mbit.
 
 Note Do NOT change the port ranges for Globus (443 and 50000-51000).
 

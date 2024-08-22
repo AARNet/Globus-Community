@@ -22,11 +22,11 @@ The inotifywait command used in this example may not work with NFS-mounted volum
 
 Copy the ```globus_folder_watcher.sh``` script in this directory to your machine, replacing the placeholders in the script below with your own values:
 
-- ```\<SOURCE>```: The UUID for the sending server.
-- ```\<DESTINATION>```: The UUID for the destination server.
-- ```\<SEND-DIR>```: The root directory for the source collection.
-- ```\<SOURCE-DIR>```: The source directory to be watched, in the source collection.
-- ```\<DEST-DIR>```: The destination directory to which source directory files will be sent, in the destination collection.
+- ```<SOURCE>```: The UUID for the sending server.
+- ```<DESTINATION>```: The UUID for the destination server.
+- ```<SEND-DIR>```: The root directory for the source collection.
+- ```<SOURCE-DIR>```: The source directory to be watched, in the source collection.
+- ```<DEST-DIR>```: The destination directory to which source directory files will be sent, in the destination collection.
 
 We recommend this script be run in the background for production use, but this will demonstrate the output to stdout.
 
