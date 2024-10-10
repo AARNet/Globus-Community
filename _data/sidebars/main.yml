@@ -1,7 +1,7 @@
 subitems:
   - title: Home
     url: /index
-  - title: Getting Started
-    url: /globus-community-au/getting_started
-  - title: AARNet Public Globus Test Collections
-    url: /globus-community-au/aarnet_globus_collections
+  - title: Example page
+    url: /example_page
+
+  
