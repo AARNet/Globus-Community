@@ -1,0 +1,12 @@
+// Include here all custom classes to add extra styling on top of what the theme and bootstrap variables offer. 
+
+//Example for highlighting the active page in the navigation:
+/*-----Top navigation-----*/
+
+.navbar-nav .nav-item > a {
+    &.active {
+        color: $white;
+        background-color: $primary;
+        border-radius: $border-radius;
+    }
+}

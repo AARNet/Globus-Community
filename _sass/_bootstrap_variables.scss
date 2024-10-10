@@ -1,0 +1,11 @@
+/*-----Theme colors-----*/
+$primary:       #0d6efd;
+$secondary:     #6c757d;
+$light:         #f8f9fa;
+$dark:          #212529;
+
+/*-----Custom values for Bootstrap variables-----*/
+$link-decoration: none;
+$navbar-light-hover-color: $primary;
+
+// Find out which bootstrap variables you can use to fine tune the styling of your website here: https://github.com/ELIXIR-Belgium/elixir-toolkit-theme/blob/main/_sass/bootstrap/_variables.scss
