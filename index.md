@@ -8,5 +8,5 @@ This directory contains useful Globus information resources for training and tes
 
 Information offered includes the following:
 
-- [Getting Started](./globus-community-au/getting_started.md)
-- [AARNet Public Globus Test Collections](./globus-community-au/aarnet_globus_collections.md)
+- [Getting Started](./globus-community-au/getting_started.html)
+- [AARNet Public Globus Test Collections](./globus-community-au/aarnet_globus_collections.html)
