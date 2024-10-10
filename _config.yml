@@ -19,7 +19,7 @@ defaults:
   -
     scope:
       path: ""
-      type: "pages"
+      type: "globus-community-au"
     values:
       permalink: /:basename
       layout: "page"
