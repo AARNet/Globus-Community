@@ -2,7 +2,7 @@
 title: Australian Globus Community Index page
 ---
 
-# Globus Community (Australia) Information Resources
+# Globus Community (Australia) Information Resources (managed by AARNet)
 
 This directory contains useful Globus information resources for training and testing.
 

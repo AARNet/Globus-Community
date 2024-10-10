@@ -25,11 +25,11 @@ defaults:
       layout: "page"
       sidebar: main
 
-theme_variables: 
+theme_variables:
   # git_host: GitHub
   # back_to_top: true
   # privacy_statement_url: /privacy
-  # github_buttons: 
+  # github_buttons:
   #   position: top
   #   edit_me: true
   #   open_issue: true
