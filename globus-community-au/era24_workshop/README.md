@@ -544,7 +544,7 @@ Last Access:                 Not supported
 ```
 
 ### ADDING AN ENDPOINT TO A SUBSCRIPTION (Subscription-only feature)
-All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. If your organization has a subscription, and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below. 
+All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. If your organization has a subscription, and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below.
 ```
 globus-connect-server endpoint set-subscription-id <subscription ID>
 ```
@@ -720,6 +720,8 @@ A large part of setting up Globus endpoints, data transfer nodes, storage gatewa
 
 It is definitely best practice __not__ to simply decommission entities without de-registering them with Globus. It is not the end of the world if you do, but it will leave a number of untidy "zombie" entries that may be visible in the Globus web app until they are removed by Globus support at your request. __It is better if you tidy up yourself in order to avoid the (slight) embarrassment associated with having to involve Globus support.__
 
+Note that you will need to be logged in to your endpoint to perform the decommissioning steps. The final step will require you to re-authenticate with Globus because there will be no Data Transfer Node available to process any operations locally.
+
 We will follow the basic procedure laid out in the Globus documentation [here](https://docs.globus.org/globus-connect-server/v5.4/#decommissioning_an_endpoint) to decommission the resources we have created in the workshop in an orderly way.
 
 ### DECOMMISSION ALL COLLECTIONS ON YOUR ENDPOINT
@@ -745,10 +747,12 @@ This command will decomission all data transfer nodes on your endpoint. __Please
 sudo globus-connect-server node cleanup
 ```
 ### DECOMMISSION YOUR ENDPOINT
-Finally, this command will decomission the endpoint itself. __Please use this with extreme caution on your own servers - it cannot be undone.__
+Finally, this command will decomission the endpoint itself. Note that you will have to re-authenticate using your browser as instructed. __Please use this with extreme caution on your own servers - it cannot be undone.__
 ```
 globus-connect-server endpoint cleanup
 ```
+
+__Congratulations! You have successfully decommissioned your Globus endpoint!__
 
 ## ADVANCED GLOBUS TOPICS
 
