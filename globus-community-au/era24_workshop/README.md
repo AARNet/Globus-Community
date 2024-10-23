@@ -35,9 +35,9 @@ Please contact alex.ip@aarnet.edu.au or steele.cooke@aarnet.edu.au if you are un
 #### PRELUDE (15-20 minutes) - Sara
 ##### Housekeeping - fire exits, break times + laptop checks
 ##### Acknowledgement of Country
-##### Introductions – instructors, helpers + how to participate
+##### Introductions - instructors, helpers + how to participate
 ##### Ice breaker + Mentimeter
-##### Plan for the day – aims, learning objectives, timing (2 x 90min sessions + 30 min break)
+##### Plan for the day - aims, learning objectives, timing (2 x 90min sessions + 30 min break)
 
 #### WHAT IS GLOBUS? (15-20 minutes) - Greg
 ##### What is Globus?
@@ -94,7 +94,7 @@ Mapped Collections are collections where Globus logins are explicitly mapped to 
 
 ### Guest Collections
 
-Guest Collections are collections where user-specified Globus logins are overlaid on the collection owner’s local account.
+Guest Collections are collections where user-specified Globus logins are overlaid on the collection owner's local account.
 
 **Note that guest collections are a subscription-only option**
 
@@ -156,7 +156,7 @@ You are now ready to transfer files using Globus. To do so, we will need to show
 
 <img src="resources/globus_file_manager_two_pane_button.png" alt="Globus File Manager Two Pane Button" width="750"/>
 
-You should now be in two-pane viewing mode. We will now set the source collection in the left-hand pane, noting that the actual side really doesn’t matter. Click on the left-hand Collection Search bar on the top left of the window.
+You should now be in two-pane viewing mode. We will now set the source collection in the left-hand pane, noting that the actual side really doesn't matter. Click on the left-hand Collection Search bar on the top left of the window.
 
 <img src="resources/globus_file_manager_collection_search_button.png" alt="Globus File Manager Collection Search Button" width="1000"/>
 
@@ -182,7 +182,7 @@ You should now have your source and destination collections visible, one in each
 
 <img src="resources/globus_file_manager_two_panes.png" alt="Globus File Manager Two Panes" width="1000"/>
 
-To transfer a file from the source collection on the left to the destination collection on the right, simply drag and drop the file. Note: Since the transfer will go from the AARNet collection to your laptop, it is strongly suggested that you choose files 100MB or smaller, i.e. 100M.dat, 10M.dat or 1M.dat for this exercise so that we don’t overwhelm the workshop WiFi. The AARNet collections are permanent, so you will be able to test the transfer of larger files and entire directories later outside the workshop.
+To transfer a file from the source collection on the left to the destination collection on the right, simply drag and drop the file. Note: Since the transfer will go from the AARNet collection to your laptop, it is strongly suggested that you choose files 100MB or smaller, i.e. 100M.dat, 10M.dat or 1M.dat for this exercise so that we don't overwhelm the workshop WiFi. The AARNet collections are permanent, so you will be able to test the transfer of larger files and entire directories later outside the workshop.
 
 Once you have successfully initiated the transfer, you will see a popup in the top right corner of your window as follows:
 
@@ -190,7 +190,7 @@ Once you have successfully initiated the transfer, you will see a popup in the t
 
 This will mean that Globus has scheduled the transfer and will coordinate the two endpoints involved. The transfer is “set and forget” and will automatically resume after any network failure. You will receive an email notification to your Globus account email address when it is complete.
 
-Click on the “View details” link to see the transfer status. You will need to do this quickly if you’re only transferring a small file and want to see the transfer in progress, otherwise it will have completed before you view the status page, which will look something like this:
+Click on the “View details” link to see the transfer status. You will need to do this quickly if you're only transferring a small file and want to see the transfer in progress, otherwise it will have completed before you view the status page, which will look something like this:
 
 <img src="resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
@@ -288,7 +288,7 @@ The virtual machines you will be using for this workshop are preconfigured to me
 
 - Your system must use a unicode-capable locale in order to run the Globus Connect Server command-line tools. For RedHat, CentOS, and Fedora systems, you can use the en_US.UTF-8 locale, and for Debian and Ubuntu systems, you can use the C.UTF-8 locale.
 
-- Other hosts on the Internet must be able to initiate connections to the system via open TCP ports 443 and 50000-51000. Note that hosts using NAT behind a firewall will require special treatment – this will be needed for this workshop.
+- Other hosts on the Internet must be able to initiate connections to the system via open TCP ports 443 and 50000-51000. Note that hosts using NAT behind a firewall will require special treatment - this will be needed for this workshop.
 
 Please contact AARNet if you require any assistance with configuring your own machine after this workshop.
 
@@ -486,7 +486,7 @@ We need to have the following:
 - The UUID of the Posix storage gateway. This can be found using the “globus-connect-server storage-gateway list” command
 - A sensible display name for the collection
 
-Let’s make a data directory called “globus_collection” under the new local user’s home directory, and a subdirectory under that called "RWTEST" which we will use later. We will create the directories as the globus user in order to have appropriate permissions on them.
+Let's make a data directory called “globus_collection” under the new local user's home directory, and a subdirectory under that called "RWTEST" which we will use later. We will create the directories as the globus user in order to have appropriate permissions on them.
 ```
 sudo su - <your Globus username>
 mkdir -p globus_collection/RWTEST
@@ -622,7 +622,7 @@ If your institution is a member of the [Australian Access Federation (AAF)](http
 #### Custom Authentication
 See [Globus Connect Server v5 Authorization and Authentication](https://docs.globus.org/guides/overviews/security/authorization-authentication-v54/) for a detailed description of the interactions between various components that manage authentication/authorization when a user transfers or shares files using Globus.
 
-Globus can be integrated with your local LDAP or similar authentication mechanism – see [Identity Provider Integration (globus.org)](https://docs.globus.org/guides/overviews/security/identity-provider-integration/) for more details.
+Globus can be integrated with your local LDAP or similar authentication mechanism - see [Identity Provider Integration (globus.org)](https://docs.globus.org/guides/overviews/security/identity-provider-integration/) for more details.
 
 This customisation is beyond the scope of this workshop, so please contact AARNet if you are interested in implementing this.
 
@@ -695,7 +695,7 @@ Find and click on the Guest Collection we created previously. You should be able
 
 This will open the permissions editing window for your Guest Collection. Note that by default you will have read-write access by role because you own this collection. We will leave that as-is.
 
-Click on the “Add Permissions – Share With” button on the top right.
+Click on the “Add Permissions - Share With” button on the top right.
 
 <img src="resources/guest_collection_permissions.png" alt="Guest Collection Permissions" width="1000"/>
 
