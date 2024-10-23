@@ -180,14 +180,14 @@ You will need to select one of the read-only collections below as a source colle
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Sydney Read-only Test Collection](https://app.globus.org/file-manager?origin_id=481dde3c-15cc-4521-befa-68a37a2346f8&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 
-There are a number of other read-only test collections published by various organisations, including:
+If you open an AARNet test collection, you can double-click on the “standard_test_files” directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files, originally from the ESnet CERN collection. **Tip: Clicking on any of the three hyperlinks above will take you directly to the “standard_test_files” directory in the required collection.**
+
+There are a number of other public, read-only test collections published by various organisations you can use for testing, including:
 - [ESnet CERN DTN (Anonymous read-only testing)](https://app.globus.org/file-manager?destination_id=531643be-e83e-4ebc-a0d1-d459b48432e7&destination_path=%2Ftest3%2F&origin_id=722751ce-1264-43b8-9160-a9272f746d78&two_pane=true)
 
 Globus also provides writable test collections, each with a 10MB quota to prevent abuse.
 - [Globus Tutorial Collection 1](http://app.globus.org/file-manager?origin_id=6c54cade-bde5-45c1-bdea-f4bd71dba2cc)
 - [Globus Tutorial Collection 2](http://app.globus.org/file-manager?origin_id=31ce9ba0-176d-45a5-add3-f37d233ba47d)
-
-Once you have opened the collection, double-click on the “standard_test_files” directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files. **Tip: Clicking on any of the three hyperlinks above will take you directly to the “standard_test_files” directory in the required collection.**
 
 Now you will need to select the destination collection, which will be the local collection made visible via your GCP instance running on your laptop. Click on the right-hand Collection Search bar as follows:
 
