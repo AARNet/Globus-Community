@@ -59,17 +59,20 @@ Please contact alex.ip@aarnet.edu.au or steele.cooke@aarnet.edu.au if you are un
 - Creating a Data Transfer Node
 - Creating a Storage Gateway
 - Creating a Mapped Collection
+- Adding an Endpoint to a Subscription
 - Creating a Guest Collection
 
 ##### Configuring Globus (Hands-on) (15-20 minutes)
 - File and Directory Permissions
 - Storage Gateway Permissions
 - Globus Credentials
+- Transfer and Timing Options
+- Decommissioning
 
 ##### Open Discussion (15-20 minutes)
-- Specific use Cases
-- Bonus Advanced Topics (e.g. Globus Flow)
 - Launch Globus Community AU
+- Specific use Cases
+- Bonus Advanced Topics (e.g. Globus Flow, Automation)
 
 ## INTRODUCTORY MATERIAL
 ### What is Globus?
@@ -120,16 +123,23 @@ An instance of a Globus Connector configured to access a storage system using sp
 ##### Collection
 A logical construct that allows a user to access data via the Globus service (constrained by the underlying Storage Gateway). One could think of this as a “projection” of part or all of a storage system via the Globus service.
 
+##### UUID
+A Universally Unique Identifier (UUID) is a 128-bit label used for information in computer systems. The term Globally Unique Identifier (GUID) is also used, mostly in Microsoft systems. Every Globus entity is assigned a UUID, which looks like the following:
+```
+a3f0c02a-866a-472e-8f13-248360e296f7
+```
+These UUIDs are used by Globus to uniquely identify resources, so this is important in the context of automation. They can also be used to search for endpoints in the Web UI.
+
 ### HANDS-ON EXERCISES
 These are the instructions for the hands-on exercises for the Globus workshop.
 
 #### USING GLOBUS CONNECT PERSONAL TO TRANSFER FILES TO YOUR LAPTOP (OPTIONAL)
-**NOTE: In order to install Globus Connect Personal (GCP) on your laptop, you will need to have the appropriate administrative privileges on your machine. If you are not permitted to install software on your machine, then you will not be able to proceed and will have to skip this particular hands-on exercise. You will be able to watch a demonstration in the workshop instead.**
+**NOTE: In order to install Globus Connect Personal (GCP) on your laptop, you will need to have the appropriate administrative privileges on your machine. If you are unable to install GCP software on your machine, then you will not be able to proceed with this particular hands-on exercise and will have to watch the workshop demonstration instead.**
 
 ##### INSTALLING GLOBUS CONNECT PERSONAL (GCP)
 Use your web browser to navigate to https://www.globus.org/globus-connect-personal. Choose the download for your operating system (i.e. MacOS, Windows or Linux). Follow the instructions there to download, install and configure GCP.
 
-**Note: Make sure you remember the name you use for your local collection. You will need it to select the collection later.**
+**Note: Make sure you remember the name or UUID you use for your local collection. You will need it to select the collection later.**
 
 ##### USING GLOBUS FOR SIMPLE FILE TRANSFERS
 In this exercise, you will use the Globus web application to transfer files between two collections. In order to do this, you will need to have write access to the destination collection, so we will use the writable collection on your laptop accessible through the previously installed Globus Connect Personal software.
@@ -164,7 +174,7 @@ Enter "AARNet" into the search box as follows. You will see up to nine AARNet co
 
 <img src="resources/globus_aarnet_collection_list.png" alt="Globus AARNet Collection List" width="1000"/>
 
-You will need to select one of the read-only collections below as a source collection:
+You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
 
 - [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
@@ -194,13 +204,13 @@ Click on the “View details” link to see the transfer status. You will need t
 
 <img src="resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
-#### HTTPS FILE TRANSFERS TO/FROM GLOBUS
+#### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
 
 Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same “set-and-forget” facility: the upload/download will fail if there is an interruption to the network connection.
 
-You can upload to a collection only if you have been given write access to it. By way of a (slightly pointless) demonstration, you can upload a file via HTTPS to your own laptop by clicking on the “Upload” button in the middle of the file manager in your own GCP collection. You will be able to test the HTTPS upload feature properly with a remote collection later in the workshop.
+You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature properly with a remote collection later in the workshop.
 
-Note that the AARNet read-only and read-write Globus test collections have all been set up to be anonymously readable, so it is perfectly feasible to provide a persistent URL for anonymous HTTPS download of a given file or directory from any of these collections.
+Note that the AARNet read-only and read-write Globus test collections are associated with the AARNet subscription and have all been set up to be anonymously readable, so it is perfectly feasible to provide a persistent URL for anonymous HTTPS download of a given file or directory from any of these collections. You will be able to do the same on your own collections if your endpoint is associated with a subscription.
 
 You can download a file either by highlighting the file or directory you wish to download and clicking on the “Download” button in the middle of the file manager, or by right-clicking on the file or directory and selecting “Download”.
 
@@ -219,7 +229,7 @@ Note: Before you start, you will need to make sure that you have a valid institu
 Note that we have already taken care of the networking prerequisites on the virtual machines in this workshop, so you will not need to configure the firewall or port forwarding rules.
 
 Some tips for the hands-on sections below:
-- The text shown in Courier (fixed-pitch) font is either command templates or output. Custom values in commands are shown enclosed in angle-brackets like this: ```<custom text to be replaced>```. 
+- The text shown in Courier (fixed-pitch) font is either command templates or output. Custom values in commands are shown enclosed in angle-brackets like this: ```<custom text to be replaced>```.
 - You will often need to change contents of the commands to your custom values (e.g. usernames or IP addresses), so we recommend copying and pasting the commands into a local editor (e.g. notepad++), making the required changes, and then copying and pasting the modified text into the SSH window. Don't try copying and pasting the original commands into the SSH window as-is.
 - You may need to use a right mouse click to copy or paste into your SSH window (e.g. for your login password). Ask one of the workshop helpers if you can't get it to work
 - The SSH window to Linux is __not__ like an edit box - you will need to use the arrow keys to move backwards and forwards in a command instead of a mouse click when editing.
@@ -280,7 +290,7 @@ The virtual machines you will be using for this workshop are preconfigured to me
     - SUSE Linux Enterprise Server 15.4, 15.5
     - OpenSUSE Leap 15.4, 15.5
 
-- The minimum memory requirement is 2GB of RAM. Note that while GCS can run in an environment with these minimum specifications, this is not a suggested configuration for a production environment and should not be used to evaluate performance.
+- The minimum memory requirement is only 2GB of RAM. Note that while GCS can run in an environment with these minimum specifications, this is not a suggested configuration for a production environment and should not be used to evaluate performance.
 
 - You must have administrator (root) privileges on your system; sudo can be used to perform the installation.
 
@@ -552,7 +562,7 @@ If your organisation has a subscription then its ID can be found in the Globus w
 
 Note that this is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
 
-To confirm that your endpoint has been added to AARNet's subscription, we can check the endpoint details by entering:
+To confirm that your endpoint has been added to AARNet's subscription for the workshop, we can check the endpoint details by entering:
 ```
 globus-connect-server endpoint show
 ```
@@ -567,6 +577,7 @@ Network Use:     normal
 Organization:    AARNet
 Contact E-mail:  alex.ip@aarnet.edu.au
 ```
+__Please let one of the workshop helpers know if you have entered your endpoint details in the shared document, but your endpoint is not associated with the AARNet subscription.__
 
 ### CREATING A GUEST COLLECTION (Subscription-only feature)
 We first needed to create a Mapped Collection before we could create a Guest Collection to allow users without a local account to access data within it. Now that we have our Mapped collection and our endpoint is associated with a subscription, we can use the Globus Web Application to create a guest collection to allow other users to upload and/or download files.
@@ -685,7 +696,7 @@ You should now be unable to write to ```/home/<your Globus username>/globus_coll
 
 #### Globus User Permissions for Guest Collections (Subscription-only feature)
 
-If we have a Globus subscription, we can set permissions on individual directories and files for Globus users and groups under Guest Collections. We would do this using the Globus Web Application as follows:
+If we have a Globus subscription associated with the endpoint, we can set permissions on individual directories and files for arbitrary Globus users and groups under Guest Collections. We would do this using the Globus Web Application as follows:
 
 Log into the Globus Web Application and click on “Collections” in the left-hand menu.
 
@@ -715,10 +726,27 @@ Click the “Add Permission” button.
 
 Now the specified user will be able to write to your collection just as you can. Try it!
 
+## TRANSFER & TIMER OPTIONS
+Globus provides the ability to synchronise folders across endpoints, and also to schedule transfers so that they start at a particular time in the future. To access these controls, you first need to set up the source and destination folders in the file manager, and then click on the "Transfer & Timer Options" button at the top centre of the file manager window.
+
+<img src="resources/Transfer_and_timer_options_button.png" alt="Transfer and Timer Options button" width="1000"/>
+
+This will bring down a drop-down interface as shown below:
+
+<img src="resources/Transfer_and_timer_options.png" alt="Transfer and Timer Options" width="1000"/>
+
+These options should be fairly self-explanatory, but you can click on the "i" icon for each item for more information.
+
+### Scheduling
+You can schedule your transfer to start at some time in the future, which can help to minimise the impact on other network users by doing the transfer out of hours. Simply set a date & time in the "Schedule Start" edit box.
+
+### Synchronisation
+You can set up Globus to automatically synchronise a folder in order to mirror its contents. To do this, simply check the "sync - only transfer new or changed files" checkbox. This option can be used with a repeat period ranging from 10 minutes to a number of days to keep the mirrored folder up-to-date. Simply click on the "Repeat" edit box to select your time unit (days, hours or minutes), and then enter the number of time units between repeats.
+
 ## DECOMMISSIONING
 A large part of setting up Globus endpoints, data transfer nodes, storage gateways and collections is registering the entities with Globus so that Globus can manage them. As the entities are created, they are each issued with a unique UUID. Registering endpoints with Globus also involves the creation of a DNS entry and LetsEncrypt certificates.
 
-It is definitely best practice __not__ to simply decommission entities without de-registering them with Globus. It is not the end of the world if you do, but it will leave a number of untidy "zombie" entries that may be visible in the Globus web app until they are removed by Globus support at your request. __It is better if you tidy up yourself in order to avoid the (slight) embarrassment associated with having to involve Globus support.__
+It is definitely best practice __not__ to simply decommission entities without de-registering them with Globus. It is not the end of the world if you do, but it will leave a number of untidy "zombie" entries that may be visible in the Globus web app until they are removed by Globus support at your request. __It is better if you tidy up yourself in order to avoid the (mild) embarrassment associated with having to involve Globus support.__
 
 Note that you will need to be logged in to your endpoint to perform the decommissioning steps. The final step will require you to re-authenticate with Globus because there will be no Data Transfer Node available to process any operations locally.
 
@@ -755,23 +783,6 @@ globus-connect-server endpoint cleanup
 __Congratulations! You have successfully decommissioned your Globus endpoint!__
 
 ## ADVANCED GLOBUS TOPICS
-
-### TRANSFER & TIMER OPTIONS
-Globus provides the ability to synchronise folders across endpoints, and also to schedule transfers so that they start at a particular time in the future. To access these controls, you first need to set up the source and destination folders in the file manager, and then click on the "Transfer & Timer Options" button at the top centre of the file manager window.
-
-<img src="resources/Transfer_and_timer_options_button.png" alt="Transfer and Timer Options button" width="1000"/>
-
-This will bring down a drop-down interface as shown below:
-
-<img src="resources/Transfer_and_timer_options.png" alt="Transfer and Timer Options" width="1000"/>
-
-These options should be fairly self-explanatory, but you can click on the "i" icon for each item for more information.
-
-#### Scheduling
-You can schedule your transfer to start at some time in the future, which can help to minimise the impact on other network users by doing the transfer out of hours. Simply set a date & time in the "Schedule Start" edit box.
-
-#### Synchronisation
-You can set up Globus to automatically synchronise a folder in order to mirror its contents. To do this, simply check the "sync - only transfer new or changed files" checkbox. This option can be used with a repeat period ranging from 10 minutes to a number of days to keep the mirrored folder up-to-date. Simply click on the "Repeat" edit box to select your time unit (days, hours or minutes), and then enter the number of time units between repeats.
 
 ### GLOBUS FLOWS
 
