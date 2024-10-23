@@ -128,7 +128,7 @@ A Universally Unique Identifier (UUID) is a 128-bit label used for information i
 ```
 a3f0c02a-866a-472e-8f13-248360e296f7
 ```
-These UUIDs are used by Globus to uniquely identify resources, so this is important in the context of automation. They can also be used to search for endpoints in the Web UI.
+These UUIDs are used by Globus to uniquely identify resources, so they are particularly important in the context of automation. They can also be used to search for endpoints or collections in the Web UI.
 
 ### HANDS-ON EXERCISES
 These are the instructions for the hands-on exercises for the Globus workshop.
@@ -179,6 +179,13 @@ You will need to select one of the read-only collections below as a source colle
 - [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Sydney Read-only Test Collection](https://app.globus.org/file-manager?origin_id=481dde3c-15cc-4521-befa-68a37a2346f8&origin_path=%2Fstandard_test_files%2F&two_pane=true)
+
+There are a number of other read-only test collections published by various organisations, including:
+- [ESnet CERN DTN (Anonymous read-only testing)](https://app.globus.org/file-manager?destination_id=531643be-e83e-4ebc-a0d1-d459b48432e7&destination_path=%2Ftest3%2F&origin_id=722751ce-1264-43b8-9160-a9272f746d78&two_pane=true)
+
+Globus also provides writable test collections, each with a 10MB quota to prevent abuse.
+- [Globus Tutorial Collection 1](http://app.globus.org/file-manager?origin_id=6c54cade-bde5-45c1-bdea-f4bd71dba2cc)
+- [Globus Tutorial Collection 2](http://app.globus.org/file-manager?origin_id=31ce9ba0-176d-45a5-add3-f37d233ba47d)
 
 Once you have opened the collection, double-click on the “standard_test_files” directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files. **Tip: Clicking on any of the three hyperlinks above will take you directly to the “standard_test_files” directory in the required collection.**
 
@@ -459,7 +466,7 @@ Now that you have started and registered a Globus endpoint with a Data Transfer 
 
 A Globus Storage Gateway is an instance of a Globus Connector configured to access a storage system using specified policies (valid IDPs, path restrictions, etc.). We will be creating a simple posix storage gateway, initially with no special permissions.
 
-Having logged in earlier, you can now create your storage gateway. The domain option is the default domain that will have usernames mapped to local users, e.g. “aarnet.edu.au”.
+Having logged in earlier, you can now create your storage gateway. The ```--domain``` option is the default domain that will have usernames mapped to local users, e.g. “aarnet.edu.au”. For the purposes of this workshop, you should use the domain of your Globus account, i.e. everything after the "@" in your institutional email address. For example, you would use "gmail.com" if you are using a Google account.
 ```
 globus-connect-server storage-gateway create posix \
      "<your storage gateway name>" \
@@ -468,7 +475,7 @@ globus-connect-server storage-gateway create posix \
 
 **Congratulations! You have just created a Globus Storage Gateway.**
 
-Once this operation has completed, you will be shown the UUID of the storage gateway. We will need this for adding mapped collections.
+Once this operation has completed, you will be shown the UUID of the storage gateway. Take note of this - we will need this for adding mapped collections.
 
 You can confirm the details of the storage gateway as follows:
 ```
@@ -509,6 +516,14 @@ globus-connect-server collection create \
     <storage gateway UUID> \
     /home/<your Globus username>/globus_collection \
     "<mapped collection display name>" \
+    --public
+```
+For example, your collection create command might look something like this:
+```
+globus-connect-server collection create \
+    8e3a199f-78aa-4669-86d1-0d129eb9ed80 \
+    /home/ipai3458/globus_collection \
+    "Alex's eRA24 Workshop Trial Mapped Collection" \
     --public
 ```
 
