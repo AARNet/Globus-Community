@@ -84,6 +84,7 @@ Globus offers the following advantages:
 - Ease of Use: Globus uses a simple and intuitive web interface for initiating or scheduling transfers. Periodic directory synchronisation jobs can be scheduled through the UI, and users will be notified of transfer outcomes via email.
 - Performance: Globus will utilise concurrency and parallel transfers to optimise the use of the available bandwidth between collections.
 - Reliability: Globus will continue transfers after any interruption to the network with no user intervention. It is a “set and forget” service.
+- Interoperability: Globus is a mature and popular system being used by organisations worldwide to transfer over 1.8PB/day between more than 62,000 active endpoints.
 - Data Integrity:	Globus uses checksums during transfers and on entire files to ensure that there is no data corruption.
 - Security: Collection and file access can be locked down to specific users or groups. Globus works with local file stores controlled by the users, and no data is ever replicated to third party storage. Data can be encrypted for additional security en-route.
 - Flexibility: Globus offers a command line interface and API to facilitate scripting and automation. There is also Globus Flow for distributed workflow orchestration.
@@ -227,13 +228,13 @@ You can also obtain a persistent link for anonymous download either by highlight
 
 ## SETTING UP A GLOBUS CONNECT ENDPOINT ON A LINUX HOST
 
-This hands-on exercise will involve setting up and configuring a Globus endpoint on a Linux host. We have provided a virtual machine (VM) for each workshop participant on which you will be able to install Globus Connect Server v5 (GCSv5). Note that these VMs will be destroyed after the workshop, and they are not intended for high-volume transfers or transfer performance evaluation.
+This hands-on exercise will involve setting up and configuring a Globus endpoint on a Linux host. We have provided a virtual machine (VM) for each workshop participant on which you will be able to install Globus Connect Server v5 (GCSv5). Note that these workshop VMs will be destroyed after the workshop, and they are not intended for high-volume transfers or transfer performance evaluation.
 
 A comprehensive video has been published by Globus on YouTube at [Introduction to Globus for System Administrators - YouTube](https://www.youtube.com/watch?v=86uEdOOfY7g&t=2272s). There is full documentation available at [Globus Connect Server](https://docs.globus.org/globus-connect-server/).
 
-Note: Before you start, you will need to make sure that you have a valid institutional account you can use to log into the [Globus Web App](https://app.globus.org/). This user will become the owner of the Globus objects we create. You will need to nominate a valid education or research institutional account that can be used to log into Globus. If you do not have valid institutional credentials, then you will still be able to log in to Globus using GitHub, Google or ORCID.
+Note: Before you start, you will need to make sure that you have a valid institutional account you can use to log into the [Globus Web App](https://app.globus.org/), or, alternatively, a GitHub, Google or ORCID account. This user will become the owner of the Globus objects you will create in this part of the workshop.
 
-Note that we have already taken care of the networking prerequisites on the virtual machines in this workshop, so you will not need to configure the firewall or port forwarding rules.
+We have already taken care of the networking prerequisites on the virtual machines in this workshop, so you will not need to configure the firewall or port forwarding rules.
 
 Some tips for the hands-on sections below:
 - The text shown in Courier (fixed-pitch) font is either command templates or output. Custom values in commands are shown enclosed in angle-brackets like this: ```<custom text to be replaced>```.
@@ -472,7 +473,12 @@ globus-connect-server storage-gateway create posix \
      "<your storage gateway name>" \
     --domain <your institutional domain>
 ```
-
+For example, your storage-gateway create command might look something like this:
+```
+globus-connect-server storage-gateway create posix \
+    "Alex's eRA24 Workshop Trial Storage Gateway" \
+    --domain aarnet.edu.au
+```
 **Congratulations! You have just created a Globus Storage Gateway.**
 
 Once this operation has completed, you will be shown the UUID of the storage gateway. Take note of this - we will need this for adding mapped collections.
@@ -522,7 +528,7 @@ For example, your collection create command might look something like this:
 ```
 globus-connect-server collection create \
     8e3a199f-78aa-4669-86d1-0d129eb9ed80 \
-    /home/ipai3458/globus_collection \
+    /home/alex.ip/globus_collection \
     "Alex's eRA24 Workshop Trial Mapped Collection" \
     --public
 ```
