@@ -19,7 +19,7 @@ If time permits, we may be able to cover some additional advanced topics such as
 You will need to bring the following to the workshop:
 
 - A laptop with the ability to connect to an AWS EC2 instance via SSH in order to complete the hands-on sections of the workshop. Please ensure that your firewall permits outbound SSH access to arbitrary IP addresses. Power and WiFi will be provided.
-- A valid educational or research institution account to gain access to Globus (must be available in [EduGain](https://edugain.org/) via the [Australian Access Federation (AAF)](https://aaf.edu.au/)). A list of AAF institutions is available [here](https://aaf.edu.au/subscribers/). Alternatively, you can also use ORCID, GitHub or Google to access Globus for the workshop.
+- A valid educational or research institution account to gain access to Globus (must be available in [EduGain](https://edugain.org/) via the [Australian Access Federation (AAF)](https://aaf.edu.au/)) or [Tuakiri](https://www.reannz.co.nz/products-and-services/tuakiri/). A list of AAF institutions is available [here](https://aaf.edu.au/subscribers/), and Tuakiri [here](https://www.reannz.co.nz/membership/members/). Alternatively, you can also use ORCID, GitHub or Google to access Globus for the workshop.
 - Sufficient familiarity with the Linux command line so that you are able to perform basic command line operations, edit text files, and install packages. If you are completely unfamiliar with Linux, you will still benefit from attending the workshop, but you may need assistance with the hands-on sections. Please let us know beforehand if you are likely to require this assistance.
 
 Optionally, the following would be useful:
@@ -443,6 +443,7 @@ Network Use:     normal
 Organization:    AARNet
 Contact E-mail:  alex.ip@aarnet.edu.au
 ```
+__Please take note of your endpoint ID shown - you will need to copy and paste it into the shared document for the workshop [here](TODO) so we can add it to the AARNet subscription in time for the subscription-only exercises later in the workshop__
 
 You can list your Data Transfer Nodes with the following command:
 ```
@@ -469,7 +470,6 @@ Status:              active
 ```
 
 ### CREATING A STORAGE GATEWAY
-
 Now that you have started and registered a Globus endpoint with a Data Transfer Node, you will need to configure a Globus Connect Server Storage Gateway.
 
 A Globus Storage Gateway is an instance of a Globus Connector configured to access a storage system using specified policies (valid IDPs, path restrictions, etc.). We will be creating a simple posix storage gateway, initially with no special permissions.
@@ -582,15 +582,9 @@ Last Access:                 Not supported
 ```
 
 ### ADDING AN ENDPOINT TO A SUBSCRIPTION (Subscription-only feature)
+Earlier, we asked you to enter your endpoint UUID in the shared document for the workshop [here](TODO), This was so that one of the AARNet Subscription Administrators coulld add it to AARNet's subsription so you can try out the subscription-only features in the following sections of the workshop. Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
+
 All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. You can request a 90-day free trial subscription from Globus for your organisation - see [Why Subscribe?](https://www.globus.org/why-subscribe) for more details.
-
-If your organization already has a subscription, and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below (noting that this almost definitely won't work for you in the workshop).
-```
-globus-connect-server endpoint set-subscription-id <subscription ID>
-```
-If your organisation has a subscription then its ID can be found in the Globus web app, but we will use AARNet's subscription for this workshop. To request this, please enter your Globus username and Endpoint UUID in the shared document for the workshop [here](TODO), and one of the AARNet Subscription Administrators will add it to AARNet's subsription so you can try out the subscription-only features.
-
-Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
 
 To confirm that your endpoint has been added to AARNet's subscription for the workshop, we can check the endpoint details by entering:
 ```
@@ -607,7 +601,13 @@ Network Use:     normal
 Organization:    AARNet
 Contact E-mail:  alex.ip@aarnet.edu.au
 ```
-__Please let one of the workshop helpers know if you have entered your endpoint details in the shared document, but your endpoint is not associated with the AARNet subscription.__
+
+__Please let one of the workshop helpers know immediately if you have entered your endpoint details in the shared document but your endpoint is not yet associated with the AARNet subscription.__
+
+Note that if your organization already has a subscription and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below (noting that this almost definitely won't work for you in the workshop).
+```
+globus-connect-server endpoint set-subscription-id <subscription ID>
+```
 
 ### CREATING A GUEST COLLECTION (Subscription-only feature)
 We first needed to create a Mapped Collection before we could create a Guest Collection to allow users without a local account to access data within it. Now that we have our Mapped collection and our endpoint is associated with a subscription, we can use the Globus Web Application to create a guest collection to allow other users to upload and/or download files.
@@ -658,7 +658,7 @@ We can now add permissions for arbitrary Globus user accounts as guest users, bu
 #### Default Authentication (CILogon)
 Globus authentication defaults to using CILogon, which is an international federation of Identity Providers (IDPs). CILogon supports over 5000 identity providers, including campus identity providers, GitHub, Google, Microsoft, and ORCID. Visit [CILogon](https://cilogon.org/) to view the full list of identity providers and to try logging on with your preferred provider.
 
-If your institution is a member of the [Australian Access Federation (AAF)](https://aaf.edu.au/), then you most likely have the ability to log in via CILogon by default through [EduGAIN](https://technical.edugain.org/). You may need to ask your institutional IT administration to enable EduGain if it isn't already.
+If your institution is a member of the [Australian Access Federation (AAF)](https://aaf.edu.au/) or [Tuakiri](https://www.reannz.co.nz/products-and-services/tuakiri/), then you most likely have the ability to log in via CILogon by default through [EduGAIN](https://technical.edugain.org/). You may need to ask your institutional IT administration to enable EduGain if it isn't already.
 
 #### Custom Authentication
 See [Globus Connect Server v5 Authorization and Authentication](https://docs.globus.org/guides/overviews/security/authorization-authentication-v54/) for a detailed description of the interactions between various components that manage authentication/authorization when a user transfers or shares files using Globus.
