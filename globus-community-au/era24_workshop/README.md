@@ -818,5 +818,15 @@ __Congratulations! You have successfully decommissioned your Globus endpoint!__
 ## ADVANCED GLOBUS TOPICS
 
 ### GLOBUS FLOWS
+Globus Flows provides secure, managed automation of complex workflows at scale. These automations, called flows, are series of actions that can perform common chores—like replicating data across multiple storage systems—as well as complex, bespoke workflows—such as managing multiple conditional data analysis and results distribution operations.
+
+The [Globus Flows overview](https://docs.globus.org/api/flows/overview/) provides an introduction to the key components of this service.
+
+To learn more about how to run and manage flows, check out the [Getting Started guide](https://docs.globus.org/api/flows/getting-started/), which provides step-by-step instructions for using the Globus Web App to start and monitor runs.
+
+See the [Globus Flows documentation](https://docs.globus.org/api/flows/) for more information.
 
 ### GLOBUS AUTOMATION
+Globus provides a [command-line interface](https://github.com/globus/globus-cli) as well as [Python](https://globus-sdk-python.readthedocs.io/en/stable/) and [JavaScript](https://github.com/globus/globus-sdk-javascript#readme) SDKs, so there is great scope for integration.
+
+A sample [folder watcher script](https://github.com/AARNet/Globus-Community/tree/main/code/examples/folder_watcher) can be found in the Globus Community AU GitHub repo as a small example of basic BASH scripting using the GLobus CLI tools.
