@@ -83,13 +83,13 @@ A researcher will interact with Globus Collections. Collections are files on loc
 Globus offers the following advantages:
 - Ease of Use: Globus uses a simple and intuitive web interface for initiating or scheduling transfers. Periodic directory synchronisation jobs can be scheduled through the UI, and users will be notified of transfer outcomes via email.
 - Performance: Globus will utilise concurrency and parallel transfers to optimise the use of the available bandwidth between collections.
-- Reliability: Globus will continue transfers after any interruption to the network with no user intervention. It is a “set and forget” service.
+- Reliability: Globus will continue transfers after any interruption to the network with no user intervention. It is a "set and forget" service.
 - Interoperability: Globus is a mature and popular system being used by organisations worldwide to transfer over 1.8PB/day between more than 62,000 active endpoints.
 - Data Integrity:	Globus uses checksums during transfers and on entire files to ensure that there is no data corruption.
 - Security: Collection and file access can be locked down to specific users or groups. Globus works with local file stores controlled by the users, and no data is ever replicated to third party storage. Data can be encrypted for additional security en-route.
 - Flexibility: Globus offers a command line interface and API to facilitate scripting and automation. There is also Globus Flow for distributed workflow orchestration.
 - Accessibility:	Globus provides a way of publishing files for anonymous download via HTTPS for anyone without requiring them to have Globus software or a Globus account (subject to permissions)
-- Cost-effectiveness: Globus offers an “all-you-can-eat” subscription model to educational and research institutions through AARNet. Under that subscription, you can set up as many endpoints and collections as you need, and transfer as much data as you like.
+- Cost-effectiveness: Globus offers an "all-you-can-eat" subscription model to educational and research institutions through AARNet. Under that subscription, you can set up as many endpoints and collections as you need, and transfer as much data as you like.
 
 ### Mapped Collections
 Mapped Collections are collections where Globus logins are explicitly mapped to local user accounts.
@@ -122,7 +122,7 @@ A software package that implements an interface allowing the Globus service to a
 An instance of a Globus Connector configured to access a storage system using specified policies (valid IDPs, path restrictions, etc.).
 
 ##### Collection
-A logical construct that allows a user to access data via the Globus service (constrained by the underlying Storage Gateway). One could think of this as a “projection” of part or all of a storage system via the Globus service.
+A logical construct that allows a user to access data via the Globus service (constrained by the underlying Storage Gateway). One could think of this as a "projection" of part or all of a storage system via the Globus service.
 
 ##### UUID
 A Universally Unique Identifier (UUID) is a 128-bit label used for information in computer systems. The term Globally Unique Identifier (GUID) is also used, mostly in Microsoft systems. Every Globus entity is assigned a UUID, which looks like the following:
@@ -151,7 +151,7 @@ Open a web browser and navigate to https://globus.org.
 
 <img src="resources/globus_home_page.png" alt="Globus Home Page" width="1000"/>
 
-Click on the “LOG IN” button on the top right. You will be redirected to the CILogon login page, where you will either need to select your institution in the drop-down box and click “Continue”, or select one of the three alternative identity providers, i.e. GitHub, Google or ORCID.
+Click on the "LOG IN" button on the top right. You will be redirected to the CILogon login page, where you will either need to select your institution in the drop-down box and click "Continue", or select one of the three alternative identity providers, i.e. GitHub, Google or ORCID.
 
 <img src="resources/globus_login.png" alt="Globus Login" width="1000"/>
 
@@ -163,7 +163,7 @@ Once you have logged in, you will be redirected to the Globus web app page.
 
 <img src="resources/globus_file_manager.png" alt="Globus File Manager" width="1000"/>
 
-You are now ready to transfer files using Globus. To do so, we will need to show the intended source and destination collections in two-pane mode. Click on the “set two pane” button on the top right of the window as follows:
+You are now ready to transfer files using Globus. To do so, we will need to show the intended source and destination collections in two-pane mode. Click on the "set two pane" button on the top right of the window as follows:
 
 <img src="resources/globus_file_manager_two_pane_button.png" alt="Globus File Manager Two Pane Button" width="750"/>
 
@@ -181,48 +181,48 @@ You will need to select one of the read-only collections below as a source colle
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Sydney Read-only Test Collection](https://app.globus.org/file-manager?origin_id=481dde3c-15cc-4521-befa-68a37a2346f8&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 
-If you open an AARNet test collection, you can double-click on the “standard_test_files” directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files, originally from the ESnet CERN collection. **Tip: Clicking on any of the three hyperlinks above will take you directly to the “standard_test_files” directory in the required collection.**
+If you open an AARNet test collection, you can double-click on the "standard_test_files" directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files, originally from the ESnet CERN collection. **Tip: Clicking on any of the three hyperlinks above will take you directly to the "standard_test_files" directory in the required collection.**
 
 There are a number of other public, read-only test collections published by various organisations you can use for testing, including:
 - [ESnet CERN DTN (Anonymous read-only testing)](https://app.globus.org/file-manager?destination_id=531643be-e83e-4ebc-a0d1-d459b48432e7&destination_path=%2Ftest3%2F&origin_id=722751ce-1264-43b8-9160-a9272f746d78&two_pane=true)
 
 Globus also provides writable test collections, each with a 10MB quota to prevent abuse.
-- [Globus Tutorial Collection 1](http://app.globus.org/file-manager?origin_id=6c54cade-bde5-45c1-bdea-f4bd71dba2cc)
-- [Globus Tutorial Collection 2](http://app.globus.org/file-manager?origin_id=31ce9ba0-176d-45a5-add3-f37d233ba47d)
+- [Globus Tutorial Collection 1](http://app.globus.org/file-manager?origin_id=6c54cade-bde5-45c1-bdea-f4bd71dba2cc&two_pane=true)
+- [Globus Tutorial Collection 2](http://app.globus.org/file-manager?origin_id=31ce9ba0-176d-45a5-add3-f37d233ba47d&two_pane=true)
 
 Now you will need to select the destination collection, which will be the local collection made visible via your GCP instance running on your laptop. Click on the right-hand Collection Search bar as follows:
 
 <img src="resources/globus_file_manager_2nd_pane_collection_search.png" alt="Globus 2nd Pane Collection Search" width="1000"/>
 
-Enter all or part of the name for your local collection in the search box. Click on your collection.
+Enter all or part of the name for your local collection in the search box, or the UUID for your collection if you know it. Click on your collection.
 
 You should now have your source and destination collections visible, one in each pane of the Globus file manager window.
 
 <img src="resources/globus_file_manager_two_panes.png" alt="Globus File Manager Two Panes" width="1000"/>
 
-To transfer a file from the source collection on the left to the destination collection on the right, simply drag and drop the file. Note: Since the transfer will go from the AARNet collection to your laptop, it is strongly suggested that you choose files 100MB or smaller, i.e. 100M.dat, 10M.dat or 1M.dat for this exercise so that we don't overwhelm the workshop WiFi. The AARNet collections are permanent, so you will be able to test the transfer of larger files and entire directories later outside the workshop.
+To transfer a file from the source collection on the left to the destination collection on the right, simply drag and drop the file. Note: Since the transfer will go from the source collection to your laptop, it is strongly suggested that you choose files 100MB or smaller, i.e. 100M.dat, 10M.dat or 1M.dat for this exercise so that we don't overwhelm the workshop WiFi. The AARNet and ESnet collections are persistent, so you will be able to test the transfer of larger files and entire directories later outside the workshop.
 
 Once you have successfully initiated the transfer, you will see a popup in the top right corner of your window as follows:
 
 <img src="resources/globus_transfer_submitted.png" alt="Globus Transfer Submitted" width="500"/>
 
-This will mean that Globus has scheduled the transfer and will coordinate the two endpoints involved. The transfer is “set and forget” and will automatically resume after any network failure. You will receive an email notification to your Globus account email address when it is complete.
+This will mean that Globus has scheduled the transfer and will coordinate the two endpoints involved. The transfer is "set and forget" and will automatically resume after any network failure. You will receive an email notification to your Globus account email address when it is complete.
 
-Click on the “View details” link to see the transfer status. You will need to do this quickly if you're only transferring a small file and want to see the transfer in progress, otherwise it will have completed before you view the status page, which will look something like this:
+Click on the "View details" link to see the transfer status. You will need to do this quickly if you're only transferring a small file and want to see the transfer in progress, otherwise it will have completed before you view the status page, which will look something like this:
 
 <img src="resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
 #### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
 
-Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same “set-and-forget” facility: the upload/download will fail if there is an interruption to the network connection.
+Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same "set-and-forget" facility: the upload/download will fail if there is an interruption to the network connection.
 
 You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature properly with a remote collection later in the workshop.
 
 Note that the AARNet read-only and read-write Globus test collections are associated with the AARNet subscription and have all been set up to be anonymously readable, so it is perfectly feasible to provide a persistent URL for anonymous HTTPS download of a given file or directory from any of these collections. You will be able to do the same on your own collections if your endpoint is associated with a subscription.
 
-You can download a file either by highlighting the file or directory you wish to download and clicking on the “Download” button in the middle of the file manager, or by right-clicking on the file or directory and selecting “Download”.
+You can download a file either by highlighting the file or directory you wish to download and clicking on the "Download" button in the middle of the file manager, or by right-clicking on the file or directory and selecting "Download".
 
-You can also obtain a persistent link for anonymous download either by highlighting the file or directory you wish to download and clicking on the “Get Link” button in the middle of the file manager, or by right-clicking on the file or directory and selecting “Get Link” as follows:
+You can also obtain a persistent link for anonymous download either by highlighting the file or directory you wish to download and clicking on the "Get Link" button in the middle of the file manager, or by right-clicking on the file or directory and selecting "Get Link" as follows:
 
 <img src="resources/globus_https_file_transfer.png" alt="Globus HTTPS File Transfer" width="1000"/>
 
@@ -253,7 +253,7 @@ You can use any SSH client to connect to your VM, so feel free to use anything y
 
 SSH should be available from the Windows command line.
 
-Type “cmd” into the search box in the taskbar, and then click on the “Command Prompt” icon on the top right. You will see a window with a command prompt.
+Type "cmd" into the search box in the taskbar, and then click on the "Command Prompt" icon on the top right. You will see a window with a command prompt.
 
 <img src="resources/windows_command_prompt.png" alt="Windows Command Prompt" width="750"/>
 
@@ -261,17 +261,17 @@ Type in the following at the command prompt, substituting your username and IP a
 ```
 ssh <username>@<ip_address>
 ```
-Skip to the “All Operating Systems” section below to continue
+Skip to the "All Operating Systems" section below to continue
 
 #### MacOS
 
 <Steele Cooke to complete>
 
-Skip to the “All Operating Systems” section below to continue
+Skip to the "All Operating Systems" section below to continue
 
 #### All Operating Systems
 
-You will see something like the following prompt the first time you log in. Enter “yes” to continue.
+You will see something like the following prompt the first time you log in. Enter "yes" to continue.
 
 ```
 The authenticity of host '<ip_address> (<ip_address>)' can't be established.
@@ -350,11 +350,11 @@ sudo apt install globus-connect-server54
 ```
 ### CREATING AN ENDPOINT
 
-Once the GCSv5 packages are installed, we can create a Globus endpoint. Note that the local user you are logged in as will become the local owner of the Globus installation.
+Once the GCSv5 packages are installed, we can create a Globus endpoint using the ```globus-connect-server``` command line utility. Note that the local user you are logged into the VM as will become the local owner of the Globus installation.
 
 A Globus Endpoint is a logical construct that identifies an instance of Globus Connect to the Globus service. An endpoint can have one or more Data Transfer Nodes.
 
-Use the following command, substituting your values as required. The “owner” value should be your institutional email address that you will use for Globus. **Note that the option ```--use-explicit-host <your public IP>``` is required for the NATed network setup of the VM in this workshop. You will not need this option if you have a public IP address**
+Use the following command, substituting your values as required. The "owner" value should be your institutional email address that you will use for Globus. **Note that the option ```--use-explicit-host <your public IP>``` is required for the NATed network setup of the VM in this workshop. You will not need this option if you have a public IP address**
 
 As with many of the code snippets in this workshop, it is recommended that you copy and paste it into a text editor and replace the items in angled brackets with correct values for you.
 ```
@@ -467,7 +467,7 @@ Now that you have started and registered a Globus endpoint with a Data Transfer 
 
 A Globus Storage Gateway is an instance of a Globus Connector configured to access a storage system using specified policies (valid IDPs, path restrictions, etc.). We will be creating a simple posix storage gateway, initially with no special permissions.
 
-Having logged in earlier, you can now create your storage gateway. The ```--domain``` option is the default domain that will have usernames mapped to local users, e.g. “aarnet.edu.au”. For the purposes of this workshop, you should use the domain of your Globus account, i.e. everything after the "@" in your institutional email address. For example, you would use "gmail.com" if you are using a Google account.
+Having logged in earlier, you can now create your storage gateway. The ```--domain``` option is the default domain that will have usernames mapped to local users, e.g. "aarnet.edu.au". For the purposes of this workshop, you should use the domain of your Globus account, i.e. everything after the "@" in your institutional email address. For example, you would use "gmail.com" if you are using a Google account.
 ```
 globus-connect-server storage-gateway create posix \
      "<your storage gateway name>" \
@@ -498,7 +498,7 @@ Note that we are able to modify attributes of the storage gateway, and we will b
 
 ### CREATING A MAPPED COLLECTION
 
-You have so far created an Endpoint, Data Transfer Node, and Storage Gateway, and now we will create a Mapped Collection where Globus logins are explicitly mapped to local users. For the purposes of this workshop, we will need to have a local user defined corresponding to the Globus account name we logged in with earlier. For example, if you logged into Globus as jane.doe@aarnet.edu.au, you would require a local user with the name “jane.doe”, i.e. the portion of the email address before the “@”. We need to create this local user as follows:
+You have so far created an Endpoint, Data Transfer Node, and Storage Gateway, and now we will create a Mapped Collection where Globus logins are explicitly mapped to local users. For the purposes of this workshop, we will need to have a local user defined corresponding to the Globus account name we logged in with earlier. For example, if you logged into Globus as jane.doe@aarnet.edu.au, you would require a local user with the name "jane.doe", i.e. the portion of the email address before the "@". We need to create this local user as follows:
 ```
 sudo adduser <your Globus username>
 ```
@@ -506,17 +506,17 @@ This will mean that you will be the only user who will have access to the mapped
 
 We need to have the following:
 - A data directory to contain the data published in the collection. This directory can be anywhere on your Posix filesystem that is permitted by the Storage Gateway.
-- The UUID of the Posix storage gateway. This can be found using the “globus-connect-server storage-gateway list” command
+- The UUID of the Posix storage gateway. This can be found using the "globus-connect-server storage-gateway list" command
 - A sensible display name for the collection
 
-Let's make a data directory called “globus_collection” under the new local user's home directory, and a subdirectory under that called "RWTEST" which we will use later. We will create the directories as the globus user in order to have appropriate permissions on them.
+Let's make a data directory called "globus_collection" under the new local user's home directory, and a subdirectory under that called "RWTEST" which we will use later. We will create the directories as the globus user in order to have appropriate read-write permissions on them.
 ```
 sudo su - <your Globus username>
 mkdir -p globus_collection/RWTEST
 logout
 ```
 
-We can now create a private Mapped Collection as follows. Public means that we will be able to see it in the Globus web application.
+We can now create a public Mapped Collection as follows. Public means that we will be able to see it in the Globus web application.
 ```
 globus-connect-server collection create \
     <storage gateway UUID> \
@@ -567,7 +567,7 @@ Manager URL:                 https://e4f41b.08cc.data.globus.org
 HTTPS URL:                   None
 TLSFTP URL:                  tlsftp://m-ef3896.e4f41b.08cc.data.globus.org:443
 Force Encryption:            False
-Public:                      False
+Public:                      True
 Contact E-mail:              alex.ip@aarnet.edu.au
 Delete Protected:            True
 Created:                     2024-10-04
@@ -672,9 +672,9 @@ In a production setting, it is best practice to apply the principle of least pri
 It is important to apply appropriate POSIX (or other filesystem) permissions to your files and directories. For testing (and for this workshop), it may be acceptable to initially apply ```chmod -R 777 <globus directory>```, to allow full read/write access to all users and rely only on the storage gateway and Globus user permissions. However, it would be far better to apply a more restrictive and finely tuned set of permissions to the files and directories, especially in a production environment. Note that Access Control Lists (ACLs) can be used to apply even more finely grained security at the filesystem level.
 
 #### Globus Storage Gateway Permissions
-It is possible (and actually recommended) that you restrict permissions on files and directories when configuring the Storage Gateway for an additional of security for access through Globus. Note that we did not apply restrictions at this level in the earlier exercise, so now we will go through adjusting permissions at the Storage Gateway level retrospectively using the “globus-connect-server storage-gateway update” command. Note that we should also restrict access for local users in the filesystem to provide another layer of security as discussed in the previous section.
+It is possible (and actually recommended) that you restrict permissions on files and directories when configuring the Storage Gateway for an additional of security for access through Globus. Note that we did not apply restrictions at this level in the earlier exercise, so now we will go through adjusting permissions at the Storage Gateway level retrospectively using the "globus-connect-server storage-gateway update" command. Note that we should also restrict access for local users in the filesystem to provide another layer of security as discussed in the previous section.
 
-You should already have a writable data directory called “RWTEST” under your mapped collection directory, and a guest collection set up to use that directory.
+You should already have a writable data directory called "RWTEST" under your mapped collection directory, and a guest collection set up to use that directory.
 
 We will set out the permissions you would like to apply in a JSON document like the following, and we will name this file path-restrictions.json:
 ```
@@ -719,15 +719,15 @@ You should now be unable to write to ```/home/<your Globus username>/globus_coll
 
 If we have a Globus subscription associated with the endpoint, we can set permissions on individual directories and files for arbitrary Globus users and groups under Guest Collections. We would do this using the Globus Web Application as follows:
 
-Log into the Globus Web Application and click on “Collections” in the left-hand menu.
+Log into the Globus Web Application and click on "Collections" in the left-hand menu.
 
-Find and click on the Guest Collection we created previously. You should be able to see its attributes, which you are free to edit as you see fit. For this exercise, however, you will need to click on the “Permissions” icon at the top left. Note that you will not see “Permissions” if you accidentally opened your Mapped Collection instead of your guest one.
+Find and click on the Guest Collection we created previously. You should be able to see its attributes, which you are free to edit as you see fit. For this exercise, however, you will need to click on the "Permissions" icon at the top left. Note that you will not see "Permissions" if you accidentally opened your Mapped Collection instead of your guest one.
 
 <img src="resources/guest_collection_attributes.png" alt="Guest Collection Attributes" width="1000"/>
 
 This will open the permissions editing window for your Guest Collection. Note that by default you will have read-write access by role because you own this collection. We will leave that as-is.
 
-Click on the “Add Permissions - Share With” button on the top right.
+Click on the "Add Permissions - Share With" button on the top right.
 
 <img src="resources/guest_collection_permissions.png" alt="Guest Collection Permissions" width="1000"/>
 
@@ -737,13 +737,13 @@ This will bring up the permissions editing window
 
 Now in order to allow someone to write to this collection, you will need to do the following
 
-Set the path relative to the guest collection root (/home/<your Globus username>/globus_collection/RWTEST). The directory “/” means the whole guest collection, so we can use that.
+Set the path relative to the guest collection root (/home/<your Globus username>/globus_collection/RWTEST). The directory "/" means the whole guest collection, so we can use that.
 
-Ask the person next to you for their Globus login email address. Enter that into the Username field. Note that you could select “all users”, but it would be risky allowing anyone to upload to your storage so you would be best to keep this as restrictive as possible.
+Ask the person next to you for their Globus login email address. Enter that into the Username field. Note that you could select "all users", but it would be risky allowing anyone to upload to your storage so you would be best to keep this as restrictive as possible.
 
-Check the “write” checkbox to allow the user to upload to the collection.
+Check the "write" checkbox to allow the user to upload to the collection.
 
-Click the “Add Permission” button.
+Click the "Add Permission" button.
 
 Now the specified user will be able to write to your collection just as you can. Try it!
 
