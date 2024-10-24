@@ -683,8 +683,10 @@ It is possible (and actually recommended) that you restrict permissions on files
 
 You should already have a writable data directory called "RWTEST" under your mapped collection directory, and a guest collection set up to use that directory.
 
-We will set out the permissions you would like to apply in a JSON document like the following, and we will name this file path-restrictions.json:
+We will set out the permissions you would like to apply in a JSON document. The following commands will save this file as ```path-restrictions.json``` in your home directory __(make sure you modify it with your values first!)__:
 ```
+cd ~
+cat <<EOF >path-restrictions.json
 {
   "DATA_TYPE": "path_restrictions#1.0.0",
   "read": [
@@ -697,6 +699,7 @@ We will set out the permissions you would like to apply in a JSON document like 
     "/"
   ]
 }
+EOF
 ```
 
 The above JSON denies any access to the root directory (always a good idea), allows read-only access for anything under ```/home/<your Globus username>/globus_collection``` and allows read-write access only to ```/home/<your Globus username>/globus_collection/RWTEST```. Note that these permissions are combined with the Globus permissions and the local file permissions on a least-privilege basis: i.e. if access is denied by one or more of the Storage Gateway permissions, the Globus file permissions or the local file permissions, then the user will be denied access.
@@ -720,7 +723,7 @@ This should give you a message like the following:
 ```
 Message: Updated Storage Gateway <your gateway UUID>
 ```
-You should now be unable to write to ```/home/<your Globus username>/globus_collection``` but should be able to write to ```/home/<your Globus username>/globus_collection/RWTEST```.
+You should now be able to read but be unable to write to ```/home/<your Globus username>/globus_collection```, but you should be able to write to ```/home/<your Globus username>/globus_collection/RWTEST```.
 
 #### Globus User Permissions for Guest Collections (Subscription-only feature)
 
