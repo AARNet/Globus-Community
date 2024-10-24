@@ -273,6 +273,8 @@ Type in the following in your terminal window, substituting your username and IP
 ```
 ssh <username>@<ip_address>
 ```
+Note: You can also paste commands shown later in the workshop into your terminal by pressing "Command" and "V".
+
 Skip to the "All Operating Systems" section below to continue
 
 #### All Operating Systems
