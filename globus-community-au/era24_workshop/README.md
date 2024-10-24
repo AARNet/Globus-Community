@@ -175,6 +175,7 @@ Enter "AARNet" into the search box as follows. You will see up to nine AARNet co
 
 <img src="resources/globus_aarnet_collection_list.png" alt="Globus AARNet Collection List" width="1000"/>
 
+###### Globus test collections
 You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
 
 - [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true)
@@ -216,7 +217,7 @@ Click on the "View details" link to see the transfer status. You will need to do
 
 Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same "set-and-forget" facility: the upload/download will fail if there is an interruption to the network connection.
 
-You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature properly with a remote collection later in the workshop.
+You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature with your own collection later in the workshop.
 
 Note that the AARNet read-only and read-write Globus test collections are associated with the AARNet subscription and have all been set up to be anonymously readable, so it is perfectly feasible to provide a persistent URL for anonymous HTTPS download of a given file or directory from any of these collections. You will be able to do the same on your own collections if your endpoint is associated with a subscription.
 
@@ -227,7 +228,6 @@ You can also obtain a persistent link for anonymous download either by highlight
 <img src="resources/globus_https_file_transfer.png" alt="Globus HTTPS File Transfer" width="1000"/>
 
 ## SETTING UP A GLOBUS CONNECT ENDPOINT ON A LINUX HOST
-
 This hands-on exercise will involve setting up and configuring a Globus endpoint on a Linux host. We have provided a virtual machine (VM) for each workshop participant on which you will be able to install Globus Connect Server v5 (GCSv5). Note that these workshop VMs will be destroyed after the workshop, and they are not intended for high-volume transfers or transfer performance evaluation.
 
 A comprehensive video has been published by Globus on YouTube at [Introduction to Globus for System Administrators - YouTube](https://www.youtube.com/watch?v=86uEdOOfY7g&t=2272s). There is full documentation available at [Globus Connect Server](https://docs.globus.org/globus-connect-server/).
@@ -244,13 +244,11 @@ Some tips for the hands-on sections below:
 - At the Linux command line, the up and down arrow keys will scroll through previously entered commands. This can save you some typing.
 
 ### LOGGING INTO WORKSHOP VIRTUAL MACHINE (VM)
-
 On the day of the workshop, you will be provided with an IP address for your own VM, a standard username, and a unique password. These details will allow you to connect to your virtual machine which will exist for the duration of the workshop. Please do not share your credentials with others.
 
 You can use any SSH client to connect to your VM, so feel free to use anything you are already familiar with (e.g. PuTTY, MobaXterm, etc). If you haven't used SSH before, then basic instructions for Windows and MacOS are below.
 
 #### Microsoft Windows
-
 SSH should be available from the Windows command line.
 
 Type "cmd" into the search box in the taskbar, and then click on the "Command Prompt" icon on the top right. You will see a window with a command prompt.
@@ -264,13 +262,11 @@ ssh <username>@<ip_address>
 Skip to the "All Operating Systems" section below to continue
 
 #### MacOS
-
 <Steele Cooke to complete>
 
 Skip to the "All Operating Systems" section below to continue
 
 #### All Operating Systems
-
 You will see something like the following prompt the first time you log in. Enter "yes" to continue.
 
 ```
@@ -306,7 +302,7 @@ The virtual machines you will be using for this workshop are preconfigured to me
 
 - Your system must use a unicode-capable locale in order to run the Globus Connect Server command-line tools. For RedHat, CentOS, and Fedora systems, you can use the en_US.UTF-8 locale, and for Debian and Ubuntu systems, you can use the C.UTF-8 locale.
 
-- Other hosts on the Internet must be able to initiate connections to the system via open TCP ports 443 and 50000-51000. Note that hosts using NAT behind a firewall will require special treatment - this will be needed for this workshop.
+- Other hosts on the Internet must be able to initiate connections to the system via open TCP ports 443 and 50000-51000. Note that hosts using NAT behind a firewall will require special treatment - this is required for the VMs in this workshop but it has already been set up for you.
 
 Please contact AARNet if you require any assistance with configuring your own machine after this workshop.
 
@@ -377,7 +373,7 @@ endpoint setup \
 
 Accept the prompt for the LetsEncrypt terms of service. Globus uses LetsEncrypt to generate the HTTPS certificates for your endpoint.
 
-Copy and paste the generated link into your browser (Do __not__ use Ctrl-C to copy the text - Highlight it and right-click). You will need to authenticate as the Globus user you used for ```--owner``` in the command above, confirm the creation of the endpoint and then copy the displayed Authorization Code.
+Copy and paste the generated link into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window - highlight it and right-click). You will need to authenticate as the Globus user you used for ```--owner``` in the command above, confirm the creation of the endpoint and then copy the displayed Authorization Code.
 
 Paste the Authorization Code into the Globus CLI prompt. The process will take a few minutes to complete. Copy and paste the UUID for your new endpoint
 
@@ -403,14 +399,14 @@ Next, you will need to authenticate with Globus using a valid institutional logi
 ```
 globus-connect-server login <your endpoint UUID>
 ```
-Globus will respond with an authentication link:
+Globus will respond with an authentication link like this:
 ```
 Please authenticate with Globus here:
 ------------------------------------
 https://auth.globus.org/v2/oauth2/authorize?client_id=7e9acd72-a8f3-496d-ab96-cf823b11d70b&redirect_uri=https%3A%2F%2Fauth.globus.org%2Fv2%2Fweb%2Fauth-code&scope=openid+profile+email+urn%3Aglobus%3Aauth%3Ascope%3Aauth.globus.org%3Aview_identity_set+urn%3Aglobus%3Aauth%3Ascope%3Aauth.globus.org%3Amanage_projects+urn%3Aglobus%3Aauth%3Ascope%3Ab04bec41-a6aa-4aae-8405-d0cc85ea222f%3Amanage_collections&state=_default&response_type=code&access_type=offline&prompt=login
 ------------------------------------
 ```
-Copy the link shown and paste it into your browser. Complete your login in your browser.
+Copy the link shown and paste it into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window - highlight it and right-click). Complete your login in your browser.
 
 You will be presented with an authorisation code. Copy and paste it into the command line, and you will receive a confirmation for your login:
 ```
@@ -671,7 +667,7 @@ This means, for example, that if the local file and directory permissions do not
 In a production setting, it is best practice to apply the principle of least privilege to your security settings so that you have multiple layers of security.
 
 #### Local Filesystem Permissons
-It is important to apply appropriate POSIX (or other filesystem) permissions to your files and directories. For testing (and for this workshop), it may be acceptable to initially apply ```chmod -R 777 <globus directory>```, to allow full read/write access to all users and rely only on the storage gateway and Globus user permissions. However, it would be far better to apply a more restrictive and finely tuned set of permissions to the files and directories, especially in a production environment. Note that Access Control Lists (ACLs) can be used to apply even more finely grained security at the filesystem level.
+It is important to apply appropriate POSIX (or other filesystem) permissions to your files and directories for local users. For testing (and for this workshop), it may be acceptable to initially apply ```chmod -R 777 <globus directory>```, to allow full read/write access to all users and rely only on the storage gateway and Globus user permissions. However, it would be far better to apply a more restrictive and finely tuned set of permissions to the files and directories, especially in a production environment. Note that Access Control Lists (ACLs) can be used to apply even more finely grained security at the filesystem level.
 
 #### Globus Storage Gateway Permissions
 It is possible (and actually recommended) that you restrict permissions on files and directories when configuring the Storage Gateway for an additional of security for access through Globus. Note that we did not apply restrictions at this level in the earlier exercise, so now we will go through adjusting permissions at the Storage Gateway level retrospectively using the "globus-connect-server storage-gateway update" command. Note that we should also restrict access for local users in the filesystem to provide another layer of security as discussed in the previous section.
