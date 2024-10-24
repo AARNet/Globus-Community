@@ -262,8 +262,17 @@ ssh <username>@<ip_address>
 Skip to the "All Operating Systems" section below to continue
 
 #### MacOS
-<Steele Cooke to complete>
 
+SSH should be available from the MacOS terminal.
+
+Open Spotlight by pressing "Command" and "Space" at the same time, and then type "Terminal". Either click the terminal icon or press "Enter" to open a new terminal window.
+
+<img src="resources/macos-terminal-spotlight.png" alt="MacOS Terminal Spotlight" width="750"/>
+
+Type in the following in your terminal window, substituting your username and IP address.
+```
+ssh <username>@<ip_address>
+```
 Skip to the "All Operating Systems" section below to continue
 
 #### All Operating Systems
