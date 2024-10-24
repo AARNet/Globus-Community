@@ -575,13 +575,15 @@ Last Access:                 Not supported
 ```
 
 ### ADDING AN ENDPOINT TO A SUBSCRIPTION (Subscription-only feature)
-All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. If your organization has a subscription, and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below.
+All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. You can request a 90-day free trial subscription from Globus for your organisation - see [Why Subscribe?](https://www.globus.org/why-subscribe) for more details.
+
+If your organization already has a subscription, and your Globus account has the subscription manager role, you may set the endpoint as managed using the globus-connect-server command below (noting that this almost definitely won't work for you in the workshop).
 ```
 globus-connect-server endpoint set-subscription-id <subscription ID>
 ```
 If your organisation has a subscription then its ID can be found in the Globus web app, but we will use AARNet's subscription for this workshop. To request this, please enter your Globus username and Endpoint UUID in the shared document for the workshop [here](TODO), and one of the AARNet Subscription Administrators will add it to AARNet's subsription so you can try out the subscription-only features.
 
-Note that this is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
+Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
 
 To confirm that your endpoint has been added to AARNet's subscription for the workshop, we can check the endpoint details by entering:
 ```
