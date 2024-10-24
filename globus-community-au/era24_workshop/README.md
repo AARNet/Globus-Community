@@ -717,10 +717,9 @@ This should give you a message like the following:
 ```
 Message: Updated Storage Gateway <your gateway UUID>
 ```
-You should now be able to read but be unable to write to ```/home/<your Globus username>/globus_collection```, but you should be able to write to ```/home/<your Globus username>/globus_collection/RWTEST```.
+You should now be able to read but be unable to write to ```/home/<your Globus username>/globus_collection```, but you should be able to write to ```/home/<your Globus username>/globus_collection/RWTEST```. Note that any restrictions on the storage gateway apply across all Globus users, and you (as the owner) are currently the only user able to write to the RWTEST subdirectory until we set up a guest collection.
 
 #### Globus User Permissions for Guest Collections (Subscription-only feature)
-
 If we have a Globus subscription associated with the endpoint, we can set permissions on individual directories and files for arbitrary Globus users and groups under Guest Collections. We would do this using the Globus Web Application as follows:
 
 Log into the Globus Web Application and click on "Collections" in the left-hand menu.
@@ -741,7 +740,7 @@ This will bring up the permissions editing window
 
 Now in order to allow someone to write to this collection, you will need to do the following
 
-Set the path relative to the guest collection root (/home/<your Globus username>/globus_collection/RWTEST). The directory "/" means the whole guest collection, so we can use that.
+Set the path relative to the guest collection root (```/home/<your Globus username>/globus_collection/RWTEST```). The directory "/" means the whole guest collection, so we can use that.
 
 Ask the person next to you for their Globus login email address. Enter that into the Username field. Note that you could select "all users", but it would be risky allowing anyone to upload to your storage so you would be best to keep this as restrictive as possible.
 
