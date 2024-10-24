@@ -14,6 +14,8 @@ In this workshop, we will be working through the process of setting up and confi
 
 If time permits, we may be able to cover some additional advanced topics such as automation and the application of Globus Flow.
 
+Note that there is a shared document for the workshop [here](http://tiny.cc/eRA24Globus). You will be able to add questions on notice if we don't have time to answer them interactively during the workshop.
+
 ## Workshop Prerequisites
 
 You will need to bring the following to the workshop:
@@ -26,9 +28,7 @@ Optionally, the following would be useful:
 
 - The ability to install Globus Connect Personal (GCP) software on your laptop. You may wish to download this software from https://www.globus.org/globus-connect-personal and pre-install it before the workshop, or it can be downloaded and installed in the workshop. Note that if you are unable to install GCP due to restrictions on your laptop, you will only be able to observe demonstrations of its use.
 
-Please contact alex.ip@aarnet.edu.au or steele.cooke@aarnet.edu.au if you are unsure about any of the above requirements.
-
-
+Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@aarnet.edu.au if you are unsure about any of the above requirements.
 
 ## Agenda
 ### PART I
@@ -145,7 +145,7 @@ Use your web browser to navigate to https://www.globus.org/globus-connect-person
 ##### USING GLOBUS FOR SIMPLE FILE TRANSFERS
 In this exercise, you will use the Globus web application to transfer files between two collections. In order to do this, you will need to have write access to the destination collection, so we will use the writable collection on your laptop accessible through the previously installed Globus Connect Personal software.
 
-To proceed, you must have a working installation of Globus Connect Personal with a writable collection configured. Make sure your GCP instance is running. 
+To proceed, you must have a working installation of Globus Connect Personal with a writable collection configured. Make sure your GCP instance is running.
 
 Open a web browser and navigate to https://globus.org.
 
@@ -214,7 +214,6 @@ Click on the "View details" link to see the transfer status. You will need to do
 <img src="resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
 #### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
-
 Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same "set-and-forget" facility: the upload/download will fail if there is an interruption to the network connection.
 
 You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature with your own collection later in the workshop.
@@ -262,7 +261,6 @@ ssh <username>@<ip_address>
 Skip to the "All Operating Systems" section below to continue
 
 #### MacOS
-
 SSH should be available from the MacOS terminal.
 
 Open Spotlight by pressing "Command" and "Space" at the same time, and then type "Terminal". Either click the terminal icon or press "Enter" to open a new terminal window.
@@ -318,7 +316,6 @@ The virtual machines you will be using for this workshop are preconfigured to me
 Please contact AARNet if you require any assistance with configuring your own machine after this workshop.
 
 #### RedHat or CentOS Installation
-
 You can use either yum or dnf to install GCSv5 on a Redhat variant of Linux.
 
 ##### Using yum for RedHat/CentOS:
@@ -334,7 +331,7 @@ sudo yum -y install globus-connect-server54
 ```
 __NOTE: PLEASE DO NOT USE THE INSTALLATION METHODS BELOW FOR THE WORKSHOP - THEY ARE INCLUDED FOR INFORMATION ONLY__
 
-##### Using dnf for RedHat/CentOS:
+##### Using dnf for RedHat/CentOS (DO NOT USE FOR WORKSHOP):
 ```
 # Setup repo for Globus
 sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
@@ -347,7 +344,7 @@ sudo dnf install 'dnf-command(config-manager)'
 # Install Globus Connect Server:
 sudo dnf install globus-connect-server54
 ```
-#### Ubuntu or Debian
+#### Ubuntu or Debian (DO NOT USE FOR WORKSHOP)
 ```
 curl -LOs https://downloads.globus.org/globus-connect-server/stable/installers/repo/deb/globus-repo_latest_all.deb
 sudo dpkg -i globus-repo_latest_all.deb
@@ -356,7 +353,6 @@ sudo apt update
 sudo apt install globus-connect-server54
 ```
 ### CREATING AN ENDPOINT
-
 Once the GCSv5 packages are installed, we can create a Globus endpoint using the ```globus-connect-server``` command line utility. Note that the local user you are logged into the VM as will become the local owner of the Globus installation.
 
 A Globus Endpoint is a logical construct that identifies an instance of Globus Connect to the Globus service. An endpoint can have one or more Data Transfer Nodes.
@@ -395,7 +391,6 @@ Take note of the UUID returned for your endpoint - you will need it later
 Now that you have created and registered the endpoint, you will see a deployment-key.json file which has been in your current directory. Note that this file is important for managing your endpoint with Globus, so you would need to back it up in a production setting.
 
 ### CREATING A DATA TRANSFER NODE
-
 Now that you have an endpoint registered with Globus, you can setup a Data Transfer Node and start the Globus Connect Server. A Globus Data Transfer Node (DTN) is a physical manifestation of the endpoint, i.e. it is the node which does the actual work. More DTNs mean a larger physical footprint and better resilience and performance, but for this workshop, we will just be creating a single DTN. By default, the operation will use the deployment-key.json file created for your endpoint in your current directory, but you would need to reference the same file if you were creating more than one.
 
 Use the following command to create a DTN and start the Globus Connect Server. Note that we need to use "sudo" to elevate privileges in order to start services.
@@ -405,7 +400,6 @@ sudo globus-connect-server node setup
 **Congratulations! You have now set up and registered a Globus Data Transfer Node.**
 
 ### LOGGING IN TO GLOBUS
-
 Next, you will need to authenticate with Globus using a valid institutional login, GitHub, Google or ORCID. This Globus account will be the owner of the collection we will create shortly.
 ```
 globus-connect-server login <your endpoint UUID>
@@ -417,9 +411,9 @@ Please authenticate with Globus here:
 https://auth.globus.org/v2/oauth2/authorize?client_id=7e9acd72-a8f3-496d-ab96-cf823b11d70b&redirect_uri=https%3A%2F%2Fauth.globus.org%2Fv2%2Fweb%2Fauth-code&scope=openid+profile+email+urn%3Aglobus%3Aauth%3Ascope%3Aauth.globus.org%3Aview_identity_set+urn%3Aglobus%3Aauth%3Ascope%3Aauth.globus.org%3Amanage_projects+urn%3Aglobus%3Aauth%3Ascope%3Ab04bec41-a6aa-4aae-8405-d0cc85ea222f%3Amanage_collections&state=_default&response_type=code&access_type=offline&prompt=login
 ------------------------------------
 ```
-Copy the link shown and paste it into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window - highlight it and right-click). Complete your login in your browser.
+Copy the link shown and paste it into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window in MS-Windows - highlight it and right-click). Complete the login process in your browser.
 
-You will be presented with an authorisation code. Copy and paste it into the command line, and you will receive a confirmation for your login:
+You will be presented with an authorisation code. Copy and paste it into the prompt, and you will receive a confirmation for your login:
 ```
 Enter the resulting Authorization Code here: <paste your code here>
 You have successfully logged into GCS endpoint a04bec41-b6aa-5aae-7405-e0cc85ea222e at 3820e9.0ec8.data.globus.org!
@@ -427,7 +421,6 @@ You have successfully logged into GCS endpoint a04bec41-b6aa-5aae-7405-e0cc85ea2
 Note that the resulting Globus login session will persist for 11 days by default.
 
 ### CHECKING ENDPOINT AND NODE CONFIGURATION
-
 Now that you have a data transfer node set up to process requests, you will be able to confirm your endpoint details using the following command:
 ```
 globus-connect-server endpoint show
@@ -443,7 +436,7 @@ Network Use:     normal
 Organization:    AARNet
 Contact E-mail:  alex.ip@aarnet.edu.au
 ```
-__Please take note of your endpoint ID shown - you will need to copy and paste it into the shared document for the workshop [here](TODO) so we can add it to the AARNet subscription in time for the subscription-only exercises later in the workshop__
+__Please take note of your endpoint ID shown - you will need to copy and paste it into the shared document for the workshop [here](http://tiny.cc/eRA24Globus) so we can add it to the AARNet subscription in time for the subscription-only exercises later in the workshop__
 
 You can list your Data Transfer Nodes with the following command:
 ```
@@ -504,7 +497,6 @@ Display Name                  | ID                                   | Connector
 Note that we are able to modify attributes of the storage gateway, and we will be doing this later in the workshop.
 
 ### CREATING A MAPPED COLLECTION
-
 You have so far created an Endpoint, Data Transfer Node, and Storage Gateway, and now we will create a Mapped Collection where Globus logins are explicitly mapped to local users. For the purposes of this workshop, we will need to have a local user defined corresponding to the Globus account name we logged in with earlier. For example, if you logged into Globus as jane.doe@aarnet.edu.au, you would require a local user with the name "jane.doe", i.e. the portion of the email address before the "@". We need to create this local user as follows:
 ```
 sudo adduser <your Globus username>
@@ -582,7 +574,7 @@ Last Access:                 Not supported
 ```
 
 ### ADDING AN ENDPOINT TO A SUBSCRIPTION (Subscription-only feature)
-Earlier, we asked you to enter your endpoint UUID in the shared document for the workshop [here](TODO), This was so that one of the AARNet Subscription Administrators coulld add it to AARNet's subsription so you can try out the subscription-only features in the following sections of the workshop. Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
+Earlier, we asked you to enter your endpoint UUID in the shared document for the workshop [here](http://tiny.cc/eRA24Globus), This was so that one of the AARNet Subscription Administrators coulld add it to AARNet's subsription so you can try out the subscription-only features in the following sections of the workshop. Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
 
 All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. You can request a 90-day free trial subscription from Globus for your organisation - see [Why Subscribe?](https://www.globus.org/why-subscribe) for more details.
 
