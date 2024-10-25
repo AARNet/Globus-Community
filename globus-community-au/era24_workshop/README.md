@@ -178,7 +178,7 @@ Enter "AARNet" into the search box as follows. You will see up to nine AARNet co
 ###### Globus test collections
 You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
 
-- [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true)
+- [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true) (__OFFLINE AT THE TIME OF THE WORKSHOP__)
 - [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 - [AARNet Sydney Read-only Test Collection](https://app.globus.org/file-manager?origin_id=481dde3c-15cc-4521-befa-68a37a2346f8&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 
@@ -357,7 +357,7 @@ Once the GCSv5 packages are installed, we can create a Globus endpoint using the
 
 A Globus Endpoint is a logical construct that identifies an instance of Globus Connect to the Globus service. An endpoint can have one or more Data Transfer Nodes.
 
-Use the following command, substituting your values as required. The "owner" value should be your institutional email address that you will use for Globus. **Note that the option ```--use-explicit-host <your public IP>``` is required for the NATed network setup of the VM in this workshop. You will not need this option if you have a public IP address**
+Use the following command, substituting your values as required. The "owner" value should be your institutional email address that you will use for Globus. **Note that the option ```--use-explicit-host <your public IP>``` is required for the NATed network setup of the VM in this workshop. You will not need this option if you have a public IP address on your server**
 
 As with many of the code snippets in this workshop, it is recommended that you copy and paste it into a text editor and replace the items in angled brackets with correct values for you.
 ```
@@ -380,7 +380,7 @@ endpoint setup \
 
 Accept the prompt for the LetsEncrypt terms of service. Globus uses LetsEncrypt to generate the HTTPS certificates for your endpoint.
 
-Copy and paste the generated link into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window - highlight it and right-click). You will need to authenticate as the Globus user you used for ```--owner``` in the command above, confirm the creation of the endpoint and then copy the displayed Authorization Code.
+Copy and paste the generated link into your browser (Do __not__ use Ctrl-C to copy the text from the SSH window in MS-Windows - highlight it and right-click). You will need to authenticate as the Globus user you used for ```--owner``` in the command above, confirm the creation of the endpoint and then copy the displayed Authorization Code.
 
 Paste the Authorization Code into the Globus CLI prompt. The process will take a few minutes to complete. Copy and paste the UUID for your new endpoint
 
