@@ -649,6 +649,8 @@ Click on "Create Collection". You will be taken to the permissions page.
 
 <img src="resources/globus_guest_collection_permissions_1.png" alt="Guest Collection Permissions" width="1000"/>
 
+**Congratulations! You have just created a Globus Guest Collection.**
+
 We can now add permissions for arbitrary Globus user accounts as guest users, but we will do this later in the section "Globus User Permissions for Guest Collections" below.
 
 ## GLOBUS AUTHENTICATION & SETTING ACCESS PERMISSIONS
