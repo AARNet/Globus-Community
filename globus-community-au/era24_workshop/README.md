@@ -509,9 +509,17 @@ We need to have the following:
 - A sensible display name for the collection
 
 Let's make a data directory called "globus_collection" under the new local user's home directory, and a subdirectory under that called "RWTEST" which we will use later. We will create the directories as the globus user in order to have appropriate read-write permissions on them.
+
+Use ```sudo su -``` to become the Globus user you just created.
 ```
 sudo su - <your Globus username>
+```
+Create a directory for the mapped collection in the Globus user's home directory, plus a subdirectory we will use for a read-write guest collection later.
+```
 mkdir -p globus_collection/RWTEST
+```
+Finally, logout as your Globus user and go back to being your original user (```workshop-user```)
+```
 logout
 ```
 
