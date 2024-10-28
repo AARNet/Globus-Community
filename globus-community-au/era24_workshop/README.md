@@ -760,6 +760,8 @@ Click the "Add Permission" button.
 
 Now the specified user will be able to write to your collection just as you can. Try it!
 
+**Congratulations! You have now set up Gobus permission!**
+
 ## TRANSFER & TIMER OPTIONS
 Globus provides the ability to synchronise folders across endpoints, and also to schedule transfers so that they start at a particular time in the future. To access these controls, you first need to set up the source and destination folders in the file manager, and then click on the "Transfer & Timer Options" button at the top centre of the file manager window.
 
