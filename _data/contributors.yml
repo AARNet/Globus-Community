@@ -5,15 +5,15 @@
 # Full Name:
 #    git: github id
 #    email: email adress
-#    orcid: ocrid id
+#    orcid: orcid id
 #    role: the role of the contributor
 #    affiliation: affiliation
 #    image_url: absolute path to image (default image from github)
 
-Example contributor:
-    git: 
-    email: 
-    orcid: 
-    role: 
-    affiliation: 
+Alex Ip:
+    git: alex-ip
+    email: alex.ip@aarnet.edu.au
+    orcid: https://orcid.org/0000-0001-8937-8904
+    role: eResearch Developer
+    affiliation: AARNet Pty Ltd
 

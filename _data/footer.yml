@@ -14,8 +14,8 @@ columns:
   - type: links
     width: 3
     children: 
-      - url_text: Example page
-        url: /example_page
+      - url_text: AARNet Globus Information
+        external_url: https://aarnet.edu.au/globus
   - type: image
     image_width: 88px
     width: 2
