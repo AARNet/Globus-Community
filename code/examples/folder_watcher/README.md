@@ -1,4 +1,9 @@
-# Automate Globus transfers with a folder watcher
+---
+title: Automating Globus transfers with a folder watcher
+permalink: /code/examples/folder_watcher/
+---
+
+## Automating Globus transfers with a folder watcher
 
 If the folder sync functionality built into Globus does not fit your workflow, you can set up a watcher script that triggers a file transfer whenever new files are added to the folder.
 

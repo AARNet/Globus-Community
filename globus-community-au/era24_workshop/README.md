@@ -1,4 +1,9 @@
-# AARNet eResearch Australasia 2024 Workshop - Mastering Research Data Transfer and Automation with Globus
+---
+title: AARNet eResearch Australasia 2024 Workshop
+permalink: /globus-community-au/era24_workshop/
+---
+
+## AARNet eResearch Australasia 2024 Workshop - Mastering Research Data Transfer and Automation with Globus
 
 ## Overview
 

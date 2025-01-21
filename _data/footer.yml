@@ -4,8 +4,8 @@ columns:
   - type: image
     image_width: 88px
     width: 2
-    src: 'assets/img/main_logo.svg'
-    alt: Jekyll Bootstrap theme logo
+    src: "assets/img/AARNet_logo_mono.svg"
+    alt: AARNet logo
   - type: links
     width: 3
     children: 
@@ -19,6 +19,6 @@ columns:
   - type: image
     image_width: 88px
     width: 2
-    src: 'assets/img/main_logo.svg'
-    alt: Jekyll Bootstrap theme logo
+    src: "assets/img/logo_globus-solid.svg"
+    alt: Globus logo
 

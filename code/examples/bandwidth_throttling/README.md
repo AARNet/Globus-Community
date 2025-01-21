@@ -1,4 +1,9 @@
-# Rate limit Globus transfers
+---
+title: Rate limiting Globus transfers
+permalink: /code/examples/bandwidth_throttling/
+---
+
+## Rate limiting Globus transfers
 
 By default, Globus will use all available bandwidth on the network for transfers. It is possible to configure concurrency, parallelism and “aggressiveness” within Globus, but not the effective bandwidth, which must be managed from the operating system or network configuration.
 

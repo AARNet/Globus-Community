@@ -1,4 +1,8 @@
-# Getting Started with Globus
+---
+title: Getting Started with Globus
+---
+
+## Getting Started with Globus
 
 ## Set up your own Globus endpoint
 

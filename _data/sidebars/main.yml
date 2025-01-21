@@ -1,7 +1,17 @@
 subitems:
   - title: Home
-    url: /index
-  - title: Getting Started
-    url: /globus-community-au/getting_started
-  - title: AARNet Public Globus Test Collections
-    url: /globus-community-au/aarnet_globus_collections
+    url: ./index
+  - title: Australian Globus Community Resources
+    url: ./globus-community-au/
+    subitems:
+    - title: Getting Started
+      url: ./globus-community-au/getting_started.html
+    - title: AARNet Public Globus Test Collections
+      url: ./globus-community-au/aarnet_globus_collections.html
+  - title: Australian Globus Community Code Examples
+    url: ./code/
+    subitems:
+    - title: Bandwidth Throttling
+      url: ./code/examples/bandwidth_throttling/
+    - title: Folder Watcher
+      url: ./code/examples/folder_watcher/
