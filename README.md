@@ -1,9 +1,8 @@
 ---
-title: Australian Globus Community Index page
+title: Welcome to the Globus Community AU
 permalink: /
 ---
 
-## Welcome to the Globus Community AU
 Below you will find all the essential information to help you get started in Globus Community AU. If you have any questions, please contact us at globus@aarnet.edu.au.
 
 ## Key links
