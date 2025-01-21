@@ -7,15 +7,20 @@ columns:
     src: "assets/img/AARNet_logo_mono.svg"
     alt: AARNet logo
   - type: links
-    width: 3
+    width: 2
     children: 
-      - url_text: Home
+      - url_text: Globus Community AU Home
         url: /
   - type: links
-    width: 3
+    width: 2
     children: 
       - url_text: AARNet Globus Information
         external_url: https://aarnet.edu.au/globus
+  - type: links
+    width: 2
+    children: 
+      - url_text: Globus Site
+        external_url: https://www.globus.org/
   - type: image
     image_width: 88px
     width: 2
