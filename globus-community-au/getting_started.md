@@ -13,3 +13,8 @@ In particular, [Introduction to Globus for System Administrators](https://www.yo
 For Australian users in the academic and research sector, AARNet can help you with this setup.
 
 Once you have set up a working endpoint, you should arrange a free trial subscription in order to test out the enterprise-level features offered.
+
+## More information
+Find out more about setting up Globus on the [AARNet Knowledge Base](https://support.aarnet.edu.au/hc/en-us/categories/5318479482767-Globus).
+
+ 
