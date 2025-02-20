@@ -26,6 +26,8 @@ Community members can find resources related to Globus here, such as how-to guid
 
 These sessions aim to provide more information about Globus and to help with problems or issues relating to your Globus service or general data movement. AARNet and Globus product specialists are available during these sessions to share knowledge and provide assistance, as well as to introduce any new features or functionality.
 
+Find out more and [register your interest](https://aarnet.edu.au/aarnet-globus-technical-catch-ups).
+
 ## Resources
 
 * [Globus Guides and documentation](https://docs.globus.org/guides/)
