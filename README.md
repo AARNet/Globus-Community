@@ -25,9 +25,11 @@ Community members can find resources related to Globus here, such as how-to guid
 
 ### AARNet and Globus Technical Catch Ups
 
-These sessions aim to provide more information about Globus and to help with problems or issues relating to your Globus service or general data movement. AARNet and Globus product specialists are available during these sessions to share knowledge and provide assistance, as well as to introduce any new features or functionality.
+These sessions aim to provide more information about Globus and to help with problems or issues relating to your Globus service or general data movement. AARNet and Globus product specialists are available during these sessions to share knowledge and provide assistance, as well as to introduce any new features or functionality. Find out more and [register your interest](https://aarnet.edu.au/aarnet-globus-technical-catch-ups).
 
-Find out more and [register your interest](https://aarnet.edu.au/aarnet-globus-technical-catch-ups).
+### The Data Movers Lab
+These monthly clinics aim to help with research challenges using Globus and FileSender data movement tools. Participants can drop in any time, and bring along any problems they are trying to solve or issues they need to address that are related to Globus or FileSender. Staff from the AARNet Digital Research Team will be available to share knowledge and assist users to make the most of these data movement services.
+Find out more or [register for these sessions](https://aarnet.edu.au/the-data-movers-lab).
 
 ## Resources
 
