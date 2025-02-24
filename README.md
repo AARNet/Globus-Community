@@ -11,6 +11,7 @@ Below you will find all the essential information to help you get started in Glo
 * [GitHub](https://github.com/AARNet/Globus-Community)
 * [YouTube](https://youtube.com/playlist?list=PLabaNLSF0jBArjG5wOPKpo6jBWuyYOlOS&si=i5RJf7h_lXnzoLCG)
 * [Technical Catch Ups](https://www.aarnet.edu.au/aarnet-globus-technical-catch-ups)
+* [The Data Movers Lab](https://aarnet.edu.au/the-data-movers-lab)
 
 ## Slack channel – *coming soon*
 
