@@ -3,8 +3,6 @@ title: Globus Community AU Information Resources
 permalink: /globus-community-au/
 ---
 
-## Globus Community AU Information Resources
-
 Globus Community AU is a central hub for staff at Australian universities and research institutions who are using the Globus data movement service.   
 
 Get started:
