@@ -1,5 +1,5 @@
 ---
-title: Welcome to the Globus Community AU
+title: Home of the Globus Community AU
 permalink: /
 ---
 
