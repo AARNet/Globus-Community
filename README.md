@@ -38,7 +38,7 @@ Join the community Slack channel by sending a request to globus@aarnet.edu.au.
 
 Community members can find resources related to Globus here, such as how-to guides, FAQs, and technical solutions for some common workflows.
 
-Access the [repo here]([GitHub](https://github.com/AARNet/Globus-Community)).
+Access the [community repo here](https://github.com/AARNet/Globus-Community).
 
 ### YouTube channel
 
