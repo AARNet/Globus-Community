@@ -1,5 +1,5 @@
 ---
-title: Globus Community AU Information Resources
+title: Information Resources
 permalink: /globus-community-au/
 ---
 
@@ -7,6 +7,7 @@ Globus Community AU is a central hub for staff at Australian universities and re
 
 Get started:
 
+* [Minutes from Community catch-ups](./globus-community-au/community-updates)
 * [Getting Started](./getting_started.html)
 * [AARNet Knowledge Base - Globus](https://support.aarnet.edu.au/hc/en-us/categories/5318479482767-Globus)
 * [AARNet Public Globus Test Collections](./aarnet_globus_collections.html)
