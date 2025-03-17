@@ -30,7 +30,9 @@ Find out more or [register for these sessions](https://aarnet.edu.au/the-data-mo
 
 ### Slack channel – _coming soon_
 
-The Globus Community AU Slack channel is where members of the community can connect, collaborate, support each other, and ask for help. Whether you’re seeking advice, sharing insights, or engaging in discussions that go beyond broader topics, this is the perfect space to dive deeper into the community’s shared experiences and challenges.
+The Globus Community AU Slack channel offers members a chance to connect, collaborate, or engaging in discussions that go beyond broader topics. This is the perfect space to dive deeper into the community’s shared experiences and challenges.
+
+Join the community Slack channel by sending a request to globus@aarnet.edu.au.
 
 ### GitHub 
 
