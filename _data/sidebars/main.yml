@@ -8,6 +8,8 @@ subitems:
       url: ./globus-community-au/getting_started.html
     - title: AARNet Public Globus Test Collections
       url: ./globus-community-au/aarnet_globus_collections.html
+    - title: Community minutes
+      url: ./globus-community-au/community-updates     
   - title: Australian Globus Community Code Examples
     url: ./code/
     subitems:
