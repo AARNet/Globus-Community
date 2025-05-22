@@ -1,13 +1,13 @@
 ---
-title: AARNet eResearch Australasia 2024 Workshop
-permalink: /globus-community-au/era24_workshop/
+title: AARNet eResearch Australasia "Introduction to Globus" Workshop
+permalink: /globus-community-au/workshops/introduction_to_globus_workshop/
 ---
 
-## AARNet eResearch Australasia 2024 Workshop - Mastering Research Data Transfer and Automation with Globus
+## AARNet eResearch Australasia 2024/25 Workshop - Introduction to Globus
 
 ## Overview
 
-In this workshop, we will be working through the process of setting up and configuring a Globus endpoint and collections. At the conclusion of the workshop, you should be able to:
+In this half-day workshop, we will be working through the process of setting up and configuring a Globus endpoint and collections. At the conclusion of the workshop, you should be able to:
 
 - Know what Globus is and the benefits it provides for researchers
 - Use the Globus web interface to transfer files between collections
@@ -99,7 +99,7 @@ Globus offers the following advantages:
 ### Mapped Collections
 Mapped Collections are collections where Globus logins are explicitly mapped to local user accounts.
 
-<img src="resources/mapped_collections.png" alt="Mapped Collections" width="1000"/>
+<img src="../resources/mapped_collections.png" alt="Mapped Collections" width="1000"/>
 
 ### Guest Collections
 
@@ -107,11 +107,11 @@ Guest Collections are collections where user-specified Globus logins are overlai
 
 **Note that guest collections are a subscription-only option**
 
-<img src="resources/guest_collections.png" alt="Guest Collections" width="1000"/>
+<img src="../resources/guest_collections.png" alt="Guest Collections" width="1000"/>
 
 ### Globus Architecture and Concepts
 
-<img src="resources/globus_connect_server_architecture.png" alt="Globus Architecture and Concepts" width="1000"/>
+<img src="../resources/globus_connect_server_architecture.png" alt="Globus Architecture and Concepts" width="1000"/>
 
 #### Definitions
 ##### Endpoint
@@ -154,31 +154,31 @@ To proceed, you must have a working installation of Globus Connect Personal with
 
 Open a web browser and navigate to https://globus.org.
 
-<img src="resources/globus_home_page.png" alt="Globus Home Page" width="1000"/>
+<img src="../resources/globus_home_page.png" alt="Globus Home Page" width="1000"/>
 
 Click on the "LOG IN" button on the top right. You will be redirected to the CILogon login page, where you will either need to select your institution in the drop-down box and click "Continue", or select one of the three alternative identity providers, i.e. GitHub, Google or ORCID.
 
-<img src="resources/globus_login.png" alt="Globus Login" width="1000"/>
+<img src="../resources/globus_login.png" alt="Globus Login" width="1000"/>
 
 You will be redirected to your nominated identity provider for authentication. Log in using your credentials. For example, the AARNet login screen appears as follows, but your institutional login screen will be different:
 
-<img src="resources/aarnet_login.png" alt="Institutional (AARNet) Login" width="1000"/>
+<img src="../resources/aarnet_login.png" alt="Institutional (AARNet) Login" width="1000"/>
 
 Once you have logged in, you will be redirected to the Globus web app page.
 
-<img src="resources/globus_file_manager.png" alt="Globus File Manager" width="1000"/>
+<img src="../resources/globus_file_manager.png" alt="Globus File Manager" width="1000"/>
 
 You are now ready to transfer files using Globus. To do so, we will need to show the intended source and destination collections in two-pane mode. Click on the "set two pane" button on the top right of the window as follows:
 
-<img src="resources/globus_file_manager_two_pane_button.png" alt="Globus File Manager Two Pane Button" width="750"/>
+<img src="../resources/globus_file_manager_two_pane_button.png" alt="Globus File Manager Two Pane Button" width="750"/>
 
 You should now be in two-pane viewing mode. We will now set the source collection in the left-hand pane, noting that the actual side really doesn't matter. Click on the left-hand Collection Search bar on the top left of the window.
 
-<img src="resources/globus_file_manager_collection_search_button.png" alt="Globus File Manager Collection Search Button" width="1000"/>
+<img src="../resources/globus_file_manager_collection_search_button.png" alt="Globus File Manager Collection Search Button" width="1000"/>
 
 Enter "AARNet" into the search box as follows. You will see up to nine AARNet collections.
 
-<img src="resources/globus_aarnet_collection_list.png" alt="Globus AARNet Collection List" width="1000"/>
+<img src="../resources/globus_aarnet_collection_list.png" alt="Globus AARNet Collection List" width="1000"/>
 
 ###### Globus test collections
 You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
@@ -198,25 +198,25 @@ Globus also provides writable test collections, each with a 10MB quota to preven
 
 Now you will need to select the destination collection, which will be the local collection made visible via your GCP instance running on your laptop. Click on the right-hand Collection Search bar as follows:
 
-<img src="resources/globus_file_manager_2nd_pane_collection_search.png" alt="Globus 2nd Pane Collection Search" width="1000"/>
+<img src="../resources/globus_file_manager_2nd_pane_collection_search.png" alt="Globus 2nd Pane Collection Search" width="1000"/>
 
 Enter all or part of the name for your local collection in the search box, or the UUID for your collection if you know it. Click on your collection.
 
 You should now have your source and destination collections visible, one in each pane of the Globus file manager window.
 
-<img src="resources/globus_file_manager_two_panes.png" alt="Globus File Manager Two Panes" width="1000"/>
+<img src="../resources/globus_file_manager_two_panes.png" alt="Globus File Manager Two Panes" width="1000"/>
 
 To transfer a file from the source collection on the left to the destination collection on the right, simply drag and drop the file. Note: Since the transfer will go from the source collection to your laptop, it is strongly suggested that you choose files 100MB or smaller, i.e. 100M.dat, 10M.dat or 1M.dat for this exercise so that we don't overwhelm the workshop WiFi. The AARNet and ESnet collections are persistent, so you will be able to test the transfer of larger files and entire directories later outside the workshop.
 
 Once you have successfully initiated the transfer, you will see a popup in the top right corner of your window as follows:
 
-<img src="resources/globus_transfer_submitted.png" alt="Globus Transfer Submitted" width="500"/>
+<img src="../resources/globus_transfer_submitted.png" alt="Globus Transfer Submitted" width="500"/>
 
 This will mean that Globus has scheduled the transfer and will coordinate the two endpoints involved. The transfer is "set and forget" and will automatically resume after any network failure. You will receive an email notification to your Globus account email address when it is complete.
 
 Click on the "View details" link to see the transfer status. You will need to do this quickly if you're only transferring a small file and want to see the transfer in progress, otherwise it will have completed before you view the status page, which will look something like this:
 
-<img src="resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
+<img src="../resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
 #### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
 Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same "set-and-forget" facility: the upload/download will fail if there is an interruption to the network connection.
@@ -229,7 +229,7 @@ You can download a file either by highlighting the file or directory you wish to
 
 You can also obtain a persistent link for anonymous download either by highlighting the file or directory you wish to download and clicking on the "Get Link" button in the middle of the file manager, or by right-clicking on the file or directory and selecting "Get Link" as follows:
 
-<img src="resources/globus_https_file_transfer.png" alt="Globus HTTPS File Transfer" width="1000"/>
+<img src="../resources/globus_https_file_transfer.png" alt="Globus HTTPS File Transfer" width="1000"/>
 
 ## SETTING UP A GLOBUS CONNECT ENDPOINT ON A LINUX HOST
 This hands-on exercise will involve setting up and configuring a Globus endpoint on a Linux host. We have provided a virtual machine (VM) for each workshop participant on which you will be able to install Globus Connect Server v5 (GCSv5). Note that these workshop VMs will be destroyed after the workshop, and they are not intended for high-volume transfers or transfer performance evaluation.
@@ -257,7 +257,7 @@ SSH should be available from the Windows command line.
 
 Type "cmd" into the search box in the taskbar, and then click on the "Command Prompt" icon on the top right. You will see a window with a command prompt.
 
-<img src="resources/windows_command_prompt.png" alt="Windows Command Prompt" width="750"/>
+<img src="../resources/windows_command_prompt.png" alt="Windows Command Prompt" width="750"/>
 
 Type in the following at the command prompt, substituting your username and IP address.
 ```
@@ -270,7 +270,7 @@ SSH should be available from the MacOS terminal.
 
 Open Spotlight by pressing "Command" and "Space" at the same time, and then type "Terminal". Either click the terminal icon or press "Enter" to open a new terminal window.
 
-<img src="resources/macos-terminal-spotlight.png" alt="MacOS Terminal Spotlight" width="750"/>
+<img src="../resources/macos-terminal-spotlight.png" alt="MacOS Terminal Spotlight" width="750"/>
 
 Type in the following in your terminal window, substituting your username and IP address.
 ```
@@ -636,23 +636,23 @@ globus-connect-server collection update --allow-guest-collections <collection ID
 ```
 We can now use the Globus web app to define the guest collection under the mapped collection. Firstly, use the "Collections" button on the left to find your mapped collection. In this case, we have used the string "eRA24" to identify the collection.
 
-<img src="resources/globus_find_collection.png" alt="Find Globus Collection" width="1000"/>
+<img src="../resources/globus_find_collection.png" alt="Find Globus Collection" width="1000"/>
 
 Open the mapped collection.
 
-<img src="resources/globus_mapped_collection_attributes.png" alt="Globus Mapped Collection Attributes" width="1000"/>
+<img src="../resources/globus_mapped_collection_attributes.png" alt="Globus Mapped Collection Attributes" width="1000"/>
 
 Click on the "Collections" tab at the top.
 
-<img src="resources/globus_guest_collection_list_1.png" alt="Globus Guest Collection List" width="1000"/>
+<img src="../resources/globus_guest_collection_list_1.png" alt="Globus Guest Collection List" width="1000"/>
 
 Click on the "Add Guest Collection" button on the top right, then select the subdirectory you wish to share as a guest collection. Fill in any other details.
 
-<img src="resources/globus_create_guest_collection.png" alt="Create Guest Collection" width="1000"/>
+<img src="../resources/globus_create_guest_collection.png" alt="Create Guest Collection" width="1000"/>
 
 Click on "Create Collection". You will be taken to the permissions page.
 
-<img src="resources/globus_guest_collection_permissions_1.png" alt="Guest Collection Permissions" width="1000"/>
+<img src="../resources/globus_guest_collection_permissions_1.png" alt="Guest Collection Permissions" width="1000"/>
 
 **Congratulations! You have just created a Globus Guest Collection.**
 
@@ -741,17 +741,17 @@ Log into the Globus Web Application and click on "Collections" in the left-hand 
 
 Find and click on the Guest Collection we created previously. You should be able to see its attributes, which you are free to edit as you see fit. For this exercise, however, you will need to click on the "Permissions" icon at the top left. Note that you will not see "Permissions" if you accidentally opened your Mapped Collection instead of your guest one.
 
-<img src="resources/guest_collection_attributes.png" alt="Guest Collection Attributes" width="1000"/>
+<img src="../resources/guest_collection_attributes.png" alt="Guest Collection Attributes" width="1000"/>
 
 This will open the permissions editing window for your Guest Collection. Note that by default you will have read-write access by role because you own this collection. We will leave that as-is.
 
 Click on the "Add Permissions - Share With" button on the top right.
 
-<img src="resources/guest_collection_permissions.png" alt="Guest Collection Permissions" width="1000"/>
+<img src="../resources/guest_collection_permissions.png" alt="Guest Collection Permissions" width="1000"/>
 
 This will bring up the permissions editing window
 
-<img src="resources/guest_collection_add_permission.png" alt="Guest Collection Add Permission" width="1000"/>
+<img src="../resources/guest_collection_add_permission.png" alt="Guest Collection Add Permission" width="1000"/>
 
 Now in order to allow someone to write to this collection, you will need to do the following
 
@@ -770,11 +770,11 @@ Now the specified user will be able to write to your collection just as you can.
 ## TRANSFER & TIMER OPTIONS
 Globus provides the ability to synchronise folders across endpoints, and also to schedule transfers so that they start at a particular time in the future. To access these controls, you first need to set up the source and destination folders in the file manager, and then click on the "Transfer & Timer Options" button at the top centre of the file manager window.
 
-<img src="resources/Transfer_and_timer_options_button.png" alt="Transfer and Timer Options button" width="1000"/>
+<img src="../resources/Transfer_and_timer_options_button.png" alt="Transfer and Timer Options button" width="1000"/>
 
 This will bring down a drop-down interface as shown below:
 
-<img src="resources/Transfer_and_timer_options.png" alt="Transfer and Timer Options" width="1000"/>
+<img src="../resources/Transfer_and_timer_options.png" alt="Transfer and Timer Options" width="1000"/>
 
 These options should be fairly self-explanatory, but you can click on the "i" icon for each item for more information.
 
