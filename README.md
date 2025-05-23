@@ -28,7 +28,7 @@ Find out more or [register for these sessions](https://aarnet.edu.au/the-data-mo
 
 ## Resources
 
-### Slack channel – _coming soon_
+### Slack channel
 
 The Globus Community AU Slack channel offers members a chance to connect, collaborate, or engaging in discussions that go beyond broader topics. This is the perfect space to dive deeper into the community’s shared experiences and challenges.
 
