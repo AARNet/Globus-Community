@@ -73,7 +73,8 @@ sudo iptables -D OUTPUT -t mangle -p tcp --dest <DESTINATION_IP> --dport 443 -j 
 sudo nft list table mangle
 
 # Delete filter for marked packets (10)
-sudo tc filter del dev <NIC_DEVICE> sudo tc filter list dev <NIC_DEVICE>
+sudo tc filter del dev <NIC_DEVICE>
+sudo tc filter list dev <NIC_DEVICE>
 
 # Delete HTB class
 sudo tc class del dev <NIC_DEVICE> classid 1:10
