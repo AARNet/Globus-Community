@@ -54,38 +54,18 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 ##### Ice breaker + Mentimeter
 ##### Plan for the day - aims, learning objectives, timing (2 x 90min sessions + 30 min break)
 
-#### WHAT IS GLOBUS? (15-20 minutes) - Greg
-##### What is Globus?
-##### Installing Globus Connect Personal (optional)
-##### Using Globus for simple file transfers (Demo and Hands-on)
-##### Globus Architecture and Concepts
+### ADVANCED GLOBUS (90mins) - Alex, Chris and Steele
+##### Using connectors to interface Globus with storage systems other than Posix (e.g. S3)
 
-#### LOGGING IN TO WORKSHOP VM AND INSTALLING GLOBUS PACKAGES (15-20 minutes) - Alex and Chris
-- Logging into Globus
-- Logging into workshop virtual machine
+##### Using tools like Jupyter Notebooks with Globus
 
-### BREAK
+##### Implementing automated workflows using Globus Flows to streamline your data processing and management tasks
 
-### PART II
-### INSTALLING AND CONFIGURING GLOBUS (90mins) - Alex, Chris and Steele
-##### Installing Globus (Hands-on) (45 minutes?)
-- Installing Globus Packages
-- Creating an Endpoint
-- Creating a Data Transfer Node
-- Creating a Storage Gateway
-- Creating a Mapped Collection
-- Adding an Endpoint to a Subscription
-- Creating a Guest Collection
+##### Using Globus Compute to schedule jobs in HPC environments
 
-##### Configuring Globus (Hands-on) (15-20 minutes)
-- File and Directory Permissions
-- Storage Gateway Permissions
-- Globus Credentials
-- Transfer and Timing Options
-- Decommissioning
+##### Setting up custom user mappings for Globus authentication on local resources and optimise security settings
 
 ##### Open Discussion (15-20 minutes)
-- Launch Globus Community AU
+- Introduce Globus Community AU
 - Specific use Cases
-- Bonus Advanced Topics (e.g. Globus Flow, Automation)
 
