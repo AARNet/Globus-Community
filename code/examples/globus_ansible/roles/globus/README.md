@@ -68,7 +68,7 @@ Note that there is a `globus/defaults/main.yml.template` file which should be co
 ### inventory/all.yml and inventory/host_vars/\<hostname\>.yml
 Note that there is a file `inventory/all.yml.template` that you will need to copy to `inventory/all.yml` and edit as required.
 
-You will also need to copy `inventory/host_vars/\globus-test-host.yml.template` to `inventory/host_vars/<hostname>.yml` where `<hostname>` is in the globus.hosts section of `inventory/all.yml`.
+You will also need to copy `inventory/host_vars/globus-test-host.yml.template` to `inventory/host_vars/<hostname>.yml` where `<hostname>` is in the `globus.hosts` section of `inventory/all.yml`.
 
 | variable                         | description |
 | -------------------------------- | ----------- |
