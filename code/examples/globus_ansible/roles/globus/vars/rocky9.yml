@@ -1,0 +1,16 @@
+---
+globus__supported: true
+rhsm_managed: false
+
+# This is ugly and should be fixed
+globus__prep_cmds:
+  # Setup repo for Globus
+  - "dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+  - "/usr/bin/crb enable"
+  - "dnf install -y https://downloads.globus.org/globus-connect-server/stable/installers/repo/rpm/globus-repo-latest.noarch.rpm"
+  # Install the DNF config manager:
+  - "dnf install -y 'dnf-command(config-manager)'"
+# Install Globus Connect Server:
+  - "dnf install -y globus-connect-server54"
+
+globus__packages: []

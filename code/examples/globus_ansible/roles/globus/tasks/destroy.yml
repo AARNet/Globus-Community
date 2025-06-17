@@ -1,0 +1,98 @@
+---
+# Destruction tasks
+- name: Check deployment-key.json exists
+  ansible.builtin.stat:
+    path: "{{ globus_deploy_key_path }}"
+  register: _globus_deploy_key_file
+
+- name: Set globus_endpoint_id fact
+  when: not globus_endpoint_id and _globus_deploy_key_file.stat.exists
+  block:
+    - name: Get generated deployment key file
+      ansible.builtin.slurp:
+        path: "{{ globus_deploy_key_path }}"
+      register: _globus_endpoint_deployment_key
+
+    - name: "Set globus_endpoint_id fact from deployment-key.json"
+      ansible.builtin.set_fact:
+        globus_endpoint_id: "{{ _globus_endpoint_deployment_key.content | b64decode | from_json | community.general.json_query('client_id') }}"
+
+- name: Delete an entire deployment of Globus
+  when: globus_endpoint_id
+  environment:
+    GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
+    GCS_CLI_EXPLICIT_HOST: "localhost"
+  block:
+    - name: Confirm deletion of Globus deployment
+      ansible.builtin.pause:
+        prompt: "This will IRREVERSIBLY delete an entire deployment of Globus. Please type CONFIRM to confirm"
+      register: globus_destroy_confirm
+
+    - name: Get existing Globus components
+      when: globus_destroy_confirm.user_input == "CONFIRM"
+      block:
+        - name: List existing Globus collections
+          ansible.builtin.command: "{{ globus_gcs_binary }} collection list --format json"
+          changed_when: false
+          register: _globus_cmd_output
+
+        - name: Set globus_collection_list fact
+          ansible.builtin.set_fact:
+            globus_collection_list: "{{ _globus_cmd_output.stdout | from_json }}"
+
+        - name: Run Globus collection update command to allow mapped collection deletion
+          ansible.builtin.command: "{{ globus_gcs_binary }} collection update {{ item }} --no-delete-protected"
+          changed_when: true
+          loop: "{{ globus_collection_list | selectattr('collection_type', 'equalto', 'mapped') | map(attribute='id') }}"
+
+        - name: Delete guest collections
+          ansible.builtin.command: "{{ globus_gcs_binary }} collection delete {{ item }}"
+          changed_when: true
+          loop: "{{ globus_collection_list | selectattr('collection_type', 'equalto', 'guest') | map(attribute='id') }}"
+
+        - name: Delete mapped collections
+          ansible.builtin.command: "{{ globus_gcs_binary }} collection delete {{ item }}"
+          changed_when: true
+          loop: "{{ globus_collection_list | selectattr('collection_type', 'equalto', 'mapped') | map(attribute='id') }}"
+
+        - name: List existing Globus storage gateways
+          ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway list --format json"
+          changed_when: false
+          register: _globus_cmd_output
+
+        - name: Set globus_storage_gateway_list fact
+          ansible.builtin.set_fact:
+            globus_storage_gateway_list: "{{ _globus_cmd_output.stdout | from_json | map(attribute='data') | flatten }}"
+
+        - name: Delete storage gateways
+          ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway delete {{ item }}"
+          changed_when: true
+          loop: "{{ globus_storage_gateway_list | map(attribute='id') }}"
+
+        - name: Remove Globus DTN and stop running services
+          ansible.builtin.command: "{{ globus_gcs_binary }} node cleanup"
+          changed_when: true
+          register: gcs_node_cleanup
+          until: gcs_node_cleanup is not failed
+          retries: 5
+          delay: 10
+
+        - name: Pull deployment-key.json secret from Vault
+          ansible.builtin.copy:
+            content: "{{ lookup('community.hashi_vault.vault_kv2_get', globus_secret_path.deploy_key).secret['deployment-key'] }}"
+            dest: "{{ globus_deploy_key_path }}"
+            owner: root
+            group: root
+            mode: '0600'
+          no_log: true
+          when: use_vault
+
+        - name: Remove Globus Endpoint
+          ansible.builtin.command: "{{ globus_gcs_binary }} endpoint cleanup --agree-to-delete-endpoint --deployment-key {{ globus_deploy_key_path }}"
+          changed_when: true
+          register: gcs_endpoint_cleanup
+
+        - name: Remove deployment key file
+          ansible.builtin.file:
+            path: "{{ globus_deploy_key_path }}"
+            state: absent

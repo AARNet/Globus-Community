@@ -1,0 +1,85 @@
+---
+# Configuration tasks
+- name: Check Globus Endpoint Configuration
+  when: globus_endpoint_id
+  environment:
+    GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
+    GCS_CLI_EXPLICIT_HOST: "localhost"
+  block:
+    - name: Check Globus Endpoint status
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint show --format=json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Set globus_endpoint_status fact
+      ansible.builtin.set_fact:
+        globus_endpoint_status: "{{ _globus_cmd_output.stdout | from_json }}"
+
+    - name: Add Globus Endpoint to specified subscription
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint set-subscription-id {{ globus_subscription_id }}"
+      when: globus_endpoint_status.subscription_id == None and globus_subscription_id != ""
+      changed_when: true
+
+    - name: Check Globus Endpoint roles
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint role list --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Set globus_endpoint_existing_roles fact
+      ansible.builtin.set_fact:
+        globus_endpoint_existing_roles: "{{ _globus_cmd_output.stdout | from_json | map(attribute='data') | flatten | map(attribute='principal') | map('regex_replace', '.*:', '') }}"
+
+    - name: Assign Globus Endpoint role(s) (Subscription only)
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint role create --principal-type {{ item.type }} {{ item.role }} {{ item.uuid }}"
+      when: item.uuid not in globus_endpoint_existing_roles and globus_endpoint_status.subscription_id != None
+      changed_when: true
+      register: globus_endpoint_assign_role
+      loop: "{{ globus_endpoint_roles }}"
+      until: globus_endpoint_assign_role is not failed
+      retries: 5
+      delay: 10
+
+    - name: Set Globus Endpoint keywords
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint update --keywords {{ [globus_metadata.keywords + globus_endpoint_keywords] | flatten | unique | join(',') | quote }}"
+      changed_when: true
+
+    - name: Update Globus Endpoint display name
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint update --display-name {{ globus_endpoint_name }}"
+      when: globus_endpoint_status.display_name != globus_endpoint_name
+      changed_when: true
+
+    - name: Update other Globus Endpoint metadata
+      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint update --{{ item.key | regex_replace('_', '-') }} {{ item.value | quote }}"
+      loop: "{{ globus_metadata | dict2items | rejectattr('key', 'eq', 'keywords') }}"
+      when: (globus_endpoint_status[item.key] is not defined) or (globus_endpoint_status[item.key] != item.value)
+      changed_when: true
+
+- name: Check Globus Components
+  when: globus_endpoint_id
+  environment:
+    GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
+    GCS_CLI_EXPLICIT_HOST: "localhost"
+  block:
+    - name: List existing Globus Storage Gateways
+      ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway list --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Set globus_storage_gateway_list fact
+      ansible.builtin.set_fact:
+        globus_storage_gateway_list: "{{ _globus_cmd_output.stdout | from_json | map(attribute='data') | flatten }}"
+
+    - name: List existing Globus Collections
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection list --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Set globus_collection_list fact
+      ansible.builtin.set_fact:
+        globus_collection_list: "{{ _globus_cmd_output.stdout | from_json }}"
+
+    - name: Import Globus Storage Gateway tasks
+      ansible.builtin.include_tasks: "storage_gateway.yml"
+      loop: "{{ [globus_default_storage_gateway] + globus_storage_gateways }}"
+      loop_control:
+        loop_var: storage_gateway_config

@@ -1,0 +1,43 @@
+---
+- name: Ensure ansible_facts used by role
+  ansible.builtin.setup:
+    gather_subset: min
+  when: not ansible_facts.keys() | list | intersect(globus__required_facts) == globus__required_facts
+  tags: [globus, globus_install, globus_config, globus_deploy, globus_destroy]
+
+- name: Include distribution specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  when: item is file
+  loop:
+    - "{{ role_path }}/vars/{{ ansible_os_family | lower }}.yml"  # redhat/debian
+    - "{{ role_path }}/vars/{{ ansible_distribution | lower }}{{ ansible_distribution_major_version }}.yml"  # centos8/redhat8/ubuntu20
+  tags: [globus, globus_install, globus_config, globus_deploy, globus_destroy]
+
+- name: Import installation tasks when role is supported and enabled
+  ansible.builtin.import_tasks: install.yml
+  when: globus__supported and globus_enabled
+  tags: [globus, globus_install]
+
+- name: Import deployment tasks when role is supported and enabled
+  ansible.builtin.import_tasks: deploy.yml
+  when: globus__supported and globus_enabled
+  environment:
+    GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
+    GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
+  tags: [globus, globus_deploy]
+
+- name: Import configuration tasks when role is supported and enabled
+  ansible.builtin.import_tasks: config.yml
+  when: globus__supported and globus_enabled
+  environment:
+    GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
+    GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
+  tags: [globus, globus_config]
+
+- name: Import destruction tasks when role is supported and enabled
+  ansible.builtin.import_tasks: destroy.yml
+  when: globus__supported and globus_enabled
+  environment:
+    GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
+    GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
+  tags: [globus_destroy, never]

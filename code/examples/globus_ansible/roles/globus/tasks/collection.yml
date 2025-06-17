@@ -1,0 +1,58 @@
+---
+- name: Check Collection
+  ansible.builtin.set_fact:
+    collection_details: "{{ globus_collection_list | community.general.json_query(q) }}"
+  vars:
+    q: "[?display_name == `{{ globus_endpoint_name }} {{ storage_gateway_config.name }} {{ collection_config.name }}`] | [0]"
+
+- name: Create Collection
+  when: not collection_details
+  block:
+    - name: Create Collection directory path
+      ansible.builtin.file:
+        path: "{{ collection_config.base_path }}"
+        owner: globus
+        group: globus
+        mode: '0750'
+        state: directory
+
+    - name: Run Collection create command
+      ansible.builtin.command:
+        argv:
+          - "{{ globus_gcs_binary }}"
+          - collection
+          - create
+          - --private
+          - "{{ storage_gateway_details.id }}"
+          - "{{ collection_config.base_path }}"
+          - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }} {{ collection_config.name }}"
+      changed_when: true
+      register: _globus_cmd_output
+
+    - name: Set collection_id fact
+      ansible.builtin.set_fact:
+        collection_id: "{{ _globus_cmd_output.stdout | split(':') | last | trim }}"
+
+    - name: Get new collection metadata
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection show {{ collection_id }} --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Update collection_details fact
+      ansible.builtin.set_fact:
+        collection_details: "{{ _globus_cmd_output.stdout | from_json }}"
+
+- name: Permit guest collections (Subscription only)
+  when: globus_endpoint_status.subscription_id != None
+  block:
+    - name: Permit guest collections (Subscription only)
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection update --allow-guest-collections {{ collection_id }}"
+
+    - name: Get new collection metadata
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection show {{ collection_id }} --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Update collection_details fact
+      ansible.builtin.set_fact:
+        collection_details: "{{ _globus_cmd_output.stdout | from_json }}"

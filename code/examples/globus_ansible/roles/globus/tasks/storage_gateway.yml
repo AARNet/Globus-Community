@@ -1,0 +1,77 @@
+---
+- name: Check Storage Gateway
+  ansible.builtin.set_fact:
+    storage_gateway_details: "{{ globus_storage_gateway_list | community.general.json_query(q) }}"
+  vars:
+    q: "[?display_name == `{{ globus_endpoint_name }} {{ storage_gateway_config.name }}`] | [0]"
+
+- name: Create New Storage Gateway
+  when: not storage_gateway_details
+  block:
+    - name: Run Globus Storage Gateway create command
+      ansible.builtin.command:
+        argv:
+          - "{{ globus_gcs_binary }}"
+          - storage-gateway
+          - create
+          - posix
+          - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }}"
+          - --domain
+          - "{{ storage_gateway_config.domain }}"
+      changed_when: true
+      register: _globus_cmd_output
+
+    - name: Set storage_gateway_id fact
+      ansible.builtin.set_fact:
+        storage_gateway_id: "{{ _globus_cmd_output.stdout | split(':') | last | trim }}"
+
+    - name: Get new storage gateway metadata
+      ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway show {{ storage_gateway_id }} --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Update storage_gateway_details fact
+      ansible.builtin.set_fact:
+        storage_gateway_details: "{{ _globus_cmd_output.stdout | from_json }}"
+
+- name: Apply Storage Gateway configuration
+  when: storage_gateway_details.id is defined
+  block:
+    - name: Template path restrictions document
+      ansible.builtin.template:
+        src: pathrestrict.json.j2
+        dest: "{{ globus_config_dir }}/{{ storage_gateway_details.id }}_pathrestrict.json"
+        owner: root
+        group: root
+        mode: '0600'
+        validate: /usr/bin/jq '.' %s
+
+    - name: Template identity mapping document
+      ansible.builtin.template:
+        src: idmap.json.j2
+        dest: "{{ globus_config_dir }}/{{ storage_gateway_details.id }}_idmap.json"
+        owner: root
+        group: root
+        mode: '0600'
+        validate: /usr/bin/jq '.' %s
+
+    - name: Update Storage Gateway Configuration
+      ansible.builtin.command:
+        argv:
+          - "{{ globus_gcs_binary }}"
+          - storage-gateway
+          - update
+          - posix
+          - "{{ storage_gateway_details.id }}"
+          - --restrict-paths
+          - "file:{{ globus_config_dir }}/{{ storage_gateway_details.id }}_pathrestrict.json"
+          - --identity-mapping
+          - "file:{{ globus_config_dir }}/{{ storage_gateway_details.id }}_idmap.json"
+      changed_when: true
+
+- name: Import Globus Collection tasks
+  when: storage_gateway_details.id is defined
+  ansible.builtin.include_tasks: "collection.yml"
+  loop: "{{ storage_gateway_config.collections }}"
+  loop_control:
+    loop_var: collection_config

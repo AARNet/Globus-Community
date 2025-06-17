@@ -1,0 +1,92 @@
+---
+# Deployment tasks
+- name: Check deployment-key.json exists
+  ansible.builtin.stat:
+    path: "{{ globus_deploy_key_path }}"
+  register: _globus_deploy_key_file
+
+- name: Set up Globus Endpoint
+  when: not _globus_deploy_key_file.stat.exists
+  block:
+    - name: Run Globus Endpoint setup command
+      ansible.builtin.command:
+        argv:
+          - "{{ globus_gcs_binary }}"
+          - --use-explicit-host
+          - "{{ globus_external_ip }}"
+          - endpoint
+          - setup
+          - "{{ globus_endpoint_name }}"
+          - --owner
+          - "{{ globus_svc_client_id }}@clients.auth.globus.org"
+          - --organization
+          - "{{ globus_metadata.organization }}"
+          - --contact-email
+          - "{{ globus_metadata.contact_email }}"
+          - --deployment-key
+          - "{{ globus_deploy_key_path }}"
+          - --agree-to-letsencrypt-tos
+          - --dont-set-advertised-owner
+      changed_when: true
+      register: _globus_cmd_output
+
+    - name: Store deployment key in Vault
+      delegate_to: localhost
+      become: false
+      community.hashi_vault.vault_kv2_write:
+        path: "{{ globus_secret_path.deploy_key }}"
+        data:
+          deployment-key: "{{ _globus_endpoint_deployment_key.content | b64decode }}"
+      no_log: true
+      when: use_vault
+
+    - name: Remove deployment key file
+      ansible.builtin.file:
+        path: "{{ globus_deploy_key_path }}"
+        state: absent
+      when: use_vault
+
+- name: Get generated deployment key file
+  ansible.builtin.slurp:
+    path: "{{ globus_deploy_key_path }}"
+  register: _globus_endpoint_deployment_key
+
+- name: Set globus_endpoint_id fact
+  ansible.builtin.set_fact:
+    globus_endpoint_id: "{{ _globus_endpoint_deployment_key.content | b64decode | from_json | community.general.json_query('client_id') }}"
+
+- name: Check Globus Node
+  block:
+    - name: Check Node configuration exists
+      ansible.builtin.stat:
+        path: "{{ globus_node_setup_path }}"
+      register: _globus_node_setup_file
+
+    - name: Set up Globus Node
+      when: not _globus_node_setup_file.stat.exists
+      block:
+        - name: Pull deployment-key.json secret from Vault
+          ansible.builtin.copy:
+            content: "{{ lookup('community.hashi_vault.vault_kv2_get', globus_secret_path.deploy_key).secret['deployment-key'] }}"
+            dest: "{{ globus_deploy_key_path }}"
+            owner: root
+            group: root
+            mode: '0600'
+          no_log: true
+          when: use_vault
+
+        - name: Run Globus Node setup command
+          ansible.builtin.command: "{{ globus_gcs_binary }} --use-explicit-host {{ globus_external_ip }} node setup --ip-address {{ globus_external_ip }} --deployment-key {{ globus_deploy_key_path }} --export-node {{ globus_node_setup_path }} --verbose "
+          environment:
+            GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
+            GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
+            GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
+            # GCS_CLI_EXPLICIT_HOST: "{{ globus_external_ip }}"
+          changed_when: true
+
+        - name: Remove deployment key file
+          ansible.builtin.file:
+            path: "{{ globus_deploy_key_path }}"
+            state: absent
+          when: use_vault
+

@@ -1,0 +1,13 @@
+---
+- name: Deploy and manage globus systems
+  hosts:
+    - globus
+  become: true
+  serial: "{{ serial_num | default(1) }}"
+  gather_facts: true
+
+  tasks:
+    - name: Import globus role
+      ansible.builtin.import_role:
+        name: globus
+      tags: ['globus']

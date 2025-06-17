@@ -1,0 +1,7 @@
+---
+globus_endpoint_name: "Globus Ansible Auto-Deployment"
+globus_external_ip: "<PUBLIC IP address of Globus host being configured" # REQUIRED
+globus_endpoint_keywords:
+  - GLOBUS
+  - TEST
+globus_storage_gateways: []
