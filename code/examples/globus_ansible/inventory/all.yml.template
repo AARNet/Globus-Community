@@ -1,4 +1,4 @@
 globus:
   hosts:
-    globus-test-host: # Must have corresponding YAML file in inventory/host_vars directory
-      ansible_host: <IP address for host to configure> # REQUIRED
+    globus-test-host: # Edit this name as required. Must have corresponding YAML file in inventory/host_vars directory for this hostname (e.g. inventory/host_vars/globus-test-host.yml to match this configuration)
+      ansible_host: <IP address for host to configure via Ansible> # REQUIRED

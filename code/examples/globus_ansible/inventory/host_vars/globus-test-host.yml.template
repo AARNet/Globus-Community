@@ -1,5 +1,6 @@
 ---
-globus_endpoint_name: "Globus Ansible Auto-Deployment"
+# The name of this file must match one of the entities in the globus.hosts section of inventory/all.yml
+globus_endpoint_name: "Globus Ansible Auto-Deployment" # Edit as required
 globus_external_ip: "<PUBLIC IP address of Globus host being configured" # REQUIRED
 globus_endpoint_keywords:
   - GLOBUS
