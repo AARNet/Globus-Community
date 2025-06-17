@@ -20,12 +20,12 @@ Please refer to the [globus role README](./roles/globus/README.md) for detailed 
 
 ## Usage
 
-Navigate to the root directory of this repository. Note that we set the ANSIBLE_ROLES_PATH to the path of the roles.
+Navigate to the `code/examples/globus_ansible` directory of this repository. Note that we set the `ANSIBLE_ROLES_PATH` enfironment variable to the path of the subdirectory containing the roles.
 
-After you have configured the variables, use the following command line from the root directory of this repository to create a Globus endpoint:
+After you have configured the variables, use the following command line to create a Globus endpoint:
 
 ```ANSIBLE_ROLES_PATH=./roles ansible-playbook -vv -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml```
 
-To decommission the endpoint, use the following command line from the root directory of this repository:
+To decommission the endpoint, use the following command line:
 
 ```ANSIBLE_ROLES_PATH=./roles ansible-playbook -vv -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml --tags "globus_destroy"```
