@@ -65,10 +65,10 @@ Note that there is a `globus/defaults/main.yml.template` file which should be co
 | `globus_secret_path.deploy_svc`  | vault path where Globus auto-deploy service user credentials are located |
 | `globus_secret_path.deploy_key`  | vault path where the Globus endpoint's `deployment-key.json` secret is stored |
 
-### inventory/host_vars/\<hostname\>/globus.yml
+### inventory/all.yml and inventory/host_vars/\<hostname\>.yml
 Note that there is a file `inventory/all.yml.template` that you will need to copy to `inventory/all.yml` and edit as required.
 
-You will also need to copy `inventory/host_vars/\globus-test-host/globus.yml.template` to `<hostname>.yml` where `<hostname>` is in the globus.hosts section of `inventory/all.yml`.
+You will also need to copy `inventory/host_vars/\globus-test-host.yml.template` to `inventory/host_vars/<hostname>.yml` where `<hostname>` is in the globus.hosts section of `inventory/all.yml`.
 
 | variable                         | description |
 | -------------------------------- | ----------- |
