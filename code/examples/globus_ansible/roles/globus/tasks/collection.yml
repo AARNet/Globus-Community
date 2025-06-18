@@ -22,7 +22,7 @@
           - "{{ globus_gcs_binary }}"
           - collection
           - create
-          - --private
+          - "--{{ collection_config.public_private }}"
           - "{{ storage_gateway_details.id }}"
           - "{{ collection_config.base_path }}"
           - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }} {{ collection_config.name }}"

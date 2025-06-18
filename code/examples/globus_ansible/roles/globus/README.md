@@ -93,6 +93,7 @@ The structure is the same for both the `globus_default_storage_gateway` and `glo
       - /srv/globus/collections/example
   collections: # Collections associated with the gateway
     - name: "Example Collection"
+      public_private: public # set to "public" or "private"
       base_path: "/srv/globus/collections/example"
 ```
 

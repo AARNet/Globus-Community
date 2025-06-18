@@ -50,8 +50,12 @@ globus_default_storage_gateway:
     read: ["{{ globus_collections_dir }}"]
     read_write: ["{{ globus_collections_dir }}/default"]
   collections:
-    - name: Private Mapped Collection
-      base_path: /srv/globus/collections/default # Edit this as required for the mapped collection path
+    - name: Private Mapped Collection # Edit these details as required for the mapped collection details
+      public_private: private
+      base_path: "{{ globus_collections_dir }}/default"
+    - name: Public Mapped Collection # Edit these details as required for the mapped collection
+      public_private: public
+      base_path: "{{ globus_collections_dir }}/default"
 
 # REQUIRED
 globus_local_user_mapping: # These users will be mapped to the local globus user
