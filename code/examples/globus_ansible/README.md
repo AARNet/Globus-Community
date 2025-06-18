@@ -24,8 +24,23 @@ Navigate to the `code/examples/globus_ansible` directory of this repository. Not
 
 After you have configured the variables, use the following command line to create a Globus endpoint:
 
-```ANSIBLE_ROLES_PATH=./roles ansible-playbook -vv -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml```
+```ANSIBLE_ROLES_PATH=./roles ansible-playbook -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml```
 
 To decommission the endpoint, use the following command line:
 
-```ANSIBLE_ROLES_PATH=./roles ansible-playbook -vv -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml --tags "globus_destroy"```
+```ANSIBLE_ROLES_PATH=./roles ansible-playbook -i inventory/all.yml --user <remote_ansible_user> --private-key <path_of_SSH_private_key> playbooks/globus.yml --tags "globus_destroy"```
+
+## Notes
+
+### Private mapped collections on a non-subscription endpoint
+This Ansible uses your Globus service user credentials as the owner of the endpoint, so this means that any ___private___ mapped collections created by the Ansible on an endpoint ___not___ associated with a subscription will only be visible to that service user, so, effectively, ___NOBODY___ will be able to see them. __You will need to make your collections public (using the respective `public_private` value in the `globus_default_storage_gateway.collections` configuration variable) for them to be visible to anyone in the Globus web UI if you are not a Globus subscriber.__
+
+If you have a valid subscription ID in your configuration, then The role functionality used to assign administrative rights (set in the `globus_endpoint_roles` variable) will make any private collections on the endpoint visible to any administrators you add.
+
+### Hashicorp Vault for storing secrets
+If you have access to the Hashicorp Vault, you can use that for storing your secrets, including the ones created during the endpoint registration process.
+
+To enable the use of Hashicorp Vault, you will need to set the following configuration variables:
+- `use_vault` - set this to true
+- `globus_secret_path.deploy_svc` - set this to the vault path where Globus auto-deploy service user credentials are located
+- `globus_secret_path.deploy_key` - set this to the vault path where the Globus endpoint's `deployment-key.json` secret is stored
