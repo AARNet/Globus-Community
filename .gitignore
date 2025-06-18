@@ -1,3 +1,6 @@
 .bundle
 Gemfile.lock
 _site/
+code/examples/globus_ansible/roles/globus/defaults/main.yml
+code/examples/globus_ansible/inventory/host_vars/globus-test-host.yml
+code/examples/globus_ansible/inventory/all.yml
