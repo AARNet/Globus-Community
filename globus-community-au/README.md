@@ -1,9 +1,9 @@
 ---
 title: Information Resources
-permalink: /globus-community-au/
+permalink: /globus-community-australasia/
 ---
 
-Globus Community AU is a central hub for staff at Australian universities and research institutions who are using the Globus data movement service.   
+Globus Community Australasia is a central hub for staff at Australian and New Zealand universities and research institutions who are using the Globus data movement service.   
 
 Get started:
 
