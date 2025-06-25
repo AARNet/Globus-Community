@@ -1,10 +1,10 @@
-title: Globus Community AU
+title: Globus Community Australasia
 # This appears in the html browser tab for the site title (seen mostly by search engines, not users)
 
-topnav_title: Welcome to Globus Community AU
+topnav_title: Welcome to Globus Community Australasia
 # Optional: this appears on the top navigation bar next to the main_logo.svg icon
 
-description: "Australian Globus Community resources (managed by AARNet)"
+description: "Australasian Globus Community resources (managed by AARNet)"
 # Metadata description of the website
 
 remote_theme: ELIXIR-Belgium/elixir-toolkit-theme@3.0.0
@@ -24,7 +24,7 @@ defaults:
       layout: "page"
       sidebar: "main"
   - scope:
-      path: "globus-community-au"
+      path: "globus-community-australasia"
       type: "pages"
     values:
       permalink: /globus-community-au/:basename
