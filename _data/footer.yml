@@ -9,7 +9,7 @@ columns:
   - type: links
     width: 2
     children: 
-      - url_text: Globus Community AU Home
+      - url_text: Globus Community Australasia Home
         url: /
   - type: links
     width: 2
