@@ -7,7 +7,7 @@ The Globus platform provides a secure data transfer and management service that 
 
 Hosted by AARNet, **Globus Community Australasia** is a central hub for staff at Australian and New Zealand universities and research institutions who are using the Globus data movement service. The community aims to foster collaboration among IT administrators, researchers, and Globus group managers by providing a platform to share knowledge, resources, and best practices.
 
-The community aims to help advance the effective use of Globus and drive innovation in data movement practices across the Australian research sector. Members have access to a GitHub repository for asynchronous communication and resource exchange, as well as regular meetings, webinars, and training sessions for real-time engagement. These events, such as Office Hours and Team Globus Catch-ups, offer opportunities for learning and problem-solving.
+The community aims to help advance the effective use of Globus and drive innovation in data movement practices across the Australian and New Zealand research sectors. Members have access to a GitHub repository for asynchronous communication and resource exchange, as well as regular meetings, webinars, and training sessions for real-time engagement. These events, such as Office Hours and Team Globus Catch-ups, offer opportunities for learning and problem-solving.
 
 If you have any questions, please contact us at globus@aarnet.edu.au.
 
