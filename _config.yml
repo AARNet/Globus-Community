@@ -27,7 +27,7 @@ defaults:
       path: "globus-community-australasia"
       type: "pages"
     values:
-      permalink: /globus-community-au/:basename
+      permalink: /globus-community-australasia/:basename
   - scope:
       path: "code"
       type: "pages"
