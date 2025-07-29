@@ -1,0 +1,12 @@
+{
+  "DATA_TYPE": "expression_identity_mapping#1.0.0",
+  "mappings": [
+  {% for identity in globus_local_user_mapping %}
+  {
+    "source": "{username}",
+    "match": "{{ identity }}",
+    "output": "globus"
+  }{{ "," if not loop.last }}
+  {% endfor %}
+  ]
+}

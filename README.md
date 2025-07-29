@@ -1,13 +1,13 @@
 ---
-title: Globus Community AU
+title: Globus Community AU/NZ
 permalink: /
 ---
 
 The Globus platform provides a secure data transfer and management service that facilitates end-to-end automation of complex research flows.  
 
-Hosted by AARNet, **Globus Community AU** is a central hub for staff at Australian universities and research institutions who are using the Globus data movement service. The community aims to foster collaboration among IT administrators, researchers, and Globus group managers by providing a platform to share knowledge, resources, and best practices.
+Hosted by AARNet, **Globus Community Australasia** is a central hub for staff at Australian and New Zealand universities and research institutions who are using the Globus data movement service. The community aims to foster collaboration among IT administrators, researchers, and Globus group managers by providing a platform to share knowledge, resources, and best practices.
 
-The community aims to help advance the effective use of Globus and drive innovation in data movement practices across the Australian research sector. Members have access to a GitHub repository for asynchronous communication and resource exchange, as well as regular meetings, webinars, and training sessions for real-time engagement. These events, such as Office Hours and Team Globus Catch-ups, offer opportunities for learning and problem-solving.
+The community aims to help advance the effective use of Globus and drive innovation in data movement practices across the Australian and New Zealand research sectors. Members have access to a GitHub repository for asynchronous communication and resource exchange, as well as regular meetings, webinars, and training sessions for real-time engagement. These events, such as Office Hours and Team Globus Catch-ups, offer opportunities for learning and problem-solving.
 
 If you have any questions, please contact us at globus@aarnet.edu.au.
 
@@ -30,7 +30,7 @@ Find out more or [register for these sessions](https://aarnet.edu.au/the-data-mo
 
 ### Slack channel
 
-The Globus Community AU Slack channel offers members a chance to connect, collaborate, or engaging in discussions that go beyond broader topics. This is the perfect space to dive deeper into the community’s shared experiences and challenges.
+The Globus Community Australasia Slack channel offers members a chance to connect, collaborate, or engaging in discussions that go beyond broader topics. This is the perfect space to dive deeper into the community’s shared experiences and challenges.
 
 Join the community Slack channel by sending a request to globus@aarnet.edu.au.
 
@@ -40,7 +40,7 @@ Community members can find resources related to Globus here, such as how-to guid
 
 Access the [community repo here](https://github.com/AARNet/Globus-Community).
 
-### YouTube channel
+### AARNet YouTube channel
 
 These recorded sessions from our Globus Tech catch-ups provide insights in maximising Globus to address data movement roadblocks and streamline automated research workflows.
 

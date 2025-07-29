@@ -1,0 +1,63 @@
+---
+globus_enabled: true
+use_vault: false # Set this to true if you have set up Hashicorp Vault
+
+globus_gcs_binary: /usr/sbin/globus-connect-server
+globus_collections_dir: /srv/globus/collections
+globus_config_dir: /srv/globus/config
+
+# Leave this empty for no subscription. If you supply a subscription UUID, your service user MUST have the permissions to manage the subscription
+globus_subscription_id: ""
+
+# Example secret paths for Hashicorp Vault (not used)
+globus_secret_path:
+  deploy_svc: "globus/{{ inventory_environment }}/svc_deploy"
+  deploy_key: "globus/{{ inventory_environment }}/{{ inventory_hostname }}"
+
+globus_deploy_key_path: "{{ globus_config_dir }}/deployment-key.json"
+globus_node_setup_path: "{{ globus_config_dir }}/node-info.json"
+
+# REQUIRED
+# Either lookup values from vault if use_vault is true, or use hard-coded values below. Set globus_endpoint_id to empty string if use_vault is false.
+globus_svc_client_id: "{{ lookup('community.hashi_vault.vault_kv2_get', '{{ globus_secret_path.deploy_svc }}').secret.client_id if use_vault else '<Globus service user ID - use UUID before before @>' }}"
+globus_svc_secret_id: "{{ lookup('community.hashi_vault.vault_kv2_get', '{{ globus_secret_path.deploy_svc }}').secret.secret_id if use_vault else '<Globus service user secret>' }}"
+globus_endpoint_id: "{{ lookup('community.hashi_vault.vault_kv2_get', globus_secret_path.deploy_key, errors='ignore').secret['deployment-key']['client_id'] | d('') if use_vault else '' }}"
+
+# REQUIRED
+globus_metadata:
+  organization: "<Organisation name>"
+  department: "<Department name>"
+  contact_email: "<Contact email>"
+  info_link: "<Info link URL>"
+  keywords: # Edit, add or delete as required
+    - "<Keyword 1>"
+    - "<Keyword 2>"
+
+globus_endpoint_network_use: normal
+
+# Subscription only - will be ignored if globus_subscription_id == ""
+globus_endpoint_roles:
+  - uuid: "<User or Group UUID>" # Set this to the UUID of the user or group you want to administer the endpoint
+    type: identity # "identity" for a Globus user and "group" for a Globus group
+    role: administrator # "administrator" (full access), "activity_manager" (view endpoint config), "activity_monitor" (view tasks and endpoint activity)
+
+# REQUIRED
+globus_default_storage_gateway:
+  name: POSIX Gateway
+  domain: <Storage gateway default domain>
+  path_restrictions:
+    none: ["/"]
+    read: ["{{ globus_collections_dir }}"]
+    read_write: ["{{ globus_collections_dir }}/default"]
+  collections:
+    - name: Private Mapped Collection # Edit these details as required for the mapped collection details
+      public_private: private
+      base_path: "{{ globus_collections_dir }}/default"
+    - name: Public Mapped Collection # Edit these details as required for the mapped collection
+      public_private: public
+      base_path: "{{ globus_collections_dir }}/default"
+
+# REQUIRED
+globus_local_user_mapping: # These users will be mapped to the local globus user
+  - "<Email address of user 1 Globus account>"
+  - "<Email address of user 2 Globus account>"

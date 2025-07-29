@@ -1,16 +1,16 @@
 subitems:
   - title: Home
     url: ./index
-  - title: Australian Globus Community Resources
-    url: ./globus-community-au/
+  - title: Australasian Globus Community Resources
+    url: ./globus-community-australasia/
     subitems:
     - title: Getting Started
-      url: ./globus-community-au/getting_started.html
+      url: ./globus-community-australasia/getting_started.html
     - title: AARNet Public Globus Test Collections
-      url: ./globus-community-au/aarnet_globus_collections.html
+      url: ./globus-community-australasia/aarnet_globus_collections.html
     - title: Community minutes
-      url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-au/community-updates    
-  - title: Australian Globus Community Code Examples
+      url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/community-updates    
+  - title: Australasian Globus Community Code Examples
     url: ./code/
     subitems:
     - title: Bandwidth Throttling

@@ -1,0 +1,8 @@
+---
+globus__supported: true
+
+globus__rhsm_repositories:
+  - globus-el9-x86_64
+
+globus__packages:
+  - globus-connect-server54

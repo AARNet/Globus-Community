@@ -18,3 +18,7 @@ This is an example of [how to throttle bandwidth outbound from a Globus server u
 ### Folder Watcher
 
 This is an example of [how to set up a folder watcher script to automate Globus transfers when new files appear](./examples/folder_watcher/). This is potentially useful where the Globus synch option is not appropriate, for example, when transferred files need to be removed from the destination collection as part of a workflow and without needing to re-transfer them.
+
+### Globus Ansible
+
+This is an example of [how to use Ansible to automate the setup of a Globus endpoint, DTN, storage gateway, and mapped collection](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible).

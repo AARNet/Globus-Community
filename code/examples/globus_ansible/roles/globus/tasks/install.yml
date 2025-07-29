@@ -1,0 +1,54 @@
+---
+# Installation tasks
+- name: Enable additional support repositories via rhsm
+  community.general.rhsm_repository:
+    name: "{{ item.name }}"
+    state: "{{ item.state | d('enabled') }}"
+  loop: "{{ globus__rhsm_repositories }}"
+  when: rhsm_managed
+
+- name: Check Globus groups
+  ansible.builtin.group:
+    name: "{{ item }}"
+    gid: "{{ apl_reserved_groups[item].gid | d(omit) }}"
+    system: true
+    local: true
+  loop:
+    - globus
+    - gcsweb
+    - globusoidc
+
+- name: Check Globus users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    comment: "{{ apl_reserved_users[item].comment | d(omit) }}"
+    uid: "{{ apl_reserved_users[item].uid | d(omit) }}"
+    group: "{{ apl_reserved_users[item].group | d(omit) }}"
+    shell: "{{ apl_reserved_users[item].shell | d('/sbin/nologin') }}"
+    home: "{{ apl_reserved_users[item].home | d(omit) }}"
+    system: true
+    local: true
+  loop:
+    - globus
+    # - gcsweb
+    # - globusoidc
+
+- name: Set up additional Globus directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: globus
+    group: globus
+    mode: '0750'
+    state: directory
+  loop:
+    - "{{ globus_collections_dir }}"
+    - "{{ globus_config_dir }}"
+
+- name: Run Globus preparation commands
+  ansible.builtin.command: "{{ item }}"
+  loop: "{{ globus__prep_cmds }}"
+
+- name: Install Globus Connect Server packages
+  ansible.builtin.package:
+    name: "{{ globus__packages }}"
+    state: present

@@ -1,0 +1,16 @@
+---
+## Role vars should be considered "private" (internal use only). Naming
+## convention is as follows, where __ denotes this as a private var.
+##
+##   globus__somevar
+
+globus__supported: false
+globus__required_facts:
+  - ansible_os_family
+  - ansible_distribution
+  - ansible_distribution_major_version
+
+globus__rhsm_repositories: []
+globus__prep_cmds: []
+globus__packages:
+  - globus-connect-server54
