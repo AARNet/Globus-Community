@@ -1,6 +1,6 @@
 ---
 title: AARNet eResearch Australasia "Advanced Globus" Workshop
-permalink: /globus-community-au/workshops/advanced_globus_workshop/
+permalink: /globus-community-australasia/workshops/advanced_globus_workshop/
 ---
 
 ## AARNet eResearch Australasia 2025 Workshop - Advanced Globus
