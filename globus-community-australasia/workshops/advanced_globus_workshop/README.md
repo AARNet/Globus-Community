@@ -135,7 +135,12 @@ The following table provides a comparison of these two options:
 | Should typically use a “native” OAuth2 client (Register a thick client) | May use a “confidential” OAuth2 client (Register a portal or science gateway) |
 | Must use a “confidential” OAuth2 client | (Register a service account) |
 
-#### Registering a User App in Globus Auth (taken from https://globus-sdk-python.readthedocs.io/en/stable/user_guide/getting_started/register_app.html)
+### Registering and Running a User App in Globus Auth (taken from https://globus-sdk-python.readthedocs.io/en/stable/user_guide/getting_started/register_app.html)
+A user app is a script that you would create for other users to run. The user would authenticate using their own credentials, and their permissions would be 
+determined by the policies applicable to their own account. For example, if a user tried to run the script but did not have the permissions to read and/or write 
+from a given collection, then they would be unable to run the script successfully.
+
+#### Registering a User App
 In order for a "real" user to run your script, we will need to register a user app with appropriate scopes. The procedure for doing this is as follows:
 
 1. Navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the web app.
@@ -147,17 +152,73 @@ In order for a "real" user to run your script, we will need to register a user a
     - A project is a collection of apps with a shared list of administrators.
     - If you don’t own any projects, you will automatically be prompted to create one.
     - If you do, you will be prompted to either select an existing or create a new one.
-4. Creating or selecting a project will prompt you for another login, sign in with an account that administers your project.
 
 <img src="../resources/create_new_project.png" alt="Create New Project" width="1000"/>
 
+4. Creating or selecting a project will prompt you for another login, sign in with an account that administers your project.
+
+<img src="../resources/user_app_registration.png" alt="User App Registration" width="1000"/>
+
 5. Give your App a name; this is what users will see when they are asked to authorize your app.
 6. Click “Register App”. This will create your app and take you to a page describing it.
+
+<img src="../resources/user_app_details.png" alt="User App Details" width="1000"/>
+
 7. Copy the “Client UUID” from the page.
     - This ID can be thought of as your App’s “username”. It is non-secure information and as such, feel free to hardcode it into scripts.
 
-#### Registering a Client App in Globus Auth (service user)
-In order for a service user to run your script, we will need to register a client app with appropriate scopes. The procedure for doing this is as follows:
+#### Running a User App in a Jupyter Notebook
+The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to 
+download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
+
+We will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop.
+
+Firstly, you would start the Jupyter Notebook server (JupyterLab) on the VM as follows:
+
+```bash
+cd jupyter_notebooks
+jupyter lab
+```
+This will launch JupyterLab and you should see something like the following (with a different token) at the end of the output:
+```
+    To access the server, open this file in a browser:
+        file:///home/workshop-user/.local/share/jupyter/runtime/jpserver-108989-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
+        http://127.0.0.1:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
+```
+
+We will need to forward port 8888 from your laptop browser to the remote JupyterLab server on the VM. More details on SSH port forwarding can be found [here](https://www.ssh.com/academy/ssh/tunneling-example).
+
+We will need to establish an ssh connection with local port 8888 forwarded through to port 8888 on the remote host. The SSH command would look something like this:
+```bash
+ssh -L 8888:localhost:8888 <your VM IP address>
+```
+
+<!-- TODO: write better port forwarding instructions -->
+
+Once you have established the port forwarding, you should be able to copy and paste one of the last two URLs into your local browser, and you should see something like this:
+
+<img src="../resources/jupyterlab.png" alt="Jupyterlab" width="1000"/>
+
+You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
+
+Edit the client ID and replace it with your user client ID that you copied from the registration. Edit the DST_COLLECTION value to be the UUID of the destination collection, noting that your personal Globus account must have write access to that collection.
+
+Click on the double-arrow at the top of the notebook to restart the kernel and run all cells. You may be prompted to authenticate using a URL, and then pasting the 
+resultant token into an edit box.
+
+<img src="../resources/Initiating_a_Transfer_with_a_UserApp.png" alt="Initiating a Transfer with a UserApp" width="1000"/>
+
+Congratulations! You should have initiated a transfer from one collection to another using your own user credentials!
+
+### Registering and Running a Client App in Globus Auth (service user)
+A client app is a script that you would create for a pre-defined service user to run. The service user would be authenticated using a client secret, and its
+permissions would be determined by the policies applicable to that account. The service user ID is not sensitive, but the user secret should be closely guarded in the
+same way that you would protect an account password.
+
+### Registering a Client App
+In order for a service user to run your script, we will first need to register a client app (service user). The procedure for doing this is as follows:
 
 1. Navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the web app.
 
@@ -194,3 +255,23 @@ In order for a service user to run your script, we will need to register a clien
 
 <img src="../resources/client_secret.png" alt="Client Secret" width="1000"/>
 
+11. Add your service user to the list of users with write permissions on your writable guest collection
+
+<!-- TODO: add pictures and instructions here -->
+
+#### Running a Client App in a Jupyter Notebook
+The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to 
+download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
+
+As in the previous example, we will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop. Please follow the instructions above
+to launch JupyterLab in your laptop browser.
+
+Open the file `client_app_creds.py` and edit the `CLIENT_ID` and `CLIENT_SECRET` to match the values from your ClientApp registration
+
+You should now be able to open the Jupyter notebook `Initiating a Transfer with a ClientApp.ipynb`
+
+Click on the double-arrow at the top of the notebook to restart the kernel and run all cells.
+
+<img src="../resources/Initiating_a_Transfer_with_a_ClientApp.png" alt="Initiating a Transfer with a ClientApp" width="1000"/>
+
+Congratulations! You should have initiated a transfer from one collection to another using a service user!
