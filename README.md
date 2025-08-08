@@ -2,7 +2,9 @@
 title: Globus Community AU/NZ
 permalink: /
 ---
+This repo is used to manage the Globus Australasia Community website at [https://aarnet.github.io/Globus-Community/](https://aarnet.github.io/Globus-Community/).
 
+# Globus Community Australasia
 The Globus platform provides a secure data transfer and management service that facilitates end-to-end automation of complex research flows.  
 
 Hosted by AARNet, **Globus Community Australasia** is a central hub for staff at Australian and New Zealand universities and research institutions who are using the Globus data movement service. The community aims to foster collaboration among IT administrators, researchers, and Globus group managers by providing a platform to share knowledge, resources, and best practices.
