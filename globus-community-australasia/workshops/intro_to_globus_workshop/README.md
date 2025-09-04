@@ -183,9 +183,9 @@ Enter "AARNet" into the search box as follows. You will see up to nine AARNet co
 ###### Globus test collections
 You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
 
-- [AARNet Melbourne Read-only Test Collection #1](https://app.globus.org/file-manager?origin_id=af7fa138-6565-4a6e-a863-2292a34fa1eb&origin_path=%2Fstandard_test_files%2F&two_pane=true) (__OFFLINE AT THE TIME OF THE WORKSHOP__)
-- [AARNet Melbourne Read-only Test Collection #2](https://app.globus.org/file-manager?origin_id=ea66df1d-7642-4e90-99ae-87a11e4c0678&origin_path=%2Fstandard_test_files%2F&two_pane=true)
-- [AARNet Sydney Read-only Test Collection](https://app.globus.org/file-manager?origin_id=481dde3c-15cc-4521-befa-68a37a2346f8&origin_path=%2Fstandard_test_files%2F&two_pane=true)
+- [AARNet Globus Endpoint NSW (ARTM) POSIX Gateway Public RO Guest Collection](https://app.globus.org/file-manager?origin_id=9e472d3a-ac18-42d0-bac8-3c9220801fbe&origin_path=%2Fstandard_test_files%2F&two_pane=true)
+- [AARNet Globus Endpoint NSW (ETCA) POSIX Gateway Public RO Guest Collection](https://app.globus.org/file-manager?origin_id=ba7a1bc4-dacd-47a7-bc92-87d0a5768305&origin_path=%2Fstandard_test_files%2F&two_pane=true)
+- [AARNet Globus Endpoint NSW (MCQM) POSIX Gateway Public RO Guest Collection](https://app.globus.org/file-manager?origin_id=12b88024-167c-4869-ab40-69bbf07ce3c5&origin_path=%2Fstandard_test_files%2F&two_pane=true)
 
 If you open an AARNet test collection, you can double-click on the "standard_test_files" directory in the left-hand collection pane. This is a copy of various sizes and numbers of test files, originally from the ESnet CERN collection. **Tip: Clicking on any of the three hyperlinks above will take you directly to the "standard_test_files" directory in the required collection.**
 
