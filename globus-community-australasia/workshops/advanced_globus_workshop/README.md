@@ -113,7 +113,7 @@ We will set up a service user that we can use to authenticate several automation
 ### Registering a Client App
 To have persistent authentication for automation tasks, we will first need to register a client app (service user). The procedure for doing this is as follows:
 
-1. Navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the web app.
+1. Log in as yourself and navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the Globus web app.
 
 <img src="../resources/globus_developers_page.png" alt="Globus Developer site" width="1000"/>
 
@@ -144,26 +144,99 @@ To have persistent authentication for automation tasks, we will first need to re
 
 <img src="../resources/generate_new_client_secret.png" alt="Generate New Client Secret" width="1000"/>
 
-10. Copy the client secret and store it somewhere secure - you will only have this one opportunity to do so!
+10. Copy the client ID and secret and save them somewhere secure - __note that you will only have this one opportunity to do so!__
 
 <img src="../resources/client_secret.png" alt="Client Secret" width="1000"/>
 
-11. Add your service user to the list of users with write permissions on your writable guest collection
+### Adding the service user as a project administrator
+In order to be able to create an endpoint, storage gateway and mapped collection, we will need to add the service user as a project administrator.
 
-<!-- TODO: add pictures and instructions here -->
+1. Select "Roles" tab
 
-##### Setting up a Globus Endpoint automatically using Ansible
+<img src="../resources/globus_project_roles.png" alt="Project Roles" width="1000"/>
+
+2. Click "Assign New Role" and start entering the service user ID. CLick on the service user when it is shown in the drop-down menu.
+
+<img src="../resources/globus_assign_new_project_role.png" alt="Project Roles" width="1000"/>
+
+3. Click "Add Role" with "Administrator" selected to add the service user as an administrator for the project.
+
+<img src="../resources/globus_add_new_project_role.png" alt="Project Roles" width="1000"/>
+
+## Setting up a Globus Endpoint, Storage Gateway and Mapped Collection automatically using Ansible
 We have set up an Ansible script to automate the setup of a Globus endpoint, storage gateway and mapped collection on your workshop VM. The Ansible code can
 be found [here](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible).
 
-For this workshop, you will find the ansible code in your home directory ~/globus_ansible. We have already set up the files `~/globus_ansible/inventory/all.yml` and `~/globus_ansible/inventory/host_vars/globus-test-host.yml` with your public IP address for you, but you will need to edit the file `~/globus_ansible/roles/globus/defaults/main.yml` with your user details.
+For this workshop, you will find the ansible code in your home directory ~/globus_ansible. We have already set up the files `~/globus_community_ansible/inventory/all.yml` and `~/globus_community_ansible/inventory/host_vars/globus-test-host.yml` with your public IP address for you, but you will need to edit the file `~/globus_community_ansible/roles/globus/defaults/main.yml` with your user details.
 
-Specifically, you will need to provide values for these:
-- `globus_svc_client_id: "{{ lookup('community.hashi_vault.vault_kv2_get', '{{ globus_secret_path.deploy_svc }}').secret.client_id if use_vault else '<Globus service user ID - use UUID before before @>' }}"`
-- `globus_svc_secret_id: "{{ lookup('community.hashi_vault.vault_kv2_get', '{{ globus_secret_path.deploy_svc }}').secret.secret_id if use_vault else '<Globus service user secret>' }}"`
+Specifically, you will need to provide values for these at the top of the file `~/globus_community_ansible/roles/globus/defaults/main.yml`:
+```
+---
+# WORKSHOP USER TO FILL THESE IN
+workshop_globus_login: 'ipai3458@gmail.com'
+workshop_client_uuid: '093fb7ae-9f4c-4e79-b0c4-5f7847ac4f68'
+workshop_client_secret: '<redacted>>'
+workshop_subscription_uuid: ''
+```
 
+Once you have filled in these details, change directory to `~/globus_community_ansible` and enter in the following Ansible command:
 
+```
+ANSIBLE_ROLES_PATH=./roles ansible-playbook -i inventory/all.yml --user workshop-user --private-key ~/.ssh/id_ssh_rsa --ask-become-pass playbooks/globus.yml
+```
 
+Paste in your workshop-user password when you see the `BECOME passowrd:` prompt. You may need to type `yes` when prompted
+
+The first time you SSH to localhost, you will see the following:
+```
+The authenticity of host 'localhost (::1)' can't be established.
+ED25519 key fingerprint is SHA256:5ZJFCUDyMml5eDLJz1jfhiD/BJE3YSmz3KGHre5wySg.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+
+Enter `yes` and hit the `Enter` key to continue.
+
+The Ansible should run to completion. The last couple of lines should be a summary of the Ansible run with no failures similar to this:
+
+```
+PLAY RECAP ********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+globus-workshop-host       : ok=30   changed=3    unreachable=0    failed=0    skipped=31   rescued=0    ignored=0
+
+```
+
+__Contratulations! You have just automagically done in a few minutes what we took most of the first workshop session doing! ;)__
+
+You can check what you have done by entering the following:
+```
+globus-connect-server login localhost
+globus-connect-server endpoint show
+globus-connect-server storage-gateway list
+globus-connect-server collection list
+```
+You should see something like the following:
+```
+[workshop-user@ip-10-0-3-134 globus_community_ansible]$ globus-connect-server endpoint show
+Display Name:       Advanced Globus Workshop Ansible Auto-Deployment
+ID:                 da27e302-2e3e-4b85-b3b2-3627781b2892
+Subscription ID:    None
+Public:             True
+GCS Manager URL:    https://c2e8ac.03c0.gaccess.io
+Network Use:        normal
+Organization:       AARNet
+Department:         eResearch
+Keywords:           ['AARNet', 'workshop', 'Australia', 'GLOBUS']
+Contact E-mail:     alex.ip@aarnet.edu.au
+Endpoint Info Link: https://www.aarnet.edu.au/globus
+[workshop-user@ip-10-0-3-134 globus_community_ansible]$ globus-connect-server storage-gateway list
+Display Name                                                   | ID                                   | Connector | High Assurance | MFA
+-------------------------------------------------------------- | ------------------------------------ | --------- | -------------- | -----
+Advanced Globus Workshop Ansible Auto-Deployment POSIX Gateway | bc44519c-ab1f-4b6c-8ef5-9d1912b38916 | POSIX     | False          | False
+[workshop-user@ip-10-0-3-134 globus_community_ansible]$ globus-connect-server collection list
+ID                                   | Display Name                                                                            | Owner                                                        | Collection Type | Storage Gateway ID                   | Created    | Last Access
+------------------------------------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ | --------------- | ------------------------------------ | ---------- | -------------
+31bb52a1-c15f-4e0c-bd64-19aaad613e52 | Advanced Globus Workshop Ansible Auto-Deployment POSIX Gateway Public Mapped Collection | 093fb7ae-9f4c-4e79-b0c4-5f7847ac4f68@clients.auth.globus.org | mapped          | bc44519c-ab1f-4b6c-8ef5-9d1912b38916 | 2025-09-10 | Not supported
+```
 
 ## Using tools like Jupyter Notebooks with the Globus API
 Globus maintains a full SDK (System Developers Kit) including a Python API, with documentation at https://globus-sdk-python.readthedocs.io/en/stable/.
@@ -175,7 +248,7 @@ This has already been installed for you on your workshop VM, along with a number
 #### Definitions
 To use the API, we will need to authenticate with Globus. Details about this process can be found in the Globus documentation on [Clients, Scopes, and Consents](https://docs.globus.org/guides/overviews/clients-scopes-and-consents/).
 
-The important points to note are 
+The important points to note are:
 - A __Client__ is an application like the CLI or Web Application.
     - Users can register their own Clients.
 - __Scopes__ define actions which are permitted within Globus.
