@@ -56,14 +56,17 @@ View the [channel here](https://www.youtube.com/playlist?list=PLabaNLSF0jBArjG5w
 
 ### Enabling astronomy at scale with AARNet and Globus 
 Astronomers studying long-period radio transients with South Africa’s MeerKAT telescope generate up to 2 TB per session. Using Globus over AARNet’s high-speed network, they transfer data to Australia quickly and reliably, enabling rapid analysis, refining observations, and sustaining scientific momentum across vast international distances. 
+
 [Read the full story](https://www.aarnet.edu.au/enabling-astronomy-at-scale-with-aarnet-and-globus)
 
 ### AARNet and Globus support critical data transfer 
 The Australian Apollo Service migrated 15 TB of research data during an infrastructure change at the Pawsey Supercomputing Research Centre. Using Globus over AARNet’s high-speed network, they achieved a fast, secure, and disruption-free transfer, preserving metadata and ensuring life science researchers maintained seamless access to critical data and workflows throughout the transition. 
+
 [Read the full story](https://www.aarnet.edu.au/smooth-migration-for-biocommons-apollo-service-aarnet-and-globus-support-critical-data-transfer)
 
 ### The Role of Globus in International Genome Research  
 Genetics technical specialists at the Biomolecular Resource Facility (BRF) are using Globus to transfer and share huge datasets through AARNet with national and international collaborators. Globus has greatly sped up their data delivery process, eliminating the need to spend time and resources to compress data into smaller files before sending them. For a recent project, they were able to transfer over 3 TB from their laboratory in Australia to a collaborator in New Zealand in only three hours using Globus. 
+
 [Read the full story](https://aarnet.edu.au/data-without-borders-the-role-of-globus-in-international-genome-research)
 
 This repository is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License
