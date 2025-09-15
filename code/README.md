@@ -1,5 +1,5 @@
 ---
-title: Globus Community Australasia Code Samples
+title: Globus Code Samples
 permalink: /code/
 ---
 
