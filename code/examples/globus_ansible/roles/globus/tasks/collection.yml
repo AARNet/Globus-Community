@@ -46,10 +46,10 @@
   when: globus_endpoint_status.subscription_id != None
   block:
     - name: Permit guest collections (Subscription only)
-      ansible.builtin.command: "{{ globus_gcs_binary }} collection update --allow-guest-collections {{ collection_id }}"
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection update --allow-guest-collections {{ collection_details.id }}"
 
     - name: Get new collection metadata
-      ansible.builtin.command: "{{ globus_gcs_binary }} collection show {{ collection_id }} --format json"
+      ansible.builtin.command: "{{ globus_gcs_binary }} collection show {{ collection_details.id }} --format json"
       changed_when: false
       register: _globus_cmd_output
 
