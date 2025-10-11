@@ -173,7 +173,9 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 Enter `yes` and hit the `Enter` key to continue.
 
-The Ansible should run to completion. The last couple of lines should be a summary of the Ansible run with no failures similar to this:
+__The Ansible will take just under ten minutes to run, so, in the interests of time, we may skip ahead to the next section and come back when it's finished.__
+
+After a while, the Ansible should run to completion. The last couple of lines should be a summary of the Ansible run with no failures similar to this:
 
 ```
 PLAY RECAP ********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
@@ -190,7 +192,7 @@ globus-connect-server login localhost
 Note that your session will stay active for the duration of the workshop, so you won't need to do this again.
 
 Now you can look at the endpoint, storage gateway(s) and collection(s) using the following commands:
-```
+```bash
 globus-connect-server endpoint show
 globus-connect-server storage-gateway list
 globus-connect-server collection list

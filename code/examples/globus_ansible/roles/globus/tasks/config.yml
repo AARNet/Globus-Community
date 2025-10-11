@@ -15,10 +15,21 @@
       ansible.builtin.set_fact:
         globus_endpoint_status: "{{ _globus_cmd_output.stdout | from_json }}"
 
-    - name: Add Globus Endpoint to specified subscription
-      ansible.builtin.command: "{{ globus_gcs_binary }} endpoint set-subscription-id {{ globus_subscription_id }}"
+    - name: Add Globus Endpoint to specified subscription and update endpoint status
       when: globus_endpoint_status.subscription_id == None and globus_subscription_id != ""
-      changed_when: true
+      block:
+        - name: Add Globus Endpoint to specified subscription
+          ansible.builtin.command: "{{ globus_gcs_binary }} endpoint set-subscription-id {{ globus_subscription_id }}"
+          changed_when: true
+
+        - name: Reheck Globus Endpoint status
+          ansible.builtin.command: "{{ globus_gcs_binary }} endpoint show --format=json"
+          changed_when: false
+          register: _globus_cmd_output
+
+        - name: Update globus_endpoint_status fact
+          ansible.builtin.set_fact:
+            globus_endpoint_status: "{{ _globus_cmd_output.stdout | from_json }}"
 
     - name: Check Globus Endpoint roles
       ansible.builtin.command: "{{ globus_gcs_binary }} endpoint role list --format json"
