@@ -53,26 +53,32 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 ##### Introductions - instructors, helpers + how to participate
 ##### Plan for the day - aims, learning objectives, timing (2 x 90min sessions + 30 min break)
 
-### ADVANCED GLOBUS (90mins) - Alex, Chris and Steele
+### GLOBUS AUTOMATION (60mins) - Alex, Chris and Steele
 ##### Quick Review of Globus System Architecture
-
-##### Setting up a Globus Service User (Client App)
 
 ##### Setting up a Globus Endpoint automatically using Ansible
 
-##### Using the Globus API tools with including Jupyter Notebooks
+##### Using the Globus SDK to automate the creation and population of guest collections
+
+##### Registering a Globus User App (for scripts to be run by users)
+
+##### Setting up a Globus Service User by registering a Client App
+
+### GLOBUS FLOWS AND COMPUTE (2 X 60mins) - Dr Kyle Chard, Director of Research at Globus
 
 ##### Implementing automated workflows using Globus Flows to streamline your data processing and management tasks
 
 ##### Using Globus Compute to schedule jobs in HPC environments
 
+### Open Discussion (15-20 minutes)
+- Introduce Globus Community Australasia
+- Specific use Cases
+
+### TOPICS TO BE COVERED IN FUTURE ONLINE SESSIONS (Apologies if you especially wanted them covered here)
+
 ##### Using connectors to interface Globus with storage systems other than Posix (e.g. S3)
 
 ##### Setting up custom user mappings for Globus authentication on local resources and optimise security settings
-
-##### Open Discussion (15-20 minutes)
-- Introduce Globus Community Australasia
-- Specific use Cases
 
 ## Quick Review of Globus System Architecture
 Below is a high-level diagram of the major components of the Globus system.
@@ -103,89 +109,59 @@ a3f0c02a-866a-472e-8f13-248360e296f7
 These UUIDs are used by Globus to uniquely identify resources, so they are particularly important in the context of automation. They can also be used to search for endpoints or collections in the Web UI.
 
 
-## Setting up a Globus Service User (Client App)
-A client app is a script or application that you would create for a pre-defined service user to run. The service user would be authenticated using a client secret,
-and its permissions would be determined by the policies applicable to that account. The service user ID is not sensitive, but the user secret should be closely 
-guarded in the same way that you would protect a normal account password.
-
-We will set up a service user that we can use to authenticate several automation tasks in this workshop
-
-### Registering a Client App
-To have persistent authentication for automation tasks, we will first need to register a client app (service user). The procedure for doing this is as follows:
-
-1. Log in as yourself and navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the Globus web app.
-
-<img src="../resources/globus_developers_page.png" alt="Globus Developer site" width="1000"/>
-
-2. Select “Register a service account or application credential for automation.”
-3. Create or Select a Project
-    - A project is a collection of apps with a shared list of administrators.
-    - If you don’t own any projects, you will automatically be prompted to create one.
-    - If you do, you will be prompted to either select an existing or create a new one.
-
-<img src="../resources/create_new_project.png" alt="Create New Project" width="1000"/>
-
-4. Creating or selecting a project will prompt you for another login, sign in with an account that administers your project.
-5. Give your App a name; this is what users will see when they are asked to authorize your app.
-
-<img src="../resources/service_account_registration.png" alt="Service Account Registration" width="1000"/>
-
-6. Click “Register App”. This will create your client app and take you to a page describing it.
-7. Copy the “Client UUID” from the page.
-    - This ID can be thought of as your Client App’s “username”. It is non-secure information and as such, feel free to hardcode it into scripts.
-
-<img src="../resources/client_app_details.png" alt="Client App Details" width="1000"/>
-
-8. Click on "Add Client Secret" and enter the name of your Client App
-
-<img src="../resources/generate_new_client_secret.png" alt="Generate New Client Secret" width="1000"/>
-
-9. Click on "Generate Secret"
-
-<img src="../resources/generate_new_client_secret.png" alt="Generate New Client Secret" width="1000"/>
-
-10. Copy the client ID and secret and save them somewhere secure - __note that you will only have this one opportunity to do so!__
-
-<img src="../resources/client_secret.png" alt="Client Secret" width="1000"/>
-
-### Adding the service user as a project administrator
-In order to be able to create an endpoint, storage gateway and mapped collection, we will need to add the service user as a project administrator.
-
-1. Select "Roles" tab
-
-<img src="../resources/globus_project_roles.png" alt="Project Roles" width="1000"/>
-
-2. Click "Assign New Role" and start entering the service user ID. CLick on the service user when it is shown in the drop-down menu.
-
-<img src="../resources/globus_assign_new_project_role.png" alt="Project Roles" width="1000"/>
-
-3. Click "Add Role" with "Administrator" selected to add the service user as an administrator for the project.
-
-<img src="../resources/globus_add_new_project_role.png" alt="Project Roles" width="1000"/>
-
 ## Setting up a Globus Endpoint, Storage Gateway and Mapped Collection automatically using Ansible
-We have set up an Ansible script to automate the setup of a Globus endpoint, storage gateway and mapped collection on your workshop VM. The Ansible code can
-be found [here](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible).
+The first exercise in the workshop will be the creation of a Globus endpoint, storage gateway and mapped collection on your workshop VM from scratch using a
+pre-configured service user with manager rights on the AARNet workshop subscription. We will cover the creation of service users later in this workshop.
 
-For this workshop, you will find the ansible code in your home directory ~/globus_ansible. We have already set up the files `~/globus_community_ansible/inventory/all.yml` and `~/globus_community_ansible/inventory/host_vars/globus-test-host.yml` with your public IP address for you, but you will need to edit the file `~/globus_community_ansible/roles/globus/defaults/main.yml` with your user details.
+We have published an Ansible script to automate the setup of a Globus endpoint, storage gateway and mapped collection. The original Ansible code can
+be found [here](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible), but we have already preconfigured it as much as possible
+on your workshop VM.
+
+For this workshop, you will find the ansible code in your home directory ~/globus_ansible. We have already set up the files `~/globus_community_ansible/inventory/all.yml` and `~/globus_community_ansible/inventory/host_vars/globus-test-host.yml` with your public IP address for you and created a service user, 
+but you will need to edit the file `~/globus_community_ansible/roles/globus/defaults/main.yml` with your user details.
 
 Specifically, you will need to provide values for these at the top of the file `~/globus_community_ansible/roles/globus/defaults/main.yml`:
+
+To obtain the value for `workshop_globus_user_uuid`, we will use the Globus CLI as follows:
+
+'''bash
+globus login
+'''
+This will bring up a URL which you will need to copy and paste into your browser. Complete the login process as your user, and then paste the resulting code at the
+prompt and hit enter.
+```
+Please authenticate with Globus here:
+------------------------------------
+https://auth.globus.org/v2/oauth2/authorize?client_id=70e7b4e2-9a56-4bb8-a6fe-857582e4ab46&redirect_uri=https%3A%2F%2Fauth.globus.org%2Fv2%2Fweb%2Fauth-code&scope=openid+profile+email+urn%3Aglobus%3Aauth%3Ascope%3Aauth.globus.org%3Aview_identity_set+urn%3Aglobus%3Aauth%3Ascope%3Atransfer.api.globus.org%3Aall+urn%3Aglobus%3Aauth%3Ascope%3Agroups.api.globus.org%3Aall+urn%3Aglobus%3Aauth%3Ascope%3Asearch.api.globus.org%3Aall+https%3A%2F%2Fauth.globus.org%2Fscopes%2F524230d7-ea86-4a52-8312-86065a9e0417%2Ftimer%5Burn%3Aglobus%3Aauth%3Ascope%3Atransfer.api.globus.org%3Aall%5D+https%3A%2F%2Fauth.globus.org%2Fscopes%2Feec9b274-0c81-4334-bdc2-54e90e689b9a%2Fmanage_flows+https%3A%2F%2Fauth.globus.org%2Fscopes%2Feec9b274-0c81-4334-bdc2-54e90e689b9a%2Fview_flows+https%3A%2F%2Fauth.globus.org%2Fscopes%2Feec9b274-0c81-4334-bdc2-54e90e689b9a%2Frun_status+https%3A%2F%2Fauth.globus.org%2Fscopes%2Feec9b274-0c81-4334-bdc2-54e90e689b9a%2Frun_manage&state=_default&response_type=code&access_type=offline&prompt=login
+------------------------------------
+
+Enter the resulting Authorization Code here:
+```
+Once you have logged into the CLI, you can use the following command to find the UUID for your username as follows:
+```bash
+globus get-identities someuser@gmail.com
+```
+This will bring up the UUID for the Globus user, which will look like this:
+```
+71fe5bdc-a52c-4096-bd0e-d0f6542208c2
+```
+
+The values at the top of the file `~/globus_community_ansible/roles/globus/defaults/main.yml` should look something like this after you've filled them in.
 ```
 ---
 # WORKSHOP USER TO FILL THESE IN
-workshop_globus_login: 'ipai3458@gmail.com'
-workshop_client_uuid: '093fb7ae-9f4c-4e79-b0c4-5f7847ac4f68'
-workshop_client_secret: '<redacted>>'
-workshop_subscription_uuid: ''
+workshop_globus_user: 'someuser@gmail.com'
+workshop_globus_user_uuid: '71fe5bdc-a52c-4096-bd0e-d0f6542208c2'
+workshop_globus_user_domain: 'gmail.com'
 ```
 
 Once you have filled in these details, change directory to `~/globus_community_ansible` and enter in the following Ansible command:
 
-```
+```bash
 ANSIBLE_ROLES_PATH=./roles ansible-playbook -i inventory/all.yml --user workshop-user --private-key ~/.ssh/id_ssh_rsa --ask-become-pass playbooks/globus.yml
 ```
 
-Paste in your workshop-user password when you see the `BECOME passowrd:` prompt. You may need to type `yes` when prompted
+Paste in your workshop-user password when you see the `BECOME passowrd:` prompt.
 
 The first time you SSH to localhost, you will see the following:
 ```
@@ -205,11 +181,16 @@ globus-workshop-host       : ok=30   changed=3    unreachable=0    failed=0    s
 
 ```
 
-__Contratulations! You have just automagically done in a few minutes what we took most of the first workshop session doing! ;)__
+__Congratulations! You have just automagically done in a few minutes what we took most of the first workshop session doing!__
 
-You can check what you have done by entering the following:
-```
+You can check what you have done using the `globus-connect-server` utility. First you will need to log in:
+```bash
 globus-connect-server login localhost
+```
+Note that your session will stay active for the duration of the workshop, so you won't need to do this again.
+
+Now you can look at the endpoint, storage gateway(s) and collection(s) using the following commands:
+```
 globus-connect-server endpoint show
 globus-connect-server storage-gateway list
 globus-connect-server collection list
@@ -228,22 +209,27 @@ Department:         eResearch
 Keywords:           ['AARNet', 'workshop', 'Australia', 'GLOBUS']
 Contact E-mail:     alex.ip@aarnet.edu.au
 Endpoint Info Link: https://www.aarnet.edu.au/globus
+
 [workshop-user@ip-10-0-3-134 globus_community_ansible]$ globus-connect-server storage-gateway list
 Display Name                                                   | ID                                   | Connector | High Assurance | MFA
 -------------------------------------------------------------- | ------------------------------------ | --------- | -------------- | -----
 Advanced Globus Workshop Ansible Auto-Deployment POSIX Gateway | bc44519c-ab1f-4b6c-8ef5-9d1912b38916 | POSIX     | False          | False
+
 [workshop-user@ip-10-0-3-134 globus_community_ansible]$ globus-connect-server collection list
 ID                                   | Display Name                                                                            | Owner                                                        | Collection Type | Storage Gateway ID                   | Created    | Last Access
 ------------------------------------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ | --------------- | ------------------------------------ | ---------- | -------------
 31bb52a1-c15f-4e0c-bd64-19aaad613e52 | Advanced Globus Workshop Ansible Auto-Deployment POSIX Gateway Public Mapped Collection | 093fb7ae-9f4c-4e79-b0c4-5f7847ac4f68@clients.auth.globus.org | mapped          | bc44519c-ab1f-4b6c-8ef5-9d1912b38916 | 2025-09-10 | Not supported
 ```
 
-## Using tools like Jupyter Notebooks with the Globus API
+__Pro tip: Use the collection UUID in the Globus web app instead of the collection display name to go straight to it.__
+
+## Using the Globus SDK in Jupyter Notebooks
 Globus maintains a full SDK (System Developers Kit) including a Python API, with documentation at https://globus-sdk-python.readthedocs.io/en/stable/.
 
-This has already been installed for you on your workshop VM, along with a number of Jupyter notebooks we will use.
+This has already been installed for you on your workshop VM, along with some Jupyter notebooks.
 
 ### Authentication
+In order to run our script to create guest collections and transfer files as a user, we will need to set up a Globus user app in the web UI.
 
 #### Definitions
 To use the API, we will need to authenticate with Globus. Details about this process can be found in the Globus documentation on [Clients, Scopes, and Consents](https://docs.globus.org/guides/overviews/clients-scopes-and-consents/).
@@ -261,6 +247,7 @@ There are two types of applications which can be authorised in Globus: UserApps 
 
 - UserApp, for interactions in which a "real" end user communicates with Globus services
 - ClientApp, for interactions in which an OAuth2 client, operating as a “service account”, communicates with Globus services.
+We used a pre-configured ClientApp to run the Ansible
 
 Details about these application types can be found at https://globus-sdk-python.readthedocs.io/en/stable/authorization/globus_app/apps.html
 
@@ -299,16 +286,20 @@ In order for a "real" user to run your script, we will need to register a user a
 
 <img src="../resources/user_app_registration.png" alt="User App Registration" width="1000"/>
 
-5. Give your App a name; this is what users will see when they are asked to authorize your app.
+5. Give your App a name; this is what users will see when they are asked to authorize your app. We will use "Advanced Globus Workshop Example Project".
+Enter your Globus account email address as the contact email.
+
 6. Click “Register App”. This will create your app and take you to a page describing it.
 
 <img src="../resources/user_app_details.png" alt="User App Details" width="1000"/>
 
 7. Copy the “Client UUID” from the page.
-    - This ID can be thought of as your App’s “username”. It is non-secure information and as such, feel free to hardcode it into scripts.
+    - This ID is your App’s identifier. It is non-secure information and as such, feel free to hardcode it into scripts. You will need it for the examples below.
+
+__Congratulations! You have just created a Globus User App you can use to access the API!__
 
 #### Running a User App in a Jupyter Notebook
-The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to 
+The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to
 download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
 
 We will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop.
@@ -341,11 +332,31 @@ Once you have established the port forwarding, you should be able to copy and pa
 
 <img src="../resources/jupyterlab.png" alt="Jupyterlab" width="1000"/>
 
+##### Creating and populating guest collections with a User App in a Jupyter Notebook
+We will use the Jupyter notebook `jupyter_notebooks/Create guest collections.ipynb` to create guest collections in your brand-new mapped collection on your VM.
+This script is not particularly pretty, but it gets the job done.
+
+Open the notebook, and fill in values for the following constants. You can find the Globus hostname to put in `GLOBUS_HOSTS` by looking at the output of the
+`globus-connect-server endpoint show` command you executed earlier. You need the hostname portion of the `GCS Manager URL` value;
+
+- `NATIVE_CLIENT_ID` - This is the UUID of your Client App that you just created
+- `GLOBUS_HOSTS` - This is the hostname given to your endpoint when you registered it
+- `GLOBUS_USER_UUID` This is the UUID of your user which is used to set the permissions on the guest collections. Make sure you use the same one as you used earlier
+for the Ansible configuration.
+
+Restart the kernel and run the notebook using the double arrows at the top. You will need to authenticate twice using your browser: Once for the endpoint and once for the transfer operation. The script will report its progress at the bottom of the notebook.
+
+When it has finished, you should have two new guest collections, with a set of test files in the RO collection.
+
+
+##### Transferring files with a User App in a Jupyter Notebook
+This section is optional, because you have already done a file transfer using a User App in the above example. We may skip this in the interests of time.
+
 You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
 
 Edit the client ID and replace it with your user client ID that you copied from the registration. Edit the DST_COLLECTION value to be the UUID of the destination collection, noting that your personal Globus account must have write access to that collection.
 
-Click on the double-arrow at the top of the notebook to restart the kernel and run all cells. You may be prompted to authenticate using a URL, and then pasting the 
+Click on the double-arrow at the top of the notebook to restart the kernel and run all cells. You may be prompted to authenticate using a URL, and then pasting the
 resultant token into an edit box.
 
 <img src="../resources/Initiating_a_Transfer_with_a_UserApp.png" alt="Initiating a Transfer with a UserApp" width="1000"/>
@@ -354,13 +365,14 @@ Check your destination collection, and, if all has gone well, the file should ha
 
 **Congratulations! You should have initiated a transfer from one collection to another using your own user credentials!**
 
-Of course, we may not want to have to go through the browser-based authenticate every time we run a script, so we will now look at creating a service user and running
-a client app.
+Of course, we may not want to have to go through the browser-based authenticate the first time we run a script, so we will now look at creating a service user and
+running a client app.
 
 ### Registering and Running a Client App in Globus Auth (service user)
 A client app is a script that you would create for a pre-defined service user to run. The service user would be authenticated using a client secret, and its
-permissions would be determined by the policies applicable to that account. The service user ID is not sensitive, but the user secret should be closely guarded in the
-same way that you would protect a normal account password.
+permissions would be determined by the policies applicable to that account, just like any "normal" user account. The service user ID is not sensitive, but the user
+secret should be closely guarded in the same way that you would protect a normal account password. We used a pre-configured Client App for the Ansible example
+earlier - the secret used for that will only be valid for this workshop.
 
 ### Registering a Client App
 In order for a service user to run your script, we will first need to register a client app (service user). The procedure for doing this is as follows:
@@ -420,4 +432,4 @@ Click on the double-arrow at the top of the notebook to restart the kernel and r
 
 <img src="../resources/Initiating_a_Transfer_with_a_ClientApp.png" alt="Initiating a Transfer with a ClientApp" width="1000"/>
 
-Congratulations! You should have initiated a transfer from one collection to another using a service user!
+__Congratulations! You should have initiated a transfer from one collection to another using a service user!__
