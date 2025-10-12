@@ -58,11 +58,13 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 
 ##### Setting up a Globus Endpoint automatically using Ansible
 
-##### Using the Globus SDK to automate the creation and population of guest collections
-
 ##### Registering a Globus User App (for scripts to be run by users)
 
 ##### Setting up a Globus Service User by registering a Client App
+
+##### Using the Globus SDK to automate the creation and population of guest collections
+
+##### Running Jupyter notebooks using your User App and Client App
 
 ### GLOBUS FLOWS AND COMPUTE (2 X 60mins) - Dr Kyle Chard, Director of Research at Globus
 
@@ -343,16 +345,18 @@ Open the notebook, and fill in values for the following constants. You can find 
 
 - `NATIVE_CLIENT_ID` - This is the UUID of your Client App that you just created
 - `GLOBUS_HOSTS` - This is the hostname given to your endpoint when you registered it
-- `GLOBUS_USER_UUID` This is the UUID of your user which is used to set the permissions on the guest collections. Make sure you use the same one as you used earlier
-for the Ansible configuration.
+- `GLOBUS_USER_UUID` This is the UUID of your service user which is used to set the permissions on the guest collections. Make sure you use the ID of from the Client
+App registration you did earlier. Note that your login user will be granted write access by virtue of owning the guest collections.
 
 Restart the kernel and run the notebook using the double arrows at the top. You will need to authenticate twice using your browser: Once for the endpoint and once for the transfer operation. The script will report its progress at the bottom of the notebook.
 
-When it has finished, you should have two new guest collections, with a set of test files in the RO collection.
+When it has finished, you should have two new guest collections, with a set of test files in the RO collection. The RW collection will have permissions which allow 
+your service user to write to it.
 
 
 ##### Transferring files with a User App in a Jupyter Notebook
-This section is optional, because you have already done a file transfer using a User App in the above example. We may skip this in the interests of time.
+This section is optional, because you have already done a file transfer using a User App in the above example creating the guest collections.
+We may skip this in the interests of time.
 
 You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
 
@@ -425,10 +429,9 @@ download the notebooks from [here](https://github.com/AARNet/Globus-Community/tr
 As in the previous example, we will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop. Please follow the instructions above
 to launch JupyterLab in your laptop browser.
 
-Open the file `client_app_creds.py` and edit the `CLIENT_ID` and `CLIENT_SECRET` to match the values from your ClientApp registration. We will use these credentials for
-some of the later coding examples.
-
 You should now be able to open the Jupyter notebook `Initiating a Transfer with a ClientApp.ipynb`
+
+Fill in the client ID and destination collection UUID
 
 Click on the double-arrow at the top of the notebook to restart the kernel and run all cells.
 
