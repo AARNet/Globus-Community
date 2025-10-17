@@ -1,11 +1,7 @@
 ---
-title: Globus Community AU Code Samples
+title: Globus Code Samples
 permalink: /code/
 ---
-
-## Globus Community AU Code Samples
-
-## Examples
 
 The examples folder contains code examples for various useful tasks using Globus.
 
