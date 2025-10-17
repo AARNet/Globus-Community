@@ -303,7 +303,7 @@ Enter your Globus account email address as the contact email.
 __Congratulations! You have just created a Globus User App you can use to access the API!__
 
 #### Running a User App in a Jupyter Notebook
-The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to
+The Globus Community Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to
 download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
 
 We will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop.
@@ -311,7 +311,7 @@ We will run the Jupyter notebook examples on the VM using port-forwarding from a
 Firstly, you would start the Jupyter Notebook server (JupyterLab) on the VM as follows:
 
 ```bash
-cd jupyter_notebooks
+cd globus_community_notebooks
 jupyter lab
 ```
 This will launch JupyterLab and you should see something like the following (with a different token) at the end of the output:
