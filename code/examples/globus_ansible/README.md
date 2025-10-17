@@ -11,6 +11,8 @@ Please follow the instructions at the [Globus Automated Endpoint Deployment Guid
 
 Additional information is available at [Globus How To Use Application Credentials or Service Accounts to Automate Data Transfer](https://docs.globus.org/guides/recipes/automate-with-service-account/).
 
+NB: You will need to make sure that your service user is a valid subscription manager if you have a non-empty `globus_subscription_id` value.
+
 ### SSH keys
 You will also need to have a valid SSH public key installed in authorized_hosts on the target machine for the remote Ansible user, and the private key accessible on the Ansible host with this repository.
 
