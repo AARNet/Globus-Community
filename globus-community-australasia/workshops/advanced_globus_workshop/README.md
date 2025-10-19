@@ -1,5 +1,5 @@
 ---
-title: Advanced Globus" Workshop - eResearch Australasia 2025
+title: Advanced Globus Workshop - eResearch Australasia 2025
 permalink: /globus-community-australasia/workshops/advanced_globus_workshop/
 ---
 
