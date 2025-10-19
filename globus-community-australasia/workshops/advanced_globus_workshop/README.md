@@ -1,9 +1,7 @@
 ---
-title: AARNet eResearch Australasia "Advanced Globus" Workshop
+title: eResearch Australasia 2025 - Advanced Globs" Workshop
 permalink: /globus-community-australasia/workshops/advanced_globus_workshop/
 ---
-
-## AARNet eResearch Australasia 2025 Workshop - Advanced Globus
 
 ## Overview
 
@@ -48,11 +46,10 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 
 ## Agenda
 ### PART I
-#### PRELUDE (15-20 minutes) - Sara
-##### Housekeeping - fire exits, break times + laptop checks
-##### Acknowledgement of Country
+#### PRELUDE (25 minutes) - Greg
+##### Welcome & Housekeeping
 ##### Introductions - instructors, helpers + how to participate
-##### Plan for the afternoon - aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
+##### Session Aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
 
 ### GLOBUS AUTOMATION (60mins) - Alex, Chris and Steele
 ##### Quick Review of Globus System Architecture
