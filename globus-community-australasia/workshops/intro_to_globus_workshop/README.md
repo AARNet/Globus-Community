@@ -39,16 +39,14 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 
 ## Agenda
 ### PART I
-#### PRELUDE (15-20 minutes) - Sara
-##### Housekeeping - fire exits, break times + laptop checks
-##### Acknowledgement of Country
-##### Introductions - instructors, helpers + how to participate
-##### Ice breaker + Mentimeter
-##### Plan for the day - aims, learning objectives, timing (2 x 90min sessions + 30 min break)
 
-#### WHAT IS GLOBUS? (15-20 minutes) - Greg
-##### What is Globus?
-##### Installing Globus Connect Personal (optional)
+#### PRELUDE (20 minutes) - Greg
+#### Welcome & Housekeeping
+#### Introductions - instructors, helpers + how to participate
+#### Session Aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
+
+#### WHAT IS GLOBUS? (20 minutes) - Greg
+##### Introduction to Globus?
 ##### Using Globus for simple file transfers (Demo and Hands-on)
 ##### Globus Architecture and Concepts
 
