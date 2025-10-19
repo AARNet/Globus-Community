@@ -9,12 +9,13 @@ permalink: /globus-community-australasia/workshops/advanced_globus_workshop/
 
 In this half-day workshop, we will be exploring some advanced Globus configurations. At the conclusion of the workshop, you should be able to:
 
-- Use connectors to interface Globus with storage systems other than Posix (e.g. S3)
+- Run Ansible to create Globus Endpoints, Data Transfer Nodes, Storage Gateways, and Mapped Collections
+- Create Globus User Apps and Client Apps, and understand the difference between the two
+- Use tools like Jupyter Notebooks to run Globus the Globus SDK
 - Implement automated workflows using Globus Flows to streamline your data processing and management tasks
-- Use tools like Jupyter Notebooks with Globus
 - Use Globus Compute to schedule jobs in HPC environments
-- Set up custom user mappings for Globus authentication on local resources and optimise security settings
-
+<!-- - Set up custom user mappings for Globus authentication on local resources and optimise security settings -->
+<!-- - Use connectors to interface Globus with storage systems other than Posix (e.g. S3) -->
 If time permits, we hope to have an round-table discussion of real-life Globus use-cases.
 
 Note that there is a shared document for the workshop [here](http://tiny.cc/eRA25AdvGlobus). You will be able to add questions on notice if we don't have time to answer them interactively during the workshop.
@@ -26,10 +27,6 @@ You will need to bring the following to the workshop:
 - A laptop with the ability to connect to an AWS EC2 instance via SSH in order to complete the hands-on sections of the workshop. Please ensure that your firewall permits outbound SSH access to arbitrary IP addresses. Power and WiFi will be provided.
 - A valid educational or research institution account to gain access to Globus (must be available in [EduGain](https://edugain.org/) via the [Australian Access Federation (AAF)](https://aaf.edu.au/)) or [Tuakiri](https://www.reannz.co.nz/products-and-services/tuakiri/). A list of AAF institutions is available [here](https://aaf.edu.au/subscribers/), and Tuakiri [here](https://www.reannz.co.nz/membership/members/). Alternatively, you can also use ORCID, GitHub or Google to access Globus for the workshop.
 - Sufficient familiarity with the Linux command line so that you are able to perform basic command line operations, edit text files, and install packages. If you are completely unfamiliar with Linux, you will still benefit from attending the workshop, but you may need assistance with the hands-on sections. Please let us know beforehand if you are likely to require this assistance.
-
-Optionally, the following would be useful:
-
-- The ability to install Globus Connect Personal (GCP) software on your laptop. You may wish to download this software from https://www.globus.org/globus-connect-personal and pre-install it before the workshop, or it can be downloaded and installed in the workshop. Note that if you are unable to install GCP due to restrictions on your laptop, you will only be able to observe demonstrations of its use.
 
 To get the most out of this workshop, you should already be able to:
 
@@ -51,7 +48,7 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 ##### Housekeeping - fire exits, break times + laptop checks
 ##### Acknowledgement of Country
 ##### Introductions - instructors, helpers + how to participate
-##### Plan for the day - aims, learning objectives, timing (2 x 90min sessions + 30 min break)
+##### Plan for the afternoon - aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
 
 ### GLOBUS AUTOMATION (60mins) - Alex, Chris and Steele
 ##### Quick Review of Globus System Architecture
@@ -227,15 +224,10 @@ ID                                   | Display Name                             
 
 __Pro tip: Use the collection UUID in the Globus web app instead of the collection display name to go straight to it.__
 
-## Using the Globus SDK in Jupyter Notebooks
-Globus maintains a full SDK (System Developers Kit) including a Python API, with documentation at https://globus-sdk-python.readthedocs.io/en/stable/.
-
-This has already been installed for you on your workshop VM, along with some Jupyter notebooks.
-
-### Authentication
+## Authentication
 In order to run our script to create guest collections and transfer files as a user, we will need to set up a Globus user app in the web UI.
 
-#### Definitions
+### Definitions
 To use the API, we will need to authenticate with Globus. Details about this process can be found in the Globus documentation on [Clients, Scopes, and Consents](https://docs.globus.org/guides/overviews/clients-scopes-and-consents/).
 
 The important points to note are:
@@ -246,7 +238,7 @@ The important points to note are:
 - __Consents__ are records of a user granting a Client permissions in the form of a set of Scopes.
     - Tokens will be issued to the Client, associated with the requested Scopes.
 
-#### Application Types
+### Application Types
 There are two types of applications which can be authorised in Globus: UserApps and ClientApps.
 
 - UserApp, for interactions in which a "real" end user communicates with Globus services
@@ -266,12 +258,12 @@ The following table provides a comparison of these two options:
 | Should typically use a “native” OAuth2 client (Register a thick client) | May use a “confidential” OAuth2 client (Register a portal or science gateway) |
 | Must use a “confidential” OAuth2 client | (Register a service account) |
 
-### Registering and Running a User App in Globus Auth (taken from https://globus-sdk-python.readthedocs.io/en/stable/user_guide/getting_started/register_app.html)
-A user app is a script that you would create for other users to run. The user would authenticate using their own credentials, and their permissions would be 
-determined by the policies applicable to their own account. For example, if a user tried to run the script but did not have the permissions to read and/or write 
-from a given collection, then they would be unable to run the script successfully.
+### Registering User App in Globus Auth (taken from https://globus-sdk-python.readthedocs.io/en/stable/user_guide/getting_started/register_app.html)
+A user app is a script that you would create for other users to run. The user would authenticate using their own credentials, and
+their permissions would be determined by the policies applicable to their own account. For example, if a user tried to run the
+script but did not have the permissions to read and/or write from a given collection, then they would be unable to run the script
+successfully.
 
-#### Registering a User App
 In order for a "real" user to run your script, we will need to register a user app with appropriate scopes. The procedure for doing this is as follows:
 
 1. Navigate to the Globus [Developer Site](https://app.globus.org/settings/developers) - also accessible under "Settings" in the web app.
@@ -301,78 +293,6 @@ Enter your Globus account email address as the contact email.
     - This ID is your App’s identifier. It is non-secure information and as such, feel free to hardcode it into scripts. You will need it for the examples below.
 
 __Congratulations! You have just created a Globus User App you can use to access the API!__
-
-#### Running a User App in a Jupyter Notebook
-The Globus Community Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to
-download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
-
-We will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop.
-
-Firstly, you would start the Jupyter Notebook server (JupyterLab) on the VM as follows:
-
-```bash
-cd globus_community_notebooks
-jupyter lab
-```
-This will launch JupyterLab and you should see something like the following (with a different token) at the end of the output:
-```
-    To access the server, open this file in a browser:
-        file:///home/workshop-user/.local/share/jupyter/runtime/jpserver-108989-open.html
-    Or copy and paste one of these URLs:
-        http://localhost:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
-        http://127.0.0.1:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
-```
-
-We will need to forward port 8888 from your laptop browser to the remote JupyterLab server on the VM. More details on SSH port forwarding can be found [here](https://www.ssh.com/academy/ssh/tunneling-example).
-
-We will need to establish an ssh connection with local port 8888 forwarded through to port 8888 on the remote host. The SSH command would look something like this:
-```bash
-ssh -L 8888:localhost:8888 <your VM IP address>
-```
-
-<!-- TODO: write better port forwarding instructions - maybe in appendix -->
-
-Once you have established the port forwarding, you should be able to copy and paste one of the last two URLs into your local browser, and you should see something like this:
-
-<img src="../resources/jupyterlab.png" alt="Jupyterlab" width="1000"/>
-
-##### Creating and populating guest collections with a User App in a Jupyter Notebook
-We will use the Jupyter notebook `jupyter_notebooks/Create guest collections.ipynb` to create guest collections in your brand-new mapped collection on your VM.
-This script is not particularly pretty, but it gets the job done.
-
-Open the notebook, and fill in values for the following constants. You can find the Globus hostname to put in `GLOBUS_HOSTS` by looking at the output of the
-`globus-connect-server endpoint show` command you executed earlier. You need the hostname portion of the `GCS Manager URL` value;
-
-- `NATIVE_CLIENT_ID` - This is the UUID of your Client App that you just created
-- `GLOBUS_HOSTS` - This is the hostname given to your endpoint when you registered it
-- `GLOBUS_USER_UUID` This is the UUID of your service user which is used to set the permissions on the guest collections. Make sure you use the ID of from the Client
-App registration you did earlier. Note that your login user will be granted write access by virtue of owning the guest collections.
-
-Restart the kernel and run the notebook using the double arrows at the top. You will need to authenticate twice using your browser: Once for the endpoint and once for the transfer operation. The script will report its progress at the bottom of the notebook.
-
-When it has finished, you should have two new guest collections, with a set of test files in the RO collection. The RW collection will have permissions which allow 
-your service user to write to it.
-
-
-##### Transferring files with a User App in a Jupyter Notebook
-This section is optional, because you have already done a file transfer using a User App in the above example creating the guest collections.
-We may skip this in the interests of time.
-
-You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
-
-Edit the client ID and replace it with your user client ID that you copied from the registration. Edit the DST_COLLECTION value to be the UUID of the destination collection, noting that your personal Globus account must have write access to that collection.
-
-Click on the double-arrow at the top of the notebook to restart the kernel and run all cells. You may be prompted to authenticate using a URL, and then pasting the
-resultant token into an edit box.
-
-<img src="../resources/Initiating_a_Transfer_with_a_UserApp.png" alt="Initiating a Transfer with a UserApp" width="1000"/>
-
-Check your destination collection, and, if all has gone well, the file should have been transferred there by the script.
-
-**Congratulations! You should have initiated a transfer from one collection to another using your own user credentials!**
-
-Of course, we may not want to have to go through the browser-based authenticate the first time we run a script, so we will now look at creating a service user and
-running a client app.
 
 ### Registering and Running a Client App in Globus Auth (service user)
 A client app is a script that you would create for a pre-defined service user to run. The service user would be authenticated using a client secret, and its
@@ -422,7 +342,83 @@ In order for a service user to run your script, we will first need to register a
 
 <!-- TODO: add pictures and instructions here -->
 
-#### Running a Client App in a Jupyter Notebook
+## Using the Globus SDK in Jupyter Notebooks
+Globus maintains a full SDK (System Developers Kit) including a Python API, with documentation at https://globus-sdk-python.readthedocs.io/en/stable/.
+
+This has already been installed for you on your workshop VM, along with some Jupyter notebooks.
+
+The Globus Community Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to
+download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
+
+We will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop.
+
+Firstly, you would start the Jupyter Notebook server (JupyterLab) on the VM as follows:
+
+```bash
+cd globus_community_notebooks
+jupyter lab
+```
+This will launch JupyterLab and you should see something like the following (with a different token) at the end of the output:
+```
+    To access the server, open this file in a browser:
+        file:///home/workshop-user/.local/share/jupyter/runtime/jpserver-108989-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
+        http://127.0.0.1:8888/lab?token=be631b49d54575dc6741c91b8043cc83592cd71d261dabbe
+```
+
+We will need to forward port 8888 from your laptop browser to the remote JupyterLab server on the VM. More details on SSH port forwarding can be found [here](https://www.ssh.com/academy/ssh/tunneling-example).
+
+We will need to establish an ssh connection with local port 8888 forwarded through to port 8888 on the remote host. The SSH command would look something like this:
+```bash
+ssh -L 8888:localhost:8888 <your VM IP address>
+```
+
+<!-- TODO: write better port forwarding instructions - maybe in appendix -->
+
+Once you have established the port forwarding, you should be able to copy and paste one of the last two URLs into your local browser, and you should see something like this:
+
+<img src="../resources/jupyterlab.png" alt="Jupyterlab" width="1000"/>
+
+### Creating and populating guest collections with a User App in a Jupyter Notebook
+We will use the Jupyter notebook `jupyter_notebooks/Create guest collections.ipynb` which uses several Globus SDK components to create guest collections in your brand-new mapped collection on your VM.
+This script is not particularly pretty, but it gets the job done.
+
+Open the notebook, and fill in values for the following constants. You can find the Globus hostname to put in `GLOBUS_HOSTS` by looking at the output of the
+`globus-connect-server endpoint show` command you executed earlier. You need the hostname portion of the `GCS Manager URL` value;
+
+- `NATIVE_CLIENT_ID` - This is the UUID of your Client App that you just created
+- `GLOBUS_HOSTS` - This is the hostname given to your endpoint when you registered it
+- `GLOBUS_USER_UUID` This is the UUID of your service user which is used to set the permissions on the guest collections. Make sure you use the ID of from the Client
+App registration you did earlier. Note that your login user will be granted write access by virtue of owning the guest collections.
+
+Restart the kernel and run the notebook using the double arrows at the top. You will need to authenticate twice using your browser: Once for the endpoint and once for the transfer operation. The script will report its progress at the bottom of the notebook.
+
+When it has finished, you should have two new guest collections, with a set of test files in the RO collection. The RW collection will have permissions which allow 
+your service user to write to it.
+
+
+### Transferring files with a User App in a Jupyter Notebook
+This section is optional, because you have already done a file transfer using a User App in the above example creating the guest collections.
+We may skip this in the interests of time.
+
+You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
+
+Edit the client ID and replace it with your user client ID that you copied from the registration. Edit the DST_COLLECTION value to be the UUID of the destination collection, noting that your personal Globus account must have write access to that collection.
+
+Click on the double-arrow at the top of the notebook to restart the kernel and run all cells. You may be prompted to authenticate using a URL, and then pasting the
+resultant token into an edit box.
+
+<img src="../resources/Initiating_a_Transfer_with_a_UserApp.png" alt="Initiating a Transfer with a UserApp" width="1000"/>
+
+Check your destination collection, and, if all has gone well, the file should have been transferred there by the script.
+
+**Congratulations! You should have initiated a transfer from one collection to another using your own user credentials!**
+
+Of course, we may not want to have to go through the browser-based authenticate the first time we run a script, so we will now look at creating a service user and
+running a client app.
+
+### Transferring files with a Client App (service user) in a Jupyter Notebook
 The Jupyter notebooks for the workshop should be pre-loaded on your VM. If you are going through these exercises in a different environment, then you may want to 
 download the notebooks from [here](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks).
 

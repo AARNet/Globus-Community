@@ -71,3 +71,8 @@ Genetics technical specialists at the Biomolecular Resource Facility (BRF) are u
 
 This repository is licensed under the Creative Commons Attribution-ShareAlike 4.0 International Public License
 
+## Globus Workshops
+AARNet runs Globus workshops, either in-person (e.g. at eResearch Australasia) or in-person. All workshop materials are published
+on this site.
+* [AARNet eResearch Australasia Introduction to Globus Workshop 2024/2025](./globus-community-australasia/workshops/intro_to_globus_workshop/)
+* [AARNet eResearch Australasia Advanced Globus Workshop 2025](./globus-community-australasia/workshops/advanced_globus_workshop/)
