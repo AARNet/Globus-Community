@@ -1,5 +1,5 @@
 ---
-title: AARNet eResearch Australasia 2024/25 Workshop - Introduction to Globus
+title: Introduction to Globus Workshop - eResearch Australasia 2024/25
 permalink: /globus-community-australasia/workshops/intro_to_globus_workshop/
 ---
 
