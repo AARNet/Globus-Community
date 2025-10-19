@@ -587,7 +587,7 @@ Last Access:                 Not supported
 ```
 
 ### ADDING AN ENDPOINT TO A SUBSCRIPTION (Subscription-only feature)
-Earlier, we asked you to enter your endpoint UUID in the shared document for the workshop [here](http://tiny.cc/eRA24Globus), This was so that one of the AARNet Subscription Administrators coulld add it to AARNet's subsription so you can try out the subscription-only features in the following sections of the workshop. Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
+Earlier, we asked you to enter your endpoint UUID in the shared document for the workshop [here](https://tinyurl.com/eRA25-Globus), This was so that one of the AARNet Subscription Administrators coulld add it to AARNet's subsription so you can try out the subscription-only features in the following sections of the workshop. Note that this workflow is a realistic simulation of what you are likely to have to do to request the addition of a new endpoint to your institutional subscription, where you will probably need to send your endpoint ID to your institutional subscription administrator.
 
 All of the tasks undertaken so far can be accomplished without a Globus subscription. Endpoints that require premium functionality such as guest collections, HTTP downloads and premium connectors must be managed under a Globus subscription. You can request a 90-day free trial subscription from Globus for your organisation - see [Why Subscribe?](https://www.globus.org/why-subscribe) for more details.
 
