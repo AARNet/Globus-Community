@@ -15,9 +15,13 @@ In this half-day workshop, we will be working through the process of setting up 
 - Configure Globus Storage Gateways and Collections for fine-grained access control
 - Know how to monitor user activity on your collections
 
-If time permits, we may be able to cover some additional advanced topics such as automation and the application of Globus Flow.
+If time permits, we may be able to cover some additional advanced topics.
 
-Note that there is a shared document for the workshop [here](http://tiny.cc/eRA24Globus). You will be able to add questions on notice if we don't have time to answer them interactively during the workshop.
+Note that there is a shared document for the workshop [https://tinyurl.com/eRA25-Globus](https://tinyurl.com/eRA25-Globus). 
+
+Please enter your name against an IP address for the session you are in - that will be your virtual machine for the session.
+
+You will be able to add questions on notice to the document if we don't have time to answer them interactively during the workshop.
 
 ## Workshop Prerequisites
 

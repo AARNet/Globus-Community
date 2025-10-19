@@ -18,7 +18,11 @@ In this half-day workshop, we will be exploring some advanced Globus configurati
 <!-- - Use connectors to interface Globus with storage systems other than Posix (e.g. S3) -->
 If time permits, we hope to have an round-table discussion of real-life Globus use-cases.
 
-Note that there is a shared document for the workshop [here](http://tiny.cc/eRA25AdvGlobus). You will be able to add questions on notice if we don't have time to answer them interactively during the workshop.
+Note that there is a shared document for the workshop [https://tinyurl.com/eRA25-Globus](https://tinyurl.com/eRA25-Globus). 
+
+Please enter your name against an IP address for the session you are in - that will be your virtual machine for the session.
+
+You will be able to add questions on notice to the document if we don't have time to answer them interactively during the workshop.
 
 ## Workshop Prerequisites
 
