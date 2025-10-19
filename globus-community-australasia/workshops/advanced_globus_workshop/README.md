@@ -116,6 +116,8 @@ We have published an Ansible script to automate the setup of a Globus endpoint, 
 be found [here](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible), but we have already preconfigured it as much as possible
 on your workshop VM.
 
+__Please change directory to `~/globus_community_ansible` and enter `git pull` to update your repo with any late-breaking changes to the Globus Community Australasia repo__
+
 For this workshop, you will find the ansible code in your home directory ~/globus_ansible. We have already set up the files `~/globus_community_ansible/inventory/all.yml` and `~/globus_community_ansible/inventory/host_vars/globus-test-host.yml` with your public IP address for you and created a service user, 
 but you will need to edit the file `~/globus_community_ansible/roles/globus/defaults/main.yml` with your user details.
 
@@ -154,7 +156,7 @@ workshop_globus_user_uuid: '71fe5bdc-a52c-4096-bd0e-d0f6542208c2'
 workshop_globus_user_domain: 'gmail.com'
 ```
 
-Once you have filled in these details, change directory to `~/globus_community_ansible` and enter in the following Ansible command:
+Once you have filled in these details, make sure you are in `~/globus_community_ansible` and enter in the following Ansible command:
 
 ```bash
 ANSIBLE_ROLES_PATH=./roles ansible-playbook -i inventory/all.yml --user workshop-user --private-key ~/.ssh/id_ssh_rsa --ask-become-pass playbooks/globus.yml
@@ -381,7 +383,7 @@ Once you have established the port forwarding, you should be able to copy and pa
 <img src="../resources/jupyterlab.png" alt="Jupyterlab" width="1000"/>
 
 ### Creating and populating guest collections with a User App in a Jupyter Notebook
-We will use the Jupyter notebook `jupyter_notebooks/Create guest collections.ipynb` which uses several Globus SDK components to create guest collections in your brand-new mapped collection on your VM.
+We will use the Jupyter notebook `jupyter_notebooks/1. Create guest collections.ipynb` which uses several Globus SDK components to create guest collections in your brand-new mapped collection on your VM.
 This script is not particularly pretty, but it gets the job done.
 
 Open the notebook, and fill in values for the following constants. You can find the Globus hostname to put in `GLOBUS_HOSTS` by looking at the output of the
@@ -402,7 +404,7 @@ your service user to write to it.
 This section is optional, because you have already done a file transfer using a User App in the above example creating the guest collections.
 We may skip this in the interests of time.
 
-You should be able to open the Jupyter notebook `Initiating a Transfer with a UserApp.ipynb`
+You should be able to open the Jupyter notebook `2. Initiating a Transfer with a UserApp.ipynb`
 
 Edit the client ID and replace it with your user client ID that you copied from the registration. Edit the DST_COLLECTION value to be the UUID of the destination collection, noting that your personal Globus account must have write access to that collection.
 
@@ -425,7 +427,7 @@ download the notebooks from [here](https://github.com/AARNet/Globus-Community/tr
 As in the previous example, we will run the Jupyter notebook examples on the VM using port-forwarding from a browser on your laptop. Please follow the instructions above
 to launch JupyterLab in your laptop browser.
 
-You should now be able to open the Jupyter notebook `Initiating a Transfer with a ClientApp.ipynb`
+You should now be able to open the Jupyter notebook `3. Initiating a Transfer with a ClientApp.ipynb`
 
 Fill in the client ID and destination collection UUID
 
