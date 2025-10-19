@@ -39,11 +39,11 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 
 ## Agenda
 ### PART I
+#### PRELUDE (25 minutes) - Greg
+##### Welcome & Housekeeping
+##### Introductions - instructors, helpers + how to participate
+##### Session Aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
 
-#### PRELUDE (20 minutes) - Greg
-#### Welcome & Housekeeping
-#### Introductions - instructors, helpers + how to participate
-#### Session Aims, learning objectives, timing (3 x 60min sessions + afternoon tea break)
 
 #### WHAT IS GLOBUS? (20 minutes) - Greg
 ##### Introduction to Globus?
