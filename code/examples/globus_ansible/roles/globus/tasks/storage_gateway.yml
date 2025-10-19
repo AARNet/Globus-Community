@@ -18,6 +18,8 @@
           - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }}"
           - --domain
           - "{{ storage_gateway_config.domain }}"
+          - --domain
+          - "clients.auth.globus.org" # Add this domain to allow service users in
       changed_when: true
       register: _globus_cmd_output
 
