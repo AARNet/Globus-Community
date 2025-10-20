@@ -23,3 +23,7 @@ subitems:
       url: ./code/examples/bandwidth_throttling/
     - title: Folder Watcher
       url: ./code/examples/folder_watcher/
+    - title: Globus Ansible
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible
+    - title: AARNet Advanced Globus Workshop Jupyter Notebooks
+      url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks

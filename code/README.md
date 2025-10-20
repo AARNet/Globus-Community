@@ -18,3 +18,7 @@ This is an example of [how to set up a folder watcher script to automate Globus 
 ### Globus Ansible
 
 This is an example of [how to use Ansible to automate the setup of a Globus endpoint, DTN, storage gateway, and mapped collection](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible).
+
+### AARNet Advanced Globus Workshop Jupyter Notebooks
+
+The notebooks used in the AARNet Advanced Globus Workshop Jupyter Notebooks are available at [https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks)
