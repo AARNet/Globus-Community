@@ -66,9 +66,9 @@ Please contact alex.ip@aarnet.edu.au, steele.cooke@aarnet.edu.au or chris.myers@
 
 ### GLOBUS FLOWS AND COMPUTE (2 X 60mins) - Dr Kyle Chard, Director of Research at Globus
 
-##### Implementing automated workflows using Globus Flows to streamline your data processing and management tasks
-
 ##### Using Globus Compute to schedule jobs in HPC environments
+
+##### Implementing automated workflows using Globus Flows to streamline your data processing and management tasks
 
 ### Open Discussion (15-20 minutes)
 - Introduce Globus Community Australasia
@@ -437,3 +437,7 @@ Click on the double-arrow at the top of the notebook to restart the kernel and r
 <img src="../resources/Initiating_a_Transfer_with_a_ClientApp.png" alt="Initiating a Transfer with a ClientApp" width="1000"/>
 
 __Congratulations! You should have initiated a transfer from one collection to another using a service user!__
+
+## Using Globus Compute to schedule jobs in HPC environments & Implementing automated workflows using Globus Flows to streamline your data processing and management tasks
+
+Please refer to [Kyle Chard's slide deck](../resources/25-10%20eResearchGlobus.pptx.pdf) for details on Globus Compute and Flows.
