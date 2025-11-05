@@ -54,6 +54,11 @@ View the [channel here](https://www.youtube.com/playlist?list=PLabaNLSF0jBArjG5w
 
 ## Case Studies 
 
+### National Transport Research Organisation transforms road surveys with Globus
+The National Transport Research Organisation (NTRO) collects massive road survey datasets using advanced vehicles. With Globus NTRO securely transfers data from vehicles to the cloud in near real time, enabling rapid validation and analysis. Results now reach agencies within hours, improving transport safety and efficiency
+
+[Read the full story](https://www.aarnet.edu.au/national-transport-research-organisation-transforms-road-surveys-with-globus)
+
 ### Enabling astronomy at scale with AARNet and Globus 
 Astronomers studying long-period radio transients with South Africa’s MeerKAT telescope generate up to 2 TB per session. Using Globus over AARNet’s high-speed network, they transfer data to Australia quickly and reliably, enabling rapid analysis, refining observations, and sustaining scientific momentum across vast international distances. 
 
