@@ -30,16 +30,36 @@
     local: true
   loop:
     - globus
-    - "{{ globus_local_user }}"
     # - gcsweb
     # - globusoidc
 
-- name: Add user "{{ globus_local_user }} to globus group
-  ansible.builtin.user:
-    name: "{{ globus_local_user }}"
-    groups: "globus"
-    append: yes
-    state: present
+- name: "Use local user {{ globus_map_user }} as Globus map user"
+  when: globus_map_user | d('') != ''
+  block:
+  - name: Check if {{ globus_map_user }} user exists
+    ansible.builtin.user:
+      name: "{{ globus_map_user }}"
+    check_mode: true
+    register: local_user
+
+  - name: Create {{ globus_map_user }} user with no login
+    ansible.builtin.user:
+      name: "{{ globus_map_user }}"
+      comment: "{{ apl_reserved_users[globus_map_user].comment | d(omit) }}"
+      uid: "{{ apl_reserved_users[globus_map_user].uid | d(omit) }}"
+      group: "{{ apl_reserved_users[globus_map_user].group | d(omit) }}"
+      shell: "{{ apl_reserved_users[globus_map_user].shell | d('/sbin/nologin') }}"
+      home: "{{ apl_reserved_users[globus_map_user].home | d(omit) }}"
+      system: true
+      local: true
+    when: local_user.state | d('') == 'present'
+
+  - name: Add user "{{ globus_map_user }} to globus group
+    ansible.builtin.user:
+      name: "{{ globus_map_user }}"
+      groups: "globus"
+      append: yes
+      state: present
 
 - name: Set up Globus configuration directory
   ansible.builtin.file:
@@ -52,7 +72,7 @@
 - name: Set up Globus collection directory
   ansible.builtin.file:
     path: "{{ globus_collections_dir }}"
-    owner: "{{ globus_local_user }}"
+    owner: "{{ globus_map_user }} | d('globus')"
     group: globus
     mode: '0750'
     state: directory
