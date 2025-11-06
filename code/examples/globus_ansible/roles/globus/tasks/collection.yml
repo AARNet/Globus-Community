@@ -11,7 +11,7 @@
     - name: Create Collection directory path
       ansible.builtin.file:
         path: "{{ collection_config.base_path }}"
-        owner: globus
+        owner: "{{ globus_map_user | d('globus') }}"
         group: globus
         mode: '0750'
         state: directory
