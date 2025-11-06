@@ -5,7 +5,7 @@
   {
     "source": "{username}",
     "match": "{{ identity }}",
-    "output": "{{ globus_local_user }}"
+    "output": "{{ globus_map_user | d('globus') }}"
   }{{ "," if not loop.last }}
   {% endfor %}
   ]

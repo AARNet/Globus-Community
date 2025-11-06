@@ -33,16 +33,20 @@
     # - gcsweb
     # - globusoidc
 
-- name: "Use local user {{ globus_map_user }} as Globus map user"
+- name: "Use local user {{ globus_map_user | d('<undefined>') }} as Globus map user"
   when: globus_map_user | d('') != ''
   block:
-  - name: Check if {{ globus_map_user }} user exists
+  - name: Check if {{ globus_map_user | d('<undefined>') }} user exists
     ansible.builtin.user:
       name: "{{ globus_map_user }}"
     check_mode: true
     register: local_user
 
-  - name: Create {{ globus_map_user }} user with no login
+  - name: Report
+    ansible.builtin.debug:
+      msg: "{{ local_user }}"
+
+  - name: Create new {{ globus_map_user | d('<undefined>') }} map user with no login
     ansible.builtin.user:
       name: "{{ globus_map_user }}"
       comment: "{{ apl_reserved_users[globus_map_user].comment | d(omit) }}"
@@ -52,9 +56,9 @@
       home: "{{ apl_reserved_users[globus_map_user].home | d(omit) }}"
       system: true
       local: true
-    when: local_user.state | d('') == 'present'
+    when: local_user.state | d('') != 'present'
 
-  - name: Add user "{{ globus_map_user }} to globus group
+  - name: "Add map user {{ globus_map_user | d('<undefined>') }} to globus group"
     ansible.builtin.user:
       name: "{{ globus_map_user }}"
       groups: "globus"
@@ -72,7 +76,7 @@
 - name: Set up Globus collection directory
   ansible.builtin.file:
     path: "{{ globus_collections_dir }}"
-    owner: "{{ globus_map_user }} | d('globus')"
+    owner: "{{ globus_map_user | d('globus') }}" # Default to globus user if no map user specified
     group: globus
     mode: '0750'
     state: directory
