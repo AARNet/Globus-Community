@@ -57,6 +57,9 @@ globus_default_storage_gateway:
       public_private: public
       base_path: "{{ globus_collections_dir }}/default"
 
+# OPTIONAL - local user to which globus logins are mapped. Will default to "globus" if not specified, or will be created if it doesn't already exist.
+# globus_map_user: <local_user>
+
 # REQUIRED
 globus_local_user_mapping: # These users will be mapped to the local globus user
   - "<Email address of user 1 Globus account>"

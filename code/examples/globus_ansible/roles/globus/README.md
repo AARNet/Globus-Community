@@ -52,6 +52,7 @@ Note that there is a `globus/defaults/main.yml.template` file which should be co
 | `globus_metadata.keywords`       | list of keywords to associate with the Globus component (endpoint, collection etc) |
 | `globus_endpoint_network_use`    | explicitly set endpoint network use to 'normal' by default |
 | `globus_default_storage_gateway` | dictionary defining a default storage gateway and collection to be created for each endpoint |
+| `globus_map_user`                | OPTIONAL - local user to which globus logins are mapped. Will default to "globus" if not specified, or will be created if it doesn't already exist. |
 | `globus_local_user_mapping`      | list of email addresses to map to the local unix user 'globus' to enable specific users to read/write to the storage backend |
 |                                  |
 | __SUBSCRIPTION ONLY VALUES__     |
