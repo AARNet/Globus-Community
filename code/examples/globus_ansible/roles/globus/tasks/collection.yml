@@ -5,17 +5,17 @@
   vars:
     q: "[?display_name == `{{ globus_endpoint_name }} {{ storage_gateway_config.name }} {{ collection_config.name }}`] | [0]"
 
+- name: Create Collection directory path
+  ansible.builtin.file:
+    path: "{{ collection_config.base_path }}"
+    owner: "{{ globus_map_user | d('globus') }}"
+    group: globus
+    mode: '0750'
+    state: directory
+
 - name: Create Collection
   when: not collection_details
   block:
-    - name: Create Collection directory path
-      ansible.builtin.file:
-        path: "{{ collection_config.base_path }}"
-        owner: "{{ globus_map_user | d('globus') }}"
-        group: globus
-        mode: '0750'
-        state: directory
-
     - name: Run Collection create command
       ansible.builtin.command:
         argv:
