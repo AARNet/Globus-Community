@@ -1,5 +1,5 @@
 ---
-title: Deploying compute on Gadi using Globus flows
+title: Running compute on Gadi using Globus flows
 permalink: /code/examples/flows_nci_gardi/
 ---
 
