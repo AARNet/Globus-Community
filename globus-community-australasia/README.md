@@ -7,7 +7,7 @@ Globus Community Australasia is a central hub for staff at Australian and New Ze
 
 **From the Community:**
 * [Minutes from Community catch-ups](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/community-updates)
-* [Running compute on NCI's Gadi with Globus flows](./code/examples/flows_nci_gardi/)
+* [Running compute on NCI's Gadi with Globus flows](././code/examples/flows_nci_gardi/)
 
 **Globus support:**
 * [Getting Started (AARNet)](./getting_started.html)
