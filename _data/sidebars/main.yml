@@ -19,6 +19,8 @@ subitems:
   - title: Globus Community Code Examples
     url: ./code/
     subitems:
+    - title: Globus Flows on NCI Gardi
+      url: ./code/examples/flows_nci_gardi/
     - title: Bandwidth Throttling
       url: ./code/examples/bandwidth_throttling/
     - title: Folder Watcher
