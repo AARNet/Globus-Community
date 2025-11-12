@@ -12,9 +12,9 @@ subitems:
       url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/community-updates
     - title: AARNet Knowledge Base - Globus
       url: https://support.aarnet.edu.au/hc/en-us/categories/5318479482767-Globus
-    - title: eResearch Australasia Introduction to Globus Workshop 2024/2025
+    - title: Introduction to Globus Workshop 2024/2025
       url: ./globus-community-australasia/workshops/intro_to_globus_workshop/
-    - title: eResearch Australasia Advanced Globus Workshop 2025
+    - title: Advanced Globus Workshop 2025
       url: ./globus-community-australasia/workshops/advanced_globus_workshop/
   - title: Globus Community Code Examples
     url: ./code/
