@@ -7,7 +7,7 @@ The examples folder contains code examples for various useful tasks using Globus
 
 All example code is provided on an as-is basis and are provided strictly on a "use at your own risk" basis. The examples are intended not as complete solutions, but rather as an indicator of how to approach particular tasks.
 
-### Using Globus Flows on NCI Gardi
+### Globus Flows on NCI Gardi
 
 Community member Dr Kisaru Liyanage demonstrates his work integrating [Globus Flows with NCI’s Gadi supercomputer](./examples/flows_nci_gardi/). 
 
