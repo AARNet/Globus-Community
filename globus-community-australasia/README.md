@@ -14,5 +14,5 @@ Globus Community Australasia is a central hub for staff at Australian and New Ze
 * [AARNet Public Globus Test Collections](./aarnet_globus_collections.html)
 
 **Training:**
-* [eResearch Australasia Introduction to Globus Workshop 2024/2025](./workshops/intro_to_globus_workshop/)
-* [eResearch Australasia Advanced Globus Workshop 2025](./workshops/advanced_globus_workshop/)
+* [Introduction to Globus Workshop (eResearch Australasia 2024/2025)](./workshops/intro_to_globus_workshop/)
+* [Advanced Globus Workshop (eResearch Australasia 2025)](./workshops/advanced_globus_workshop/)
