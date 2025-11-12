@@ -11,6 +11,6 @@ Kisaru presented his work integrating Globus Flows with NCI’s Gadi supercomput
 * Code from the presentation can accessed on [Kisaru's GitHub account](https://github.com/kisarur/gadi-genomics-globus-flow).
 * A copy of the [presentation slides is avaliable here](Gadi%20Globus%20Flow%20Slides.pdf).
 
-There's growing interest in using Globus Flows and Compute to automate pipelines between instruments and HPC facilities (tier 1 and tier 2). Any community members who'd like to try a Globus Flow that interacts with Gadi, please feel free to contact Kisaru.
+There's growing interest in using Globus Flows and Compute to automate pipelines between instruments and HPC facilities (tier-1 and tier-2). Any community members who'd like to try a Globus Flow that interacts with Gadi, please feel free to contact Kisaru.
 
 
