@@ -2,8 +2,6 @@
 title: Getting Started with Globus
 ---
 
-## Getting Started with Globus
-
 ## Set up your own Globus endpoint
 
 There are many useful resources at [Getting Started Globus Videos on YouTube](https://www.youtube.com/watch?v=bLjLsO6hgVw&list=PLLCSx-IFoBeu2F-HF-DMoc5_AUsvYft8c)

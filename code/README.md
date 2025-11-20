@@ -7,6 +7,10 @@ The examples folder contains code examples for various useful tasks using Globus
 
 All example code is provided on an as-is basis and are provided strictly on a "use at your own risk" basis. The examples are intended not as complete solutions, but rather as an indicator of how to approach particular tasks.
 
+### Globus Flows on NCI Gardi
+
+Community member Dr Kisaru Liyanage demonstrates his work integrating [Globus Flows with NCI’s Gadi supercomputer](./examples/flows_nci_gardi/). 
+
 ### Bandwidth Throttling
 
 This is an example of [how to throttle bandwidth outbound from a Globus server under Ubuntu 22.04](./examples/bandwidth_throttling/).
@@ -19,6 +23,6 @@ This is an example of [how to set up a folder watcher script to automate Globus 
 
 This is an example of [how to use Ansible to automate the setup of a Globus endpoint, DTN, storage gateway, and mapped collection](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible).
 
-### AARNet Advanced Globus Workshop Jupyter Notebooks
+### Advanced Globus Workshop Jupyter Notebooks
 
 The notebooks used in the AARNet Advanced Globus Workshop Jupyter Notebooks are available at [https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks)

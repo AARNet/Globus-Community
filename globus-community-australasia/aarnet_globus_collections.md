@@ -2,8 +2,6 @@
 title: AARNet Public Globus Test Collections
 ---
 
-## AARNet Public Globus Test Collections
-
 The following collections have been made available by AARNet to help Australian users test their Globus endpoints against high-performance endpoints on AARNet infrastructure.
 The collections are published from servers with 100GB/s network interfaces and fast RAID0 NVME storage for parallel writes. These servers are connected directly to the AARNet network.
 The full list of AARNet Globus collections can be viewed in the Globus web app [here](https://app.globus.org/collections?entityType=GCSv5_guest_collection&q=AARNet&scope=all).

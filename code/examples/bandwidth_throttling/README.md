@@ -3,8 +3,6 @@ title: Rate limiting Globus transfers
 permalink: /code/examples/bandwidth_throttling/
 ---
 
-## Rate limiting Globus transfers
-
 By default, Globus will use all available bandwidth on the network for transfers. It is possible to configure concurrency, parallelism and “aggressiveness” within Globus, but not the effective bandwidth, which must be managed from the operating system or network configuration.
 
 If you’d like to throttle the speed at which the files are transferred, you can enable rate limiting on the sending server using tc. This method uses packet marking, and packets can be tagged by IP address, port number, or both. This means it is possible to throttle outbound Globus traffic to a single recipient or all recipients.

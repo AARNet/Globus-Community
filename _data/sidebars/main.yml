@@ -1,7 +1,7 @@
 subitems:
   - title: Home
     url: ./index
-  - title: Australasian Globus Community Resources
+  - title: Globus Community Resources
     url: ./globus-community-australasia/
     subitems:
     - title: Getting Started
@@ -12,18 +12,20 @@ subitems:
       url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/community-updates
     - title: AARNet Knowledge Base - Globus
       url: https://support.aarnet.edu.au/hc/en-us/categories/5318479482767-Globus
-    - title: AARNet eResearch Australasia Introduction to Globus Workshop 2024/2025
+    - title: Introduction to Globus Workshop 2024/2025
       url: ./globus-community-australasia/workshops/intro_to_globus_workshop/
-    - title: AARNet eResearch Australasia Advanced Globus Workshop 2025
+    - title: Advanced Globus Workshop 2025
       url: ./globus-community-australasia/workshops/advanced_globus_workshop/
-  - title: Australasian Globus Community Code Examples
+  - title: Globus Community Code Examples
     url: ./code/
     subitems:
+    - title: Globus Flows on NCI Gardi
+      url: ./code/examples/flows_nci_gardi/
     - title: Bandwidth Throttling
       url: ./code/examples/bandwidth_throttling/
     - title: Folder Watcher
       url: ./code/examples/folder_watcher/
     - title: Globus Ansible
       url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible
-    - title: AARNet Advanced Globus Workshop Jupyter Notebooks
+    - title: Advanced Globus Workshop Jupyter Notebooks
       url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks
