@@ -8,18 +8,23 @@
 - name: Create New Storage Gateway
   when: not storage_gateway_details
   block:
-    - name: Run Globus Storage Gateway create command
-      ansible.builtin.command:
-        argv:
+    - name: "Set initial _storage_gateway_argv fact"
+      ansible.builtin.set_fact:
+        _storage_gateway_argv:
           - "{{ globus_gcs_binary }}"
           - storage-gateway
           - create
           - posix
           - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }}"
-          - --domain
-          - "{{ storage_gateway_config.domain }}"
-          - --domain
-          - "clients.auth.globus.org" # Add this domain to allow service users in
+
+    - name: "Set _storage_gateway_argv fact with domain arguments"
+      ansible.builtin.set_fact:
+        _storage_gateway_argv: "{{ _storage_gateway_argv + ['--domain', item] }}"
+      loop: "{{ storage_gateway_config.domains }}"
+
+    - name: Run Globus Storage Gateway create command
+      ansible.builtin.command:
+        argv: "{{ _storage_gateway_argv }}"
       changed_when: true
       register: _globus_cmd_output
 
@@ -57,9 +62,9 @@
         mode: '0600'
         validate: /usr/bin/jq '.' %s
 
-    - name: Update Storage Gateway Configuration
-      ansible.builtin.command:
-        argv:
+    - name: "Set initial _storage_gateway_argv fact for update"
+      ansible.builtin.set_fact:
+        _storage_gateway_argv:
           - "{{ globus_gcs_binary }}"
           - storage-gateway
           - update
@@ -69,7 +74,18 @@
           - "file:{{ globus_config_dir }}/{{ storage_gateway_details.id }}_pathrestrict.json"
           - --identity-mapping
           - "file:{{ globus_config_dir }}/{{ storage_gateway_details.id }}_idmap.json"
+
+    - name: "Set _storage_gateway_argv fact with domain arguments for update"
+      ansible.builtin.set_fact:
+        _storage_gateway_argv: "{{ _storage_gateway_argv + ['--domain', item] }}"
+      loop: "{{ storage_gateway_config.domains }}"
+
+    - name: Run Globus Storage Gateway update command
+      ansible.builtin.command:
+        argv: "{{ _storage_gateway_argv }}"
       changed_when: true
+      register: _globus_cmd_output
+
 
 - name: Import Globus Collection tasks
   when: storage_gateway_details.id is defined

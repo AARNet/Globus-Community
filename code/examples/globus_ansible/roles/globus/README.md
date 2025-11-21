@@ -84,7 +84,9 @@ You will also need to copy `inventory/host_vars/globus-test-host.yml.template` t
 The structure is the same for both the `globus_default_storage_gateway` and `globus_storage_gateways` variables.
 ```
 - name: Name of storage gateway
-  domain: aarnet.edu.au # Restricts storage gateway access to users with an identity in the specified domain(s)
+  domains:  # Restricts storage gateway access to users with an identity in the specified domain(s)
+    - aarnet.edu.au
+    - clients.auth.globus.org  # Allows service users (remove if not required)
   path_restrictions:
     none: # Globus will block access to listed paths
       - /

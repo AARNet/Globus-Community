@@ -44,7 +44,9 @@ globus_endpoint_roles:
 # REQUIRED
 globus_default_storage_gateway:
   name: POSIX Gateway
-  domain: <Storage gateway default domain>
+  domains:  # Restricts storage gateway access to users with an identity in the specified domain(s)
+    - <Storage gateway default domain>
+    - clients.auth.globus.org  # Allows service users (remove if not required)
   path_restrictions:
     none: ["/"]
     read: ["{{ globus_collections_dir }}"]
