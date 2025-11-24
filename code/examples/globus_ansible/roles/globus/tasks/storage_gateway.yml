@@ -8,23 +8,16 @@
 - name: Create New Storage Gateway
   when: not storage_gateway_details
   block:
-    - name: "Set initial _storage_gateway_argv fact"
-      ansible.builtin.set_fact:
-        _storage_gateway_argv:
-          - "{{ globus_gcs_binary }}"
-          - storage-gateway
-          - create
-          - posix
-          - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }}"
-
-    - name: "Set _storage_gateway_argv fact with domain arguments"
-      ansible.builtin.set_fact:
-        _storage_gateway_argv: "{{ _storage_gateway_argv + ['--domain', item] }}"
-      loop: "{{ storage_gateway_config.domains }}"
-
     - name: Run Globus Storage Gateway create command
       ansible.builtin.command:
-        argv: "{{ _storage_gateway_argv }}"
+        argv:
+        - "{{ globus_gcs_binary }}"
+        - storage-gateway
+        - create
+        - posix
+        - "{{ globus_endpoint_name }} {{ storage_gateway_config.name }}"
+        - --domain
+        - "{{ storage_gateway_config.domains[0] }}"  # Use first domain only - will be updated later
       changed_when: true
       register: _globus_cmd_output
 
