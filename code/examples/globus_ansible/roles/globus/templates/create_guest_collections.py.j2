@@ -121,14 +121,14 @@ def main():
                 for permission in guest_collection['permissions']:
                     # Create guest collection subdirectory if it doesn't already exist
                     if permission['path'] != '/':
-                        create_directory(transfer_client, mapped_collection_id, base_path + permission['path'])
+                        create_directory(transfer_client, mapped_collection_id, base_path+permission['path'])
 
                     try:
                         result = transfer_client.add_endpoint_acl_rule(collection["id"], permission)
-                        print(f'Added "{permission["permissions"]}" permissions to "{permission["path"]}" for "{permission["principal"]}"')
+                        print(f'Added "{permission["permissions"]}" permissions to "{permission["path"]}" for {permission["principal_type"]} {permission["principal"]}')
                     except TransferAPIError as e:
                         if e.code == 'Exists':
-                            print(f'Permissions already exist for {permission["principal_type"]} {permission["principal"]}')
+                            print(f'Permissions already exist to "{permission["path"]}" for {permission["principal_type"]} {permission["principal"]}')
                         else:
                             raise e
 
