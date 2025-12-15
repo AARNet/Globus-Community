@@ -1,13 +1,17 @@
 """
-Script to automatically set up guest collections on the host specified as 'globus_host'.
-There is logic to prevent the creation of duplicate guest collections, and the standard test files are copied into the RO guest collection.
-Anyone with write permissions to the mapped collection can run this script.
+This is a Python script to automatically set up guest collections on the host specified as 'globus_host' in GUEST_COLLECTION_CONFIG.
+There is logic to prevent the creation of duplicate guest collections or permissions.
+
+The Globus credentials for the service user must be provided via the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET.
+Any service user with write permissions to the mapped collection can run this script.
+
+This script is used as the basis for a template] in the Globus deployment Ansible, and this is used to create Python scripts which create
+guest collections under each mapped collection.
 """
 import os
 from globus_sdk import GCSClient, TransferClient, TransferAPIError, GuestCollectionDocument, Scope, UserCredentialDocument, GCSAPIError
 from globus_sdk.globus_app import ClientApp
 
-ENDPOINT_ID = os.environ['GCS_CLI_ENDPOINT_ID']
 # This service user ID must be authorised to write to the destination collection. UUID only - do not include "@clients.auth.globus.org"
 CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
 CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
@@ -61,7 +65,6 @@ GUEST_COLLECTION_CONFIG = {
                             'base_path': 'guest_collection_1',
                             'display_name': 'Guest Collection 1',
                             'public': True,
-                            'owner_id': OWNER_USER_ID,
                             'permissions': DEFAULT_PERMISSIONS,
                         },
                     ]
@@ -72,7 +75,7 @@ GUEST_COLLECTION_CONFIG = {
 }
 
 
-def main():
+def main() -> None:
     client_app = ClientApp("my-simple-transfer", client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
     gcs_client = GCSClient(GUEST_COLLECTION_CONFIG['globus_host'], app=client_app)
 
