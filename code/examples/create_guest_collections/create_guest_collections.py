@@ -12,36 +12,60 @@ ENDPOINT_ID = os.environ['GCS_CLI_ENDPOINT_ID']
 CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
 CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
 
+OWNER_USER_ID = '73d1b533-653d-4832-b8a1-56d9a5a41478'  # alex.ip@aarnet.edu.au
+WRITER_GROUP_ID = 'fe345bf6-0d3b-11ef-ac74-6b6f26d90a55'  # AARNet Demonstrators
+READER_GROUP_ID = 'faf4a504-d6ea-11f0-b505-0ee9d7d7fffb'  # AARNet Test Readers
+
+DEFAULT_PERMISSIONS = [
+    # {
+    #     ''DATA_TYPE': 'access',
+    #     'path': '/',
+    #     'permissions': 'r',
+    #     'principal': '',
+    #     'principal_type': 'all_authenticated_users',
+    # },
+    {
+        'DATA_TYPE': 'access',
+        'path': '/',
+        'permissions': 'rw',
+        'principal': OWNER_USER_ID,
+        'principal_type': 'identity',
+    },
+    {
+        'DATA_TYPE': 'access',
+        'path': '/',
+        'permissions': 'rw',
+        'principal': WRITER_GROUP_ID,
+        'principal_type': 'group',
+    },
+    {
+        'DATA_TYPE': 'access',
+        'path': '/',
+        'permissions': 'r',
+        'principal': READER_GROUP_ID,
+        'principal_type': 'group',
+    },
+]
+
 GUEST_COLLECTION_CONFIG = {
-    'globus_host': '{{ globus_endpoint_status.gcs_manager_url | ansible.builtin.regex_search('https://(.*)$', '\\1') | first }}',
+    'globus_host': '84a46e.b160.gaccess.io',
+    'high_assurance': False,
     'storage_gateways': [
         {
-            'storage_gateway_id': '{{ storage_gateway_details.id }}',
-            'high_assurance': {{ storage_gateway_details.high_assurance }},
+            'storage_gateway_id': 'c819c537-dbdf-49e3-ad51-ee3e3cd33172',
             'mapped_collections': [
                 {
-                    'mapped_collection_id': '{{ mapped_collection_details.id }}',
+                    'mapped_collection_id': '4eec6298-799d-4a4f-86b4-284675191d6e',
                     'guest_collections': [
-{% for guest_collection_config in mapped_collection_config.guest_collections %}
                         {
-                            'base_path': '{{ guest_collection_config.base_path }}',
-                            'display_name': '{{ guest_collection_config.display_name }}',
-                            'public': {{ guest_collection_config.public }},
-                            'permissions': [
-    {% for permission_config in guest_collection_config.permissions %}
-                                                {
-                                                    'DATA_TYPE': '{{ permission_config.DATA_TYPE }}',
-                                                    'path': '{{ permission_config.path }}',
-                                                    'permissions': '{{ permission_config.permissions }}',
-                                                    'principal': '{{ permission_config.principal }}',
-                                                    'principal_type': '{{ permission_config.principal_type }}',
-                                                },
-    {% endfor %}
-                            ]
+                            'base_path': 'guest_collection_1',
+                            'display_name': 'Guest Collection 1',
+                            'public': True,
+                            'owner_id': OWNER_USER_ID,
+                            'permissions': DEFAULT_PERMISSIONS,
                         },
-{% endfor %}
                     ]
-                },
+                }
             ]
         },
     ]
