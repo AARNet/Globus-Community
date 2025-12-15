@@ -79,10 +79,18 @@
       changed_when: true
       register: _globus_cmd_output
 
+    - name: Get updated storage gateway metadata
+      ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway show {{ storage_gateway_details.id }} --format json"
+      changed_when: false
+      register: _globus_cmd_output
+
+    - name: Update storage_gateway_details fact
+      ansible.builtin.set_fact:
+        storage_gateway_details: "{{ _globus_cmd_output.stdout | from_json }}"
 
 - name: Import Globus Collection tasks
   when: storage_gateway_details.id is defined
-  ansible.builtin.include_tasks: "collection.yml"
-  loop: "{{ storage_gateway_config.collections }}"
+  ansible.builtin.include_tasks: "mapped_collection.yml"
+  loop: "{{ storage_gateway_config.mapped_collections }}"
   loop_control:
-    loop_var: collection_config
+    loop_var: mapped_collection_config

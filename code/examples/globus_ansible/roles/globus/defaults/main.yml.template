@@ -51,13 +51,64 @@ globus_default_storage_gateway:
     none: ["/"]
     read: ["{{ globus_collections_dir }}"]
     read_write: ["{{ globus_collections_dir }}/default"]
-  collections:
+  mapped_collections:
     - name: Private Mapped Collection # Edit these details as required for the mapped collection details
       public_private: private
       base_path: "{{ globus_collections_dir }}/default"
+      guest_collections:
+        - base_path: "/guest_collection_1"
+          display_name: "Guest Collection 1"
+          public: True
+          permissions:
+          # - DATA_TYPE: access
+          #   path: /
+          #   permissions: r
+          #   principal: ''
+          #   principal_type: all_authenticated_users
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: 73d1b533-653d-4832-b8a1-56d9a5a41478
+            principal_type: identity
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: fe345bf6-0d3b-11ef-ac74-6b6f26d90a55
+            principal_type: group
+          - DATA_TYPE: access
+            path: /
+            permissions: r
+            principal: faf4a504-d6ea-11f0-b505-0ee9d7d7fffb
+            principal_type: group
     - name: Public Mapped Collection # Edit these details as required for the mapped collection
       public_private: public
       base_path: "{{ globus_collections_dir }}/default"
+      guest_collections:
+        - base_path: "/guest_collection_1"
+          display_name: "Guest Collection 1"
+          public: True
+          permissions:
+          # - DATA_TYPE: access
+          #   path: /
+          #   permissions: r
+          #   principal: ''
+          #   principal_type: all_authenticated_users
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: 73d1b533-653d-4832-b8a1-56d9a5a41478
+            principal_type: identity
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: fe345bf6-0d3b-11ef-ac74-6b6f26d90a55
+            principal_type: group
+          - DATA_TYPE: access
+            path: /
+            permissions: r
+            principal: faf4a504-d6ea-11f0-b505-0ee9d7d7fffb
+            principal_type: group
+
 
 # OPTIONAL - local user to which globus logins are mapped. Will default to "globus" if not specified, or will be created if it doesn't already exist.
 # globus_map_user: <local_user>
