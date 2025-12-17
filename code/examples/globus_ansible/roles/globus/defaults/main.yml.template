@@ -115,5 +115,6 @@ globus_default_storage_gateway:
 
 # REQUIRED
 globus_local_user_mapping: # These users will be mapped to the local globus user
+  - "{{ globus_svc_client_id }}@clients.auth.globus.org"
   - "<Email address of user 1 Globus account>"
   - "<Email address of user 2 Globus account>"
