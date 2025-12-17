@@ -11,13 +11,19 @@ Prerequisites
 ------------
 
 ### Globus Service User
-You will need to create a Globus service user before you can configure this role. The service user is a proxy for the user which creates it.
+You will need to create a privileged Globus service user before you can configure this role. The service user is the user which creates the endpoint and other entities,
+so you will need to add it as a subscription manager in order to have it add the endpoint to your subscription.
 
 Please follow the instructions at the [Globus Automated Endpoint Deployment Guide](https://docs.globus.org/globus-connect-server/v5.4/automated-deployment/#register_for_service_credentials).
 
+You wil then need to obtain the values of `globus_svc_client_id` and `globus_svc_client_id` in 'globus/defaults/main.yml'
+
+### Globus Transfer Service User
+You will need to create an unprivileged Globus transfer service user before you can configure this role. This service user is authorised to transfer files to/from the default mapped collection.
+
 Additional information is available at [Globus How To Use Application Credentials or Service Accounts to Automate Data Transfer](https://docs.globus.org/guides/recipes/automate-with-service-account/).
 
-You wil then need to hard-code the values of `globus_svc_client_id` and `globus_svc_client_id` in 'globus/defaults/main.yml'
+You wil then need to obtain the values of `globus_transfer_svc_client_id` and `globus_transfer_svc_client_id` in 'globus/defaults/main.yml'
 
 ### SSH keys
 You will also need to have a valid SSH public key installed in authorized_hosts on the target machine for the remote Ansible user, and the private key accessible on the Ansible host with this repository.
@@ -83,8 +89,8 @@ You will also need to copy `inventory/host_vars/globus-test-host.yml.template` t
 ### storage gateway definition
 The structure is the same for both the `globus_default_storage_gateway` and `globus_storage_gateways` variables.
 ```
-- name: Name of storage gateway
-  domains:  # Restricts storage gateway access to users with an identity in the specified domain(s)
+- name: <Name of storage gateway>
+  domains:  # Restricts storage gateway access to users with an identity in the specified domain(s) - edit as required
     - aarnet.edu.au
     - clients.auth.globus.org  # Allows service users (remove if not required)
   path_restrictions:
@@ -94,10 +100,35 @@ The structure is the same for both the `globus_default_storage_gateway` and `glo
       - /srv/globus/collections/
     read_write: # Globus will allow read and write access to listed paths
       - /srv/globus/collections/example
-  collections: # Collections associated with the gateway
+  mapped_collections: # Mapped collections associated with the gateway
     - name: "Example Collection"
       public_private: public # set to "public" or "private"
       base_path: "/srv/globus/collections/example"
+      guest_collections:
+        - base_path: "/guest_collection_1"
+          display_name: "Guest Collection 1"
+          public: True
+          permissions:
+          # - DATA_TYPE: access
+          #   path: /
+          #   permissions: r
+          #   principal: ''
+          #   principal_type: all_authenticated_users
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: <writer user UUID>>
+            principal_type: identity
+          - DATA_TYPE: access
+            path: /
+            permissions: rw
+            principal: <writer group UUID>>
+            principal_type: group
+          - DATA_TYPE: access
+            path: /
+            permissions: r
+            principal: <reader group UUID>>
+            principal_type: group
 ```
 
 Dependencies
