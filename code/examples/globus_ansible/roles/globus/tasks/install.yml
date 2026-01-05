@@ -89,3 +89,14 @@
   ansible.builtin.package:
     name: "{{ globus__packages }}"
     state: present
+
+- name: Install python-pip package
+  ansible.builtin.package:
+    name: "python-pip"
+    state: present
+
+- name: Install Python packages
+  ansible.builtin.pip:
+    name:
+      - globus-sdk
+      - globus-cli
