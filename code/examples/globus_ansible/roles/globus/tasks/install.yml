@@ -90,6 +90,33 @@
     name: "{{ globus__packages }}"
     state: present
 
+- name: Install firewalld packages
+  ansible.builtin.package:
+    name: "firewalld"
+    state: present
+
+- name: Ensure firewalld is enabled and running (only needed for non-hardened OS)
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Allow HTTPS service in the public zone
+  ansible.posix.firewalld:
+    service: https
+    zone: public
+    state: enabled
+    permanent: true
+    immediate: true
+
+- name: Allow GridFTP ports in the public zone
+  ansible.posix.firewalld:
+    port: 50000-51000/tcp
+    zone: public
+    state: enabled
+    permanent: true
+    immediate: true
+
 - name: Install python-pip package
   ansible.builtin.package:
     name: "python-pip"
