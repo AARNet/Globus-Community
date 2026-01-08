@@ -71,7 +71,7 @@
   when: globus_endpoint_id
   environment:
     GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
-    GCS_CLI_EXPLICIT_HOST: "localhost"
+    GCS_CLI_EXPLICIT_HOST: "{{ globus_external_ip }}"
   block:
     - name: List existing Globus Storage Gateways
       ansible.builtin.command: "{{ globus_gcs_binary }} storage-gateway list --format json"

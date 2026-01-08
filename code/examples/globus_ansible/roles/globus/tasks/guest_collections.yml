@@ -1,0 +1,22 @@
+---
+- name: Set guest_collection_creation_python_script fact
+  ansible.builtin.set_fact:
+    guest_collection_creation_python_script: "create_guest_collections_for_{{ mapped_collection_details.display_name | ansible.builtin.regex_replace('\\W+', '_') }}.py"
+
+- name: "Template guest collection creation Python script {{ guest_collection_creation_python_script }}"
+  ansible.builtin.template:
+    src: create_guest_collections.py.j2
+    dest: "{{ globus_config_dir }}/{{ guest_collection_creation_python_script }}"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: "Run \"python {{ globus_config_dir }}/{{ guest_collection_creation_python_script }}\""
+  ansible.builtin.command: "python {{ globus_config_dir }}/{{ guest_collection_creation_python_script }}"
+  environment:
+    GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
+    GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
+    GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
+    GCS_CLI_EXPLICIT_HOST: "{{ globus_external_ip }}"
+  changed_when: true
+

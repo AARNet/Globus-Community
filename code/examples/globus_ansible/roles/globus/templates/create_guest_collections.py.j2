@@ -1,0 +1,189 @@
+"""
+This is a Python script to automatically set up guest collections on the host specified as 'globus_host' in GUEST_COLLECTION_CONFIG.
+There is logic to prevent the creation of duplicate guest collections or permissions.
+
+The Globus credentials for the service user must be provided via the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET.
+Any service user with write permissions to the mapped collection can run this script.
+
+This script is used as the basis for a template] in the Globus deployment Ansible, and this is used to create Python scripts which create
+guest collections under each mapped collection.
+"""
+import os
+from globus_sdk import GCSClient, TransferClient, TransferAPIError, GuestCollectionDocument, Scope, UserCredentialDocument, GCSAPIError
+from globus_sdk.globus_app import ClientApp
+
+# This service user ID must be authorised to write to the destination collection. UUID only - do not include "@clients.auth.globus.org"
+CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
+CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
+
+GUEST_COLLECTION_CONFIG = {
+    'globus_host': '{{ globus_endpoint_status.gcs_manager_url | ansible.builtin.regex_search('https://(.*)$', '\\1') | first }}',
+    'storage_gateways': [
+        {
+            'storage_gateway_id': '{{ storage_gateway_details.id }}',
+            'high_assurance': {{ storage_gateway_details.high_assurance }},
+            'mapped_collections': [
+                {
+                    'mapped_collection_id': '{{ mapped_collection_details.id }}',
+                    'guest_collections': [
+{% for guest_collection_config in mapped_collection_config.guest_collections %}
+                        {
+                            'base_path': '{{ guest_collection_config.base_path }}',
+                            'display_name': '{{ guest_collection_config.display_name }}',
+                            'public': {{ guest_collection_config.public }},
+                            'permissions': [
+    {% for permission_config in guest_collection_config.permissions %}
+                                                {
+                                                    'DATA_TYPE': '{{ permission_config.DATA_TYPE }}',
+                                                    'path': '{{ permission_config.path }}',
+                                                    'permissions': '{{ permission_config.permissions }}',
+                                                    'principal': '{{ permission_config.principal }}',
+                                                    'principal_type': '{{ permission_config.principal_type }}',
+                                                },
+    {% endfor %}
+                            ]
+                        },
+{% endfor %}
+                    ]
+                },
+            ]
+        },
+    ]
+}
+
+
+def main() -> None:
+    client_app = ClientApp("my-simple-transfer", client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    gcs_client = GCSClient(GUEST_COLLECTION_CONFIG['globus_host'], app=client_app)
+
+    storage_gateways = list(gcs_client.get_storage_gateway_list())
+
+    collections = list(gcs_client.get_collection_list())
+
+    for storage_gateway in GUEST_COLLECTION_CONFIG['storage_gateways']:
+        storage_gateway_id = storage_gateway['storage_gateway_id']
+
+        assert storage_gateway_id in [storage_gateway['id'] for storage_gateway in storage_gateways], f'Invalid Storage Gateway ID {storage_gateway_id}'
+
+        ensure_user_credential(gcs_client, storage_gateway_id)
+
+        for mapped_collection in storage_gateway['mapped_collections']:
+            mapped_collection_id = mapped_collection['mapped_collection_id']
+
+            assert mapped_collection_id in [collection['id'] for collection in collections if collection['collection_type'] == 'mapped'], f'Invalid Mapped Collection ID {mapped_collection_id}'
+
+            if not storage_gateway['high_assurance']:
+                attach_data_access_scope(gcs_client, mapped_collection_id)
+
+            transfer_client = TransferClient(app=client_app).add_app_data_access_scope(mapped_collection_id)
+
+            for guest_collection in mapped_collection['guest_collections']:
+
+                display_name = guest_collection['display_name']
+                base_path = guest_collection['base_path']
+                public = guest_collection['public']
+
+                create_directory(transfer_client, mapped_collection_id, base_path)
+
+                found_collections = [
+                    collection for collection in collections
+                    if collection['collection_type'] == 'guest'
+                    # and collection['public']
+                    and collection['display_name'] == display_name
+                    ]
+
+                if found_collections:
+                    print(f'Guest collection "{display_name}" already exists.')
+                    if len(found_collections) == 1:
+                        collection = found_collections[0]
+                    else:
+                        print(f'Unable to determine unique match for collection "{display_name}"')
+                        exit(1)
+
+                    # Unable to update base_path (immutable), so we can't change that
+                    collection_request = GuestCollectionDocument(
+                        public=public,
+                        # collection_base_path=base_path,
+                        display_name=display_name,
+                        mapped_collection_id=mapped_collection_id,
+                    )
+
+                    print(f'Updating existing guest collection "{display_name}" with collection ID {collection["id"]}')
+                    gcs_client.update_collection(collection['id'], collection_request)
+
+                else:
+                    collection_request = GuestCollectionDocument(
+                        public=public,
+                        collection_base_path=base_path,
+                        display_name=display_name,
+                        mapped_collection_id=mapped_collection_id,
+                    )
+
+                    collection = gcs_client.create_collection(collection_request)
+                    print(f'Created new guest collection "{display_name}" with collection ID {collection["id"]}')
+
+                for permission in guest_collection['permissions']:
+                    # Create guest collection subdirectory if it doesn't already exist
+                    if permission['path'] != '/':
+                        create_directory(transfer_client, mapped_collection_id, base_path+permission['path'])
+
+                    try:
+                        result = transfer_client.add_endpoint_acl_rule(collection["id"], permission)
+                        print(f'Added "{permission["permissions"]}" permissions to "{permission["path"]}" for {permission["principal_type"]} {permission["principal"]}')
+                    except TransferAPIError as e:
+                        if e.code == 'Exists':
+                            print(f'Permissions already exist to "{permission["path"]}" for {permission["principal_type"]} {permission["principal"]}')
+                        else:
+                            raise e
+
+
+def create_directory(transfer_client: TransferClient, mapped_collection_id: str, directory_path: str) -> None:
+    """
+    Create a directory under a mapped collection using a TransferClient
+    """
+    try:
+        response = transfer_client.operation_mkdir(mapped_collection_id, directory_path)
+        print(f'Created directory "{directory_path}" in collection {mapped_collection_id}')
+    except TransferAPIError as e:
+        if e.code == 'ExternalError.MkdirFailed.Exists':
+            print(f'Directory "{directory_path}" already exists in collection {mapped_collection_id}')
+        else:
+            raise e
+
+
+def attach_data_access_scope(gcs_client, collection_id):
+    """Compose and attach a `data_access` scope for the supplied collection"""
+
+    # Get the base scopes for the endpoint
+    endpoint_scopes = gcs_client.get_gcs_endpoint_scopes(gcs_client.endpoint_client_id)
+
+    # Get the specific data_access scope for the collection
+    collection_scopes = gcs_client.get_gcs_collection_scopes(collection_id)
+    data_access = collection_scopes.data_access
+
+    # Define a scope dependency: 'manage_collections' requires 'data_access'
+    manage_collections = endpoint_scopes.manage_collections.with_dependency(data_access)
+
+    # Add the composed scope to the client's scope requirements
+    gcs_client.add_app_scope(manage_collections)
+
+
+def ensure_user_credential(gcs_client: GCSClient, storage_gateway_id: str) -> None:
+    """
+    Ensure that the user has a user credential on the client.
+    This is the mapping between Globus Auth (OAuth2) and the local system's permissions.
+    """
+    # Depending on the endpoint & storage gateway, this request document may need to
+    # include more complex information such as a local username.
+    # Consult with the endpoint owner for more detailed info on user mappings and
+    # other particular requirements.
+    req = UserCredentialDocument(storage_gateway_id=storage_gateway_id)
+    try:
+        gcs_client.create_user_credential(req)
+    except GCSAPIError as err:
+        # A user credential already exists, no need to create it.
+        if err.http_status != 409:
+            raise
+
+if __name__ == '__main__':
+    main()
