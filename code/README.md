@@ -26,3 +26,11 @@ This is an example of [how to use Ansible to automate the setup of a Globus endp
 ### Advanced Globus Workshop Jupyter Notebooks
 
 The notebooks used in the AARNet Advanced Globus Workshop Jupyter Notebooks are available at [https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks](https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks)
+
+### Create Guest Collections
+
+This is [an example script to create and configure Globus guest collections](https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_guest_collections). A variant of this script is used in the Globus Ansible
+
+### Create and Populate Groups
+
+This is [an example script to create and populate Globus groups](https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_and_populate_groups).
