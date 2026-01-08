@@ -18,11 +18,11 @@ from globus_sdk.globus_app import ClientApp
 # Set this to True to delete and re-create managed groups - use with caution
 DELETE_MANAGED_GROUPS = False
 
-# This service user ID must be an authorised subscription Administrator. UUID only - do not include "@clients.auth.globus.org"
+# CLIENT_ID is the service user UUID only - do not include "@clients.auth.globus.org"
 CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
 CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
 
-SUBSCRIPTION_ID = None # Set to subscription UUID for verification
+SUBSCRIPTION_ID = None # Set to subscription UUID for verification. The service user ID must be an authorised subscription Administrator to use this
 
 DEFAULT_GROUP_POLICY = {
     "is_high_assurance": False,
