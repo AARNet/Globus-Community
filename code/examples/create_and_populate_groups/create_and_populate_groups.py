@@ -1,57 +1,57 @@
 """
-This is a Python script to automatically create groups as defined in MANAGED_GROUPS.
+A Python script to automatically create and populate groups defined in managed groups configuration file (path supplied as command line argument).
 There is logic to prevent the creation of duplicate groups.
 
 The Globus credentials for the service user must be provided via the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET.
 
-Provide a subscription UUID in SUBSCRIPTION_ID to verify group within the subscription. The service must have Administrator access to permit this
+Provide a subscription UUID in subscription_id in the group config to verify the group within the subscription. The service must have Administrator access to permit this
 
 """
+import argparse
 import json
 import os
+import sys
+import yaml
 from datetime import datetime
 from pprint import pprint, pformat
 from typing import Optional, Any
 from globus_sdk import GroupsClient, scopes, GroupsManager, GroupPolicies
 from globus_sdk.globus_app import ClientApp
 
-# Set this to True to delete and re-create managed groups - use with caution
-DELETE_MANAGED_GROUPS = False
-
 # CLIENT_ID is the service user UUID only - do not include "@clients.auth.globus.org"
-CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
-CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
-
-SUBSCRIPTION_ID = None # Set to subscription UUID for verification. The service user ID must be an authorised subscription Administrator to use this
+CLIENT_ID = os.environ.get('GCS_CLI_CLIENT_ID')
+CLIENT_SECRET = os.environ.get('GCS_CLI_CLIENT_SECRET')
 
 DEFAULT_GROUP_POLICY = {
     "is_high_assurance": False,
     "authentication_assurance_timeout": 1800, # Timeout is in seconds
     "group_visibility": "authenticated", # members | authenticated
-    "group_members_visibility": "members",
+    "group_members_visibility": "members", # members | authenticated
     "join_requests": False,
     "signup_fields": []
 }
 
-# Definition of new groups to be created/updated
-MANAGED_GROUPS = {
-    "Auto-created test group": {
-        #"description": "Group description",
-        "members": [
-            {
-                "id": "73d1b533-653d-4832-b8a1-56d9a5a41478", # alex.ip@aarnet.edu.au
-                "role": 'admin'
-            },
-            {
-                "id": "547541ca-d5dd-42e5-aa08-6174a61928b7", # steele.cooke@aarnet.edu.au
-                "role": 'member'
-            },
-        ],
-        "policies": dict(DEFAULT_GROUP_POLICY),
-    }
-}
-
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        prog=sys.argv[0],
+        description='Python script to automatically create groups defined in managed groups configuration file',
+        epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
+        )
+
+    parser.add_argument('managed_groups_config_path', help="group configuration JSON or YAML file")
+    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed groups")
+
+    args = parser.parse_args()
+
+    with open(args.managed_groups_config_path) as managed_groups_config_file:
+        if args.managed_groups_config_path.lower().endswith(".json"):
+            managed_groups_config = json.load(managed_groups_config_file)
+        elif args.managed_groups_config_path.lower().endswith(".yaml") or args.managed_groups_config_path.lower().endswith(".yml"):
+            managed_groups_config = yaml.load(managed_groups_config_file)
+        else:
+            raise(Exception(f"Unrecognised group configuration file type: {args.managed_groups_config_path}"))
+
+    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
 
     client_app = ClientApp(
         app_name="group_test_app",
@@ -68,22 +68,22 @@ def main() -> None:
     my_groups = get_my_groups(groups_client)
     pprint(my_groups)
 
-    if DELETE_MANAGED_GROUPS:
+    if args.delete:
         print('=' * 25)
         for group in my_groups:
-            if group["group_type"] == 'regular' and group["name"] in MANAGED_GROUPS.keys():
+            if group["group_type"] == 'regular' and group["name"] in managed_groups_config.keys():
                 print(f"Deleting group {group['name']}")
                 groups_client.delete_group(group["id"])
 
         my_groups = get_my_groups(groups_client)
         pprint(my_groups)
 
-    new_group_names = sorted(list(set(MANAGED_GROUPS.keys()) - set([group_info['name'] for group_info in my_groups])))
+    new_group_names = sorted(list(set(managed_groups_config.keys()) - set([group_info['name'] for group_info in my_groups])))
     if new_group_names:
         print('=' * 25)
 
         for new_group_name in new_group_names:
-            new_group_config = MANAGED_GROUPS[new_group_name]
+            new_group_config = managed_groups_config[new_group_name]
             print(f"Creating group \"{new_group_name}\"")
             new_group_info = create_group(
                 groups_client=groups_client,
@@ -98,23 +98,24 @@ def main() -> None:
 
     print('=' * 25)
 
-    for group_info in [group_info for group_info in my_groups if group_info["name"] in MANAGED_GROUPS.keys()]:
+    for group_info in [group_info for group_info in my_groups if group_info["name"] in managed_groups_config.keys()]:
         print(f"""Updating subscription and policies for group \"{group_info['name']}\"""")
+        subscription_id = managed_groups_config[group_info["name"]].get("subscription_id")
         update_group(
             groups_client=groups_client,
             group_id=group_info["id"],
-            subscription_id=SUBSCRIPTION_ID,
-            policies=MANAGED_GROUPS[group_info["name"]].get("policies"),
+            subscription_id=subscription_id,
+            policies=managed_groups_config[group_info["name"]].get("policies"),
         )
 
-        group_info['subscription_admin_verified_id'] = SUBSCRIPTION_ID
+        group_info['subscription_admin_verified_id'] = subscription_id
 
         # No way to list members, so we just go ahead and try to add them
         print(f"Adding members to group \"{group_info['name']}\"")
         add_members(
             groups_manager=groups_manager,
             group_id=group_info["id"],
-            users=MANAGED_GROUPS[group_info["name"]]["members"]
+            users=managed_groups_config[group_info["name"]]["members"]
         )
 
 

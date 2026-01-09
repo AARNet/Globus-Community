@@ -1,0 +1,31 @@
+{
+    "Auto-created test group": {
+        "description": null,
+        "members": [
+            {
+                "user": "alex.ip@aarnet.edu.au",
+                "id": "73d1b533-653d-4832-b8a1-56d9a5a41478",
+                "role": "admin"
+            },
+            {
+                "user": "steele.cooke@aarnet.edu.au",
+                "id": "547541ca-d5dd-42e5-aa08-6174a61928b7",
+                "role": "member"
+            },
+            {
+                "user": "greg.darcy@aarnet.edu.au",
+                "id": "17111e0b-8777-47a4-92f6-f563e64ba171",
+                "role": "member"
+            }
+        ],
+        "policies": {
+            "is_high_assurance": false,
+            "authentication_assurance_timeout": 1800,
+            "group_visibility": "authenticated",
+            "group_members_visibility": "members",
+            "join_requests": false,
+            "signup_fields": []
+        },
+        "subscription_id": "56107c7a-679f-11ea-960d-0afc9e7dd773"
+    }
+}
