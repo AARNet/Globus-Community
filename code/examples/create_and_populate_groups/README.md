@@ -30,6 +30,7 @@ The path to a valid YAML or JSON group configuration file needs to be supplied a
     join_requests: false
     signup_fields: []
   subscription_id: "<optional subscription UUID>"
+...
 ```
 
 ### JSON
@@ -55,6 +56,7 @@ The path to a valid YAML or JSON group configuration file needs to be supplied a
             "signup_fields": []
         },
         "subscription_id": "<optional subscription UUID>"
-    }
+    },
+    ...
 }
 ```
