@@ -53,6 +53,17 @@ def main() -> None:
 
     assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
 
+    manage_groups(managed_groups_config, delete_groups=args.delete)
+
+
+def manage_groups(managed_groups_config: dict[dict[str, Any]], delete_groups: bool=False) -> None:
+    """
+    Function to manage groups from a configuration dict.
+    This function could be imported into another Python script and run with a different managed_groups_config.
+
+    :param managed_groups_config: Group configuration dict
+    :type managed_groups_config: dict[dict[str, Any]]
+    """
     client_app = ClientApp(
         app_name="group_test_app",
         client_id=CLIENT_ID,
@@ -63,12 +74,10 @@ def main() -> None:
 
     groups_client = GroupsClient(app=client_app, app_scopes=group_scope)
 
-    groups_manager = GroupsManager(groups_client)
-
     my_groups = get_my_groups(groups_client)
-    pprint(my_groups)
+    # pprint(my_groups)
 
-    if args.delete:
+    if delete_groups:
         print('=' * 25)
         for group in my_groups:
             if group["group_type"] == 'regular' and group["name"] in managed_groups_config.keys():
@@ -76,7 +85,7 @@ def main() -> None:
                 groups_client.delete_group(group["id"])
 
         my_groups = get_my_groups(groups_client)
-        pprint(my_groups)
+        # pprint(my_groups)
 
     new_group_names = sorted(list(set(managed_groups_config.keys()) - set([group_info['name'] for group_info in my_groups])))
     if new_group_names:
@@ -89,11 +98,11 @@ def main() -> None:
                 groups_client=groups_client,
                 group_name=new_group_name,
                 group_description=new_group_config.get("description") or f"{new_group_name} created {datetime.now()}",
-                #parent_id=SUBSCRIPTION_ID, # This doesn't work
+                parent_id=new_group_config.get("parent_id"),
                 policies=new_group_config.get("policies"),
                 )
 
-            pprint(new_group_info)
+            # pprint(new_group_info)
             my_groups.append(new_group_info)
 
     print('=' * 25)
@@ -110,10 +119,9 @@ def main() -> None:
 
         group_info['subscription_admin_verified_id'] = subscription_id
 
-        # No way to list members, so we just go ahead and try to add them
-        print(f"Adding members to group \"{group_info['name']}\"")
-        add_members(
-            groups_manager=groups_manager,
+        print(f"Managing group membership for group \"{group_info['name']}\"")
+        manage_membership(
+            groups_client=groups_client,
             group_id=group_info["id"],
             users=managed_groups_config[group_info["name"]]["members"]
         )
@@ -201,25 +209,59 @@ def update_group(
     print(f"\t{pformat(result)}")
 
 
-def add_members(
-    groups_manager: GroupsManager,
+def manage_membership(
+    groups_client: GroupsClient,
     group_id: str,
     users: list[dict[str, Any]],
     ) -> None:
-    """Function to add members to group
+    """Function to manage members in a group
 
     Args:
-        groups_manager (GroupsManager): GroupsManager object
+        groups_client (GroupsClient): GroupsClient object
         group_id (str): UUID of group
-        users (list[dict[str, Any]]): List of dict {"id": "<user UUID>", "role": "member | admin"}
+        users (list[dict[str, Any]]): List of dict {"id": "<user UUID>", "role": "member | manager | admin"}
     """
+    groups_manager = GroupsManager(groups_client)
+
+    existing_members = groups_client.get_group(group_id, include="memberships").data["memberships"]
+    # pprint(existing_members)
+
     for user in users:
-        result = groups_manager.add_member(
-            group_id,
-            user["id"],
-            role=user.get("role") or 'member'
-            )
+        try:
+            existing_member = [member for member in existing_members if member["identity_id"] == user["id"] and member["status"] != "removed"][0]
+        except IndexError:
+            existing_member = None
+
+        if existing_member and existing_member["role"] == user["role"]:
+            # Nothing to do
+            print(f"\tUser {existing_member['identity_id']} already exists with role {existing_member['role']}")
+            continue
+
+        role=user.get("role") or 'member'
+
+        if existing_member:  # Need to modify role
+            print(f"\tChanging existing group member {user['id']} from role \"{existing_member['role']}\" to role \"{role}\"")
+            result = groups_manager.change_role(group_id, user["id"], role)
+        else:  # Need to add new user
+            print(f"\tAdding new group member {user['id']} with role \"{role}\"")
+            result = groups_manager.add_member(
+                group_id,
+                user["id"],
+                role=role
+                )
         print(f"\t{pformat(result)}")
+
+    member_ids = [user["id"] for user in users] + [CLIENT_ID]
+
+    for existing_member in existing_members:
+        existing_member_id = existing_member["identity_id"]
+        if existing_member_id not in member_ids and existing_member['status'] != 'removed':
+            print(f"\tDeleting existing user {existing_member_id} from group {group_id}")
+            result = groups_manager.remove_member(
+                group_id,
+                existing_member_id,
+                )
+            print(f"\t{pformat(result)}")
 
 
 if __name__ == '__main__':

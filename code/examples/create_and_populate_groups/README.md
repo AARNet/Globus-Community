@@ -19,7 +19,7 @@ The path to a valid YAML or JSON group configuration file needs to be supplied a
   description: "<optional group description>"
   members:
   - id: "<globus user uuid>"
-    role: "<admin | member>"
+    role: "<admin | manager | member>"
     user: "<informational field only - user email?>"
   ...
   policies:
@@ -43,7 +43,7 @@ The path to a valid YAML or JSON group configuration file needs to be supplied a
             {
                 "user": "<informational field only - user email?>",
                 "id": "<globus user uuid>",
-                "role": "<admin | member>"
+                "role": "<admin | manager | member>"
             },
             ...
         ],

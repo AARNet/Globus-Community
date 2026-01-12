@@ -6,11 +6,12 @@ Auto-created test group:
     role: admin
     user: alex.ip@aarnet.edu.au
   - id: 547541ca-d5dd-42e5-aa08-6174a61928b7
-    role: member
+    role: manager
     user: steele.cooke@aarnet.edu.au
   - id: 17111e0b-8777-47a4-92f6-f563e64ba171
     role: member
     user: greg.darcy@aarnet.edu.au
+  parent_id: "c4d1a384-679a-11ea-b75d-0a53601d30b5",
   policies:
     authentication_assurance_timeout: 1800
     group_members_visibility: members
