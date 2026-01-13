@@ -19,4 +19,3 @@
     GCS_CLI_CLIENT_SECRET: "{{ globus_svc_secret_id }}"
     GCS_CLI_EXPLICIT_HOST: "{{ globus_external_ip }}"
   changed_when: true
-
