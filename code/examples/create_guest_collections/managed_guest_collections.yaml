@@ -1,0 +1,32 @@
+---
+globus_host: c4e1bc.e229.gaccess.io
+high_assurance: false
+storage_gateways:
+- mapped_collections:
+  - guest_collections:
+    - base_path: /guest_collection_1
+      display_name: Guest Collection 1
+      permissions:
+      - DATA_TYPE: access
+        path: /
+        permissions: r
+        principal: ''
+        principal_type: all_authenticated_users
+      - DATA_TYPE: access
+        path: /
+        permissions: rw
+        principal: 73d1b533-653d-4832-b8a1-56d9a5a41478
+        principal_type: identity
+      - DATA_TYPE: access
+        path: /
+        permissions: rw
+        principal: fe345bf6-0d3b-11ef-ac74-6b6f26d90a55
+        principal_type: group
+      - DATA_TYPE: access
+        path: /
+        permissions: r
+        principal: faf4a504-d6ea-11f0-b505-0ee9d7d7fffb
+        principal_type: group
+      public: true
+    mapped_collection_id: a27b98e9-c796-4a60-88c3-2ee0b21b8b07
+  storage_gateway_id: 31e96b9d-dc42-4446-9ad7-e8db357ac8f6

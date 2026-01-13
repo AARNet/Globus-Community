@@ -65,7 +65,7 @@ def manage_groups(managed_groups_config: dict[dict[str, Any]], delete_groups: bo
     :type managed_groups_config: dict[dict[str, Any]]
     """
     client_app = ClientApp(
-        app_name="group_test_app",
+        app_name="group_manager",
         client_id=CLIENT_ID,
         client_secret=CLIENT_SECRET
         )

@@ -1,14 +1,19 @@
 """
-This is a Python script to automatically set up guest collections on the host specified as 'globus_host' in GUEST_COLLECTION_CONFIG.
+This is a Python script to automatically set up guest collections on the host specified as 'globus_host' in managed_guest_collections_config.
 There is logic to prevent the creation of duplicate guest collections or permissions.
 
 The Globus credentials for the service user must be provided via the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET.
 Any service user with write permissions to the mapped collection can run this script.
 
-This script is used as the basis for a template] in the Globus deployment Ansible, and this is used to create Python scripts which create
+This script is used as the basis for a template in the Globus deployment Ansible, and this is used to create Python scripts which create
 guest collections under each mapped collection.
 """
+import argparse
+import json
 import os
+import sys
+import yaml
+from typing import Any, Optional
 from globus_sdk import GCSClient, TransferClient, TransferAPIError, GuestCollectionDocument, Scope, UserCredentialDocument, GCSAPIError
 from globus_sdk.globus_app import ClientApp
 
@@ -16,74 +21,48 @@ from globus_sdk.globus_app import ClientApp
 CLIENT_ID = os.environ['GCS_CLI_CLIENT_ID']
 CLIENT_SECRET = os.environ['GCS_CLI_CLIENT_SECRET']
 
-OWNER_USER_ID = '73d1b533-653d-4832-b8a1-56d9a5a41478'  # alex.ip@aarnet.edu.au
-WRITER_GROUP_ID = 'fe345bf6-0d3b-11ef-ac74-6b6f26d90a55'  # AARNet Demonstrators
-READER_GROUP_ID = 'faf4a504-d6ea-11f0-b505-0ee9d7d7fffb'  # AARNet Test Readers
-
-DEFAULT_PERMISSIONS = [
-    # {
-    #     ''DATA_TYPE': 'access',
-    #     'path': '/',
-    #     'permissions': 'r',
-    #     'principal': '',
-    #     'principal_type': 'all_authenticated_users',
-    # },
-    {
-        'DATA_TYPE': 'access',
-        'path': '/',
-        'permissions': 'rw',
-        'principal': OWNER_USER_ID,
-        'principal_type': 'identity',
-    },
-    {
-        'DATA_TYPE': 'access',
-        'path': '/',
-        'permissions': 'rw',
-        'principal': WRITER_GROUP_ID,
-        'principal_type': 'group',
-    },
-    {
-        'DATA_TYPE': 'access',
-        'path': '/',
-        'permissions': 'r',
-        'principal': READER_GROUP_ID,
-        'principal_type': 'group',
-    },
-]
-
-GUEST_COLLECTION_CONFIG = {
-    'globus_host': '84a46e.b160.gaccess.io',
-    'high_assurance': False,
-    'storage_gateways': [
-        {
-            'storage_gateway_id': 'c819c537-dbdf-49e3-ad51-ee3e3cd33172',
-            'mapped_collections': [
-                {
-                    'mapped_collection_id': '4eec6298-799d-4a4f-86b4-284675191d6e',
-                    'guest_collections': [
-                        {
-                            'base_path': 'guest_collection_1',
-                            'display_name': 'Guest Collection 1',
-                            'public': True,
-                            'permissions': DEFAULT_PERMISSIONS,
-                        },
-                    ]
-                }
-            ]
-        },
-    ]
-}
-
 
 def main() -> None:
-    client_app = ClientApp("my-simple-transfer", client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-    gcs_client = GCSClient(GUEST_COLLECTION_CONFIG['globus_host'], app=client_app)
+    parser = argparse.ArgumentParser(
+        prog=sys.argv[0],
+        description='Python script to automatically create guest collections defined in managed guest collections configuration file',
+        epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
+        )
+
+    parser.add_argument('managed_guest_collections_config_path', help="guest collection configuration JSON or YAML file")
+    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed guest collections")
+
+    args = parser.parse_args()
+
+    with open(args.managed_guest_collections_config_path) as managed_guest_collections_config_file:
+        if args.managed_guest_collections_config_path.lower().endswith(".json"):
+            managed_guest_collections_config = json.load(managed_guest_collections_config_file)
+        elif args.managed_guest_collections_config_path.lower().endswith(".yaml") or args.managed_guest_collections_config_path.lower().endswith(".yml"):
+            managed_guest_collections_config = yaml.load(managed_guest_collections_config_file)
+        else:
+            raise(Exception(f"Unrecognised guest collection configuration file type: {args.managed_guest_collections_config_path}"))
+
+    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
+
+    manage_guest_collections(managed_guest_collections_config, delete_guest_collections=args.delete)
+
+
+def manage_guest_collections(managed_guest_collections_config: dict[dict[str, Any]], delete_guest_collections: bool=False) -> None:
+    """
+    Function to manage guest collections from a configuration dict.
+    This function could be imported into another Python script and run with a different managed_guest_collections_config.
+
+    :param managed_guest_collections_config: guest collection configuration dict
+    :type managed_guest_collections_config: dict[dict[str, Any]]
+    """
+    client_app = ClientApp("guest_collection_manager", client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    gcs_client = GCSClient(managed_guest_collections_config['globus_host'], app=client_app)
 
     storage_gateways = list(gcs_client.get_storage_gateway_list())
 
     collections = list(gcs_client.get_collection_list())
 
-    for storage_gateway in GUEST_COLLECTION_CONFIG['storage_gateways']:
+    for storage_gateway in managed_guest_collections_config['storage_gateways']:
         storage_gateway_id = storage_gateway['storage_gateway_id']
 
         assert storage_gateway_id in [storage_gateway['id'] for storage_gateway in storage_gateways], f'Invalid Storage Gateway ID {storage_gateway_id}'
@@ -95,7 +74,7 @@ def main() -> None:
 
             assert mapped_collection_id in [collection['id'] for collection in collections if collection['collection_type'] == 'mapped'], f'Invalid Mapped Collection ID {mapped_collection_id}'
 
-            if not storage_gateway['high_assurance']:
+            if not storage_gateway.get('high_assurance'):
                 attach_data_access_scope(gcs_client, mapped_collection_id)
 
             transfer_client = TransferClient(app=client_app).add_app_data_access_scope(mapped_collection_id)
@@ -111,7 +90,6 @@ def main() -> None:
                 found_collections = [
                     collection for collection in collections
                     if collection['collection_type'] == 'guest'
-                    # and collection['public']
                     and collection['display_name'] == display_name
                     ]
 
