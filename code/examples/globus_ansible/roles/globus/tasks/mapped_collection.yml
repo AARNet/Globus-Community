@@ -57,6 +57,11 @@
       ansible.builtin.set_fact:
         mapped_collection_details: "{{ _globus_cmd_output.stdout | from_json }}"
 
+- name: Download create_guest_collections.py from GitHub URL
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/AARNet/Globus-Community/refs/heads/main/code/examples/create_guest_collections/create_guest_collections.py"
+    dest: "{{ globus_config_dir }}/create_guest_collections.py"
+
 - name: "Import Globus Guest Collection tasks for mapped collection \"{{ mapped_collection_details.display_name }}\""
   when: storage_gateway_details.id is defined and globus_endpoint_status.subscription_id != None
   ansible.builtin.include_tasks: "guest_collections.yml"

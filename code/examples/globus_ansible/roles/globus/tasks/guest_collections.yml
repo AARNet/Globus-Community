@@ -1,18 +1,18 @@
 ---
-- name: Set guest_collection_creation_python_script fact
+- name: Set guest_collection_creation_config fact
   ansible.builtin.set_fact:
-    guest_collection_creation_python_script: "create_guest_collections_for_{{ mapped_collection_details.display_name | ansible.builtin.regex_replace('\\W+', '_') }}.py"
+    guest_collection_creation_config: "guest_collections_config_for_{{ mapped_collection_details.display_name | ansible.builtin.regex_replace('\\W+', '_') }}.json"
 
-- name: "Template guest collection creation Python script {{ guest_collection_creation_python_script }}"
+- name: "Template guest collection creation config {{ guest_collection_creation_config }}"
   ansible.builtin.template:
-    src: create_guest_collections.py.j2
-    dest: "{{ globus_config_dir }}/{{ guest_collection_creation_python_script }}"
+    src: guest_collections_config.json.j2
+    dest: "{{ globus_config_dir }}/{{ guest_collection_creation_config }}"
     owner: root
     group: root
     mode: '0600'
 
-- name: "Run \"python {{ globus_config_dir }}/{{ guest_collection_creation_python_script }}\""
-  ansible.builtin.command: "python {{ globus_config_dir }}/{{ guest_collection_creation_python_script }}"
+- name: "Run \"python {{ globus_config_dir }}/create_guest_collections.py {{ globus_config_dir }}/{{ guest_collection_creation_config }}\""
+  ansible.builtin.command: "python {{ globus_config_dir }}/create_guest_collections.py {{ globus_config_dir }}/{{ guest_collection_creation_config }}"
   environment:
     GCS_CLI_ENDPOINT_ID: "{{ globus_endpoint_id }}"
     GCS_CLI_CLIENT_ID: "{{ globus_svc_client_id }}"
