@@ -47,7 +47,7 @@ def main() -> None:
     manage_guest_collections(managed_guest_collections_config, delete_guest_collections=args.delete)
 
 
-def manage_guest_collections(managed_guest_collections_config: dict[dict[str, Any]], delete_guest_collections: bool=False) -> None:
+def manage_guest_collections(managed_guest_collections_config: dict[str, dict[str, Any]], delete_guest_collections: bool=False) -> None:
     """
     Function to manage guest collections from a configuration dict.
     This function could be imported into another Python script and run with a different managed_guest_collections_config.

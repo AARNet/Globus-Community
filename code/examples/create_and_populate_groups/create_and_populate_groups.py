@@ -56,7 +56,7 @@ def main() -> None:
     manage_groups(managed_groups_config, delete_groups=args.delete)
 
 
-def manage_groups(managed_groups_config: dict[dict[str, Any]], delete_groups: bool=False) -> None:
+def manage_groups(managed_groups_config: dict[str, dict[str, Any]], delete_groups: bool=False) -> None:
     """
     Function to manage groups from a configuration dict.
     This function could be imported into another Python script and run with a different managed_groups_config.
