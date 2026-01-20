@@ -56,7 +56,7 @@ globus_default_storage_gateway:
       public_private: private
       base_path: "{{ globus_collections_dir }}/default"
       guest_collections:
-        - base_path: "/guest_collection_1"
+        - collection_base_path: "/guest_collection_1"
           display_name: "Guest Collection 1"
           public: True
           permissions:
@@ -84,7 +84,7 @@ globus_default_storage_gateway:
       public_private: public
       base_path: "{{ globus_collections_dir }}/default"
       guest_collections:
-        - base_path: "/guest_collection_1"
+        - collection_base_path: "/guest_collection_1"
           display_name: "Guest Collection 1"
           public: True
           permissions:
