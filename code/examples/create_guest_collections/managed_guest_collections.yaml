@@ -4,7 +4,7 @@ high_assurance: false
 storage_gateways:
 - mapped_collections:
   - guest_collections:
-    - base_path: /guest_collection_1
+    - collection_base_path: /guest_collection_1
       display_name: Guest Collection 1
       permissions:
       - DATA_TYPE: access

@@ -9,8 +9,9 @@
 					"mapped_collection_id": "a27b98e9-c796-4a60-88c3-2ee0b21b8b07",
 					"guest_collections": [
 						{
-							"base_path": "/guest_collection_1",
+							"collection_base_path": "/guest_collection_1",
 							"display_name": "Guest Collection 1",
+							"description": "Test Guest Collection #1",
 							"public": true,
 							"permissions": [
 								{

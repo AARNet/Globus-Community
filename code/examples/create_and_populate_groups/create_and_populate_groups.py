@@ -31,38 +31,18 @@ DEFAULT_GROUP_POLICY = {
     "signup_fields": []
 }
 
-def main() -> None:
-    parser = argparse.ArgumentParser(
-        prog=sys.argv[0],
-        description='Python script to automatically create groups defined in managed groups configuration file',
-        epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
-        )
 
-    parser.add_argument('managed_groups_config_path', help="group configuration JSON or YAML file")
-    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed groups")
-
-    args = parser.parse_args()
-
-    with open(args.managed_groups_config_path) as managed_groups_config_file:
-        if args.managed_groups_config_path.lower().endswith(".json"):
-            managed_groups_config = json.load(managed_groups_config_file)
-        elif args.managed_groups_config_path.lower().endswith(".yaml") or args.managed_groups_config_path.lower().endswith(".yml"):
-            managed_groups_config = yaml.load(managed_groups_config_file)
-        else:
-            raise(Exception(f"Unrecognised group configuration file type: {args.managed_groups_config_path}"))
-
-    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
-
-    manage_groups(managed_groups_config, delete_groups=args.delete)
-
-
-def manage_groups(managed_groups_config: dict[str, dict[str, Any]], delete_groups: bool=False) -> None:
+def manage_groups(
+    managed_groups_config: dict[str, dict[str, Any]],
+    delete_groups: bool=False
+    ) -> None:
     """
     Function to manage groups from a configuration dict.
     This function could be imported into another Python script and run with a different managed_groups_config.
 
-    :param managed_groups_config: Group configuration dict
-    :type managed_groups_config: dict[dict[str, Any]]
+    Args:
+        :param managed_groups_config (dict[dict[str, Any]]): Group configuration dict
+        :param delete_groups (bool): Boolean flag indicating whether to pre-delete any existing guest collections in managed_groups_config
     """
     client_app = ClientApp(
         app_name="group_manager",
@@ -262,6 +242,34 @@ def manage_membership(
                 existing_member_id,
                 )
             print(f"\t{pformat(result)}")
+
+
+def main() -> None:
+    """
+    Main function when invoked from command line
+    """
+    parser = argparse.ArgumentParser(
+        prog=sys.argv[0],
+        description='Python script to automatically create groups defined in managed groups configuration file',
+        epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
+        )
+
+    parser.add_argument('managed_groups_config_path', help="group configuration JSON or YAML file")
+    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed groups")
+
+    args = parser.parse_args()
+
+    with open(args.managed_groups_config_path) as managed_groups_config_file:
+        if args.managed_groups_config_path.lower().endswith(".json"):
+            managed_groups_config = json.load(managed_groups_config_file)
+        elif args.managed_groups_config_path.lower().endswith(".yaml") or args.managed_groups_config_path.lower().endswith(".yml"):
+            managed_groups_config = yaml.load(managed_groups_config_file)
+        else:
+            raise(Exception(f"Unrecognised group configuration file type: {args.managed_groups_config_path}"))
+
+    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
+
+    manage_groups(managed_groups_config, delete_groups=args.delete)
 
 
 if __name__ == '__main__':
