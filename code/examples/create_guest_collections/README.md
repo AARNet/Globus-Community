@@ -22,7 +22,7 @@ high_assurance: <true | false>
 storage_gateways:
 - mapped_collections:
   - guest_collections:
-    - base_path: <directory path with leading />
+    - collection_base_path: <directory path with leading />
       display_name: <guest collection name>
       permissions:
       - DATA_TYPE: access
@@ -52,7 +52,7 @@ storage_gateways:
 					"mapped_collection_id": "<mapped collection UUID>",
 					"guest_collections": [
 						{
-							"base_path": "<directory path with leading />",
+							"collection_base_path": "<directory path with leading />",
 							"display_name": "<guest collection name>",
 							"public": <true | false>,
 							"permissions": [

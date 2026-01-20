@@ -23,15 +23,10 @@ from globus_sdk import GCSClient, TransferClient, TransferAPIError, GuestCollect
 from globus_sdk.globus_app import ClientApp
 from pprint import pprint
 
-# This service user ID must be authorised to write to the destination collection.
-# UUID only - do not include "@clients.auth.globus.org"
-CLIENT_ID = os.environ.get('GCS_CLI_CLIENT_ID')
-CLIENT_SECRET = os.environ.get('GCS_CLI_CLIENT_SECRET')
-
 def manage_guest_collections(
     managed_guest_collections_config: dict[str, dict[str, Any]],
-    client_id,
-    client_secret,
+    client_id: str,
+    client_secret: str,
     purge_guest_collections: bool=False,
     ) -> None:
     """
@@ -40,12 +35,13 @@ def manage_guest_collections(
     managed_guest_collections_config.
 
     Args:
-        :param managed_guest_collections_config (dict[str, dict[str, Any]]): guest
+        managed_guest_collections_config (dict[str, dict[str, Any]]): guest
             collection configuration dict
-        :param client_id (str): UUID of service user.
-        :param client_secret (str) Secret for service user.
-        :param purge_guest_collections (bool): Boolean flag indicating whether to
-            delete any existing guest collections NOT defined in managed_guest_collections_config
+        client_id (str): UUID of service user.
+        client_secret (str) Secret for service user.
+        purge_guest_collections (bool): Boolean flag indicating whether to
+            delete any existing guest collections NOT defined in managed_guest_collections_config.
+            Default = False
     """
     assert client_id and client_secret, 'Please specify client_id and client_secret'
 
@@ -240,6 +236,7 @@ def ensure_user_credential(
 def main() -> None:
     """
     Main function when invoked from command line
+    Requires Globus credentials for the service user defined in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET
     """
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
@@ -247,8 +244,17 @@ def main() -> None:
         epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
         )
 
-    parser.add_argument('managed_guest_collections_config_path', help="guest collection configuration JSON or YAML file")
-    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed guest collections")
+    parser.add_argument(
+        'managed_guest_collections_config_path',
+        help="guest collection configuration JSON or YAML file"
+        )
+
+    parser.add_argument(
+        '-d',
+        '--delete',
+        action='store_true',
+        help="Flag to delete any existing guest collections not defined in managed guest collections configuration file"
+        )
 
     args = parser.parse_args()
 
@@ -260,12 +266,17 @@ def main() -> None:
         else:
             raise(Exception(f"Unrecognised guest collection configuration file type - need JSON or YAML.: {args.managed_guest_collections_config_path}"))
 
-    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
+    # This service user ID must be authorised to write to the mapped collection.
+    # UUID only - do not include "@clients.auth.globus.org"
+    client_id = os.environ.get('GCS_CLI_CLIENT_ID')
+    client_secret = os.environ.get('GCS_CLI_CLIENT_SECRET')
+
+    assert client_id and client_secret, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
 
     manage_guest_collections(
         managed_guest_collections_config=managed_guest_collections_config,
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET,
+        client_id=client_id,
+        client_secret=client_secret,
         purge_guest_collections=args.delete,
         )
 

@@ -18,10 +18,6 @@ from typing import Optional, Any
 from globus_sdk import GroupsClient, scopes, GroupsManager, GroupPolicies
 from globus_sdk.globus_app import ClientApp
 
-# CLIENT_ID is the service user UUID only - do not include "@clients.auth.globus.org"
-CLIENT_ID = os.environ.get('GCS_CLI_CLIENT_ID')
-CLIENT_SECRET = os.environ.get('GCS_CLI_CLIENT_SECRET')
-
 DEFAULT_GROUP_POLICY = {
     "is_high_assurance": False,
     "authentication_assurance_timeout": 1800, # Timeout is in seconds
@@ -34,6 +30,8 @@ DEFAULT_GROUP_POLICY = {
 
 def manage_groups(
     managed_groups_config: dict[str, dict[str, Any]],
+    client_id: str,
+    client_secret: str,
     delete_groups: bool=False
     ) -> None:
     """
@@ -41,13 +39,16 @@ def manage_groups(
     This function could be imported into another Python script and run with a different managed_groups_config.
 
     Args:
-        :param managed_groups_config (dict[dict[str, Any]]): Group configuration dict
-        :param delete_groups (bool): Boolean flag indicating whether to pre-delete any existing guest collections in managed_groups_config
+        managed_groups_config (dict[dict[str, Any]]): Group configuration dict
+        client_id (str): UUID of service user.
+        client_secret (str) Secret for service user.
+        delete_groups (bool): Boolean flag indicating whether to pre-delete any existing guest collections
+            in managed_groups_config. Default = False
     """
     client_app = ClientApp(
         app_name="group_manager",
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET
+        client_id=client_id,
+        client_secret=client_secret
         )
 
     group_scope = scopes.data.GroupsScopes.all
@@ -100,10 +101,17 @@ def manage_groups(
         group_info['subscription_admin_verified_id'] = subscription_id
 
         print(f"Managing group membership for group \"{group_info['name']}\"")
+        # Need to add service user to prevent unsuccessful deletion attempt
         manage_membership(
             groups_client=groups_client,
             group_id=group_info["id"],
-            users=managed_groups_config[group_info["name"]]["members"]
+            users=managed_groups_config[group_info["name"]]["members"] + [
+                {
+                    "user": "Group Owner",
+                    "id": client_id,
+                    "role": "admin"
+                }
+            ]
         )
 
 
@@ -199,6 +207,7 @@ def manage_membership(
     Args:
         groups_client (GroupsClient): GroupsClient object
         group_id (str): UUID of group
+        client_id: str
         users (list[dict[str, Any]]): List of dict {"id": "<user UUID>", "role": "member | manager | admin"}
     """
     groups_manager = GroupsManager(groups_client)
@@ -231,7 +240,7 @@ def manage_membership(
                 )
         print(f"\t{pformat(result)}")
 
-    member_ids = [user["id"] for user in users] + [CLIENT_ID]
+    member_ids = [user["id"] for user in users]
 
     for existing_member in existing_members:
         existing_member_id = existing_member["identity_id"]
@@ -247,6 +256,7 @@ def manage_membership(
 def main() -> None:
     """
     Main function when invoked from command line
+    Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET
     """
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
@@ -254,8 +264,16 @@ def main() -> None:
         epilog='Requires Globus credentials for the service user in the environment variables GCS_CLI_CLIENT_ID and GCS_CLI_CLIENT_SECRET'
         )
 
-    parser.add_argument('managed_groups_config_path', help="group configuration JSON or YAML file")
-    parser.add_argument('-d', '--delete', action='store_true', help="Flag to pre-delete any existing managed groups")
+    parser.add_argument(
+        'managed_groups_config_path',
+        help="group configuration JSON or YAML file"
+        )
+    parser.add_argument(
+        '-d',
+        '--delete',
+        action='store_true',
+        help="Flag to pre-delete any existing managed groups. USE WITH CAUTION!"
+        )
 
     args = parser.parse_args()
 
@@ -267,9 +285,17 @@ def main() -> None:
         else:
             raise(Exception(f"Unrecognised group configuration file type: {args.managed_groups_config_path}"))
 
-    assert CLIENT_ID and CLIENT_SECRET, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
+    # client_id is the service user UUID only - do not include "@clients.auth.globus.org"
+    client_id = os.environ.get('GCS_CLI_CLIENT_ID')
+    client_secret = os.environ.get('GCS_CLI_CLIENT_SECRET')
 
-    manage_groups(managed_groups_config, delete_groups=args.delete)
+    assert client_id and client_secret, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET environment variables undefined"
+
+    manage_groups(
+        managed_groups_config,
+        client_id=client_id,
+        client_secret=client_secret,
+        delete_groups=args.delete)
 
 
 if __name__ == '__main__':
