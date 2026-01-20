@@ -271,7 +271,7 @@ def main() -> None:
     client_id = os.environ.get('GCS_CLI_CLIENT_ID')
     client_secret = os.environ.get('GCS_CLI_CLIENT_SECRET')
 
-    assert client_id and client_secret, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET undefined"
+    assert client_id and client_secret, "GCS_CLI_CLIENT_ID and/or GCS_CLI_CLIENT_SECRET environment variables undefined"
 
     manage_guest_collections(
         managed_guest_collections_config=managed_guest_collections_config,
