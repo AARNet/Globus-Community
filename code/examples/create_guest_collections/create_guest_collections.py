@@ -119,10 +119,10 @@ def manage_guest_collections(
                                 {'mapped_collection_id': mapped_collection_id})
                         )
 
-                        new_guest_collection = gcs_client.create_collection(collection_request)
-                        # print('new_guest_collection:')
-                        # pprint(new_guest_collection)
-                        print(f'Created new guest collection "{display_name}" with collection ID {new_guest_collection["id"]}')
+                        collection = gcs_client.create_collection(collection_request)
+                        # print('collection:')
+                        # pprint(collection)
+                        print(f'Created new guest collection "{display_name}" with collection ID {collection["id"]}')
 
                     for permission_config in host_guest_collection_config['permissions']:
                         # Create guest collection subdirectory if it doesn't already exist
