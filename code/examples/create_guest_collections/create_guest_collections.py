@@ -197,15 +197,17 @@ def attach_data_access_scope(
         gcs_client (GCSClient): GCSClient object
         collection_id (str): UUID of mapped collection
     """
-
+    # Get the base scopes for the endpoint
     endpoint_scopes = gcs_client.get_gcs_endpoint_scopes(gcs_client.endpoint_client_id)
+
+    # Get the specific data_access scope for the collection
     collection_scopes = gcs_client.get_gcs_collection_scopes(collection_id)
+    data_access = collection_scopes.data_access
 
-    manage_collections = Scope(endpoint_scopes.manage_collections)
-    data_access = Scope(collection_scopes.data_access, optional=True)
+    # Define a scope dependency: 'manage_collections' requires 'data_access'
+    manage_collections = endpoint_scopes.manage_collections.with_dependency(data_access)
 
-    manage_collections.add_dependency(data_access)
-
+    # Add the composed scope to the client's scope requirements
     gcs_client.add_app_scope(manage_collections)
 
 
