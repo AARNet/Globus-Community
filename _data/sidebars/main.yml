@@ -20,11 +20,11 @@ subitems:
     url: ./code/
     subitems:
     - title: Globus Flows on NCI Gadi
-      url: ./code/examples/flows_nci_gadi/
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/flows_nci_gadi
     - title: Bandwidth Throttling
-      url: ./code/examples/bandwidth_throttling/
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/bandwidth_throttling
     - title: Folder Watcher
-      url: ./code/examples/folder_watcher/
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/folder_watcher
     - title: Globus Ansible
       url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible
     - title: Creating and Populating Globus Groups using the Globus SDK
