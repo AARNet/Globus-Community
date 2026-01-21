@@ -1,15 +1,17 @@
-{
-    "globus_host": "{{ globus_endpoint_status.gcs_manager_url | ansible.builtin.regex_search("https://(.*)$", "\\1") | first }}",
-    "storage_gateways": [
-        {
-            "storage_gateway_id": "{{ storage_gateway_details.id }}",
-            "high_assurance": {{ storage_gateway_details.high_assurance | to_nice_json }},
-            "mapped_collections": [
-                {
-                    "mapped_collection_id": "{{ mapped_collection_details.id }}",
-                    "guest_collections": {{ mapped_collection_config.guest_collections | to_nice_json }}
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "globus_host": "{{ globus_endpoint_status.gcs_manager_url | ansible.builtin.regex_search("https://(.*)$", "\\1") | first }}",
+        "storage_gateways": [
+            {
+                "storage_gateway_id": "{{ storage_gateway_details.id }}",
+                "high_assurance": {{ storage_gateway_details.high_assurance | to_nice_json }},
+                "mapped_collections": [
+                    {
+                        "mapped_collection_id": "{{ mapped_collection_details.id }}",
+                        "guest_collections": {{ mapped_collection_config.guest_collections | to_nice_json }}
+                    }
+                ]
+            }
+        ]
+    }
+]

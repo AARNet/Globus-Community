@@ -46,115 +46,117 @@ def manage_guest_collections(
     assert client_id and client_secret, 'Please specify client_id and client_secret'
 
     client_app = ClientApp("guest_collection_manager", client_id=client_id, client_secret=client_secret)
-    gcs_client = GCSClient(managed_guest_collections_config['globus_host'], app=client_app)
 
-    storage_gateways = list(gcs_client.get_storage_gateway_list())
-    # print('storage_gateways:')
-    # pprint(storage_gateways)
+    for host_guest_collection_config in managed_guest_collections_config:
+        gcs_client = GCSClient(host_guest_collection_config['globus_host'], app=client_app)
 
-    # Get all collections on the specified host
-    collections = [
-        collection
-        for collection in gcs_client.get_collection_list()
-        if collection['domain_name'].endswith(managed_guest_collections_config['globus_host'])
-    ]
-    # print('collections:')
-    # pprint(collections)
+        storage_gateways = list(gcs_client.get_storage_gateway_list())
+        # print('storage_gateways:')
+        # pprint(storage_gateways)
 
-    for storage_gateway_config in managed_guest_collections_config['storage_gateways']:
-        storage_gateway_id = storage_gateway_config['storage_gateway_id']
+        # Get all collections on the specified host
+        collections = [
+            collection
+            for collection in gcs_client.get_collection_list()
+            if collection['domain_name'].endswith(host_guest_collection_config['globus_host'])
+        ]
+        # print('collections:')
+        # pprint(collections)
 
-        assert storage_gateway_id in [storage_gateway['id'] for storage_gateway in storage_gateways], f'Invalid Storage Gateway ID {storage_gateway_id}'
+        for storage_gateway_config in host_guest_collection_config['storage_gateways']:
+            storage_gateway_id = storage_gateway_config['storage_gateway_id']
 
-        ensure_user_credential(gcs_client, storage_gateway_id)
+            assert storage_gateway_id in [storage_gateway['id'] for storage_gateway in storage_gateways], f'Invalid Storage Gateway ID {storage_gateway_id}'
 
-        for mapped_collection_config in storage_gateway_config['mapped_collections']:
-            mapped_collection_id = mapped_collection_config['mapped_collection_id']
+            ensure_user_credential(gcs_client, storage_gateway_id)
 
-            assert mapped_collection_id in [mapped_collection['id'] for mapped_collection in collections if mapped_collection['collection_type'] == 'mapped'], \
-                f'Invalid Mapped Collection ID {mapped_collection_id}'
+            for mapped_collection_config in storage_gateway_config['mapped_collections']:
+                mapped_collection_id = mapped_collection_config['mapped_collection_id']
 
-            if not storage_gateway_config.get('high_assurance'):
-                attach_data_access_scope(gcs_client, mapped_collection_id)
+                assert mapped_collection_id in [mapped_collection['id'] for mapped_collection in collections if mapped_collection['collection_type'] == 'mapped'], \
+                    f'Invalid Mapped Collection ID {mapped_collection_id}'
 
-            transfer_client = TransferClient(app=client_app).add_app_data_access_scope(mapped_collection_id)
+                if not storage_gateway_config.get('high_assurance'):
+                    attach_data_access_scope(gcs_client, mapped_collection_id)
 
-            for guest_collection_config in mapped_collection_config['guest_collections']:
+                transfer_client = TransferClient(app=client_app).add_app_data_access_scope(mapped_collection_id)
 
-                display_name = guest_collection_config['display_name']
-                collection_base_path = guest_collection_config['collection_base_path']
+                for host_guest_collection_config in mapped_collection_config['guest_collections']:
 
-                create_directory(transfer_client, mapped_collection_id, collection_base_path)
+                    display_name = host_guest_collection_config['display_name']
+                    collection_base_path = host_guest_collection_config['collection_base_path']
 
-                matching_guest_collections = [
-                    collection for collection in collections
-                    if collection['collection_type'] == 'guest'
-                    and collection['storage_gateway_id'] == storage_gateway_id
-                    and collection['mapped_collection_id'] == mapped_collection_id
-                    and collection['display_name'] == display_name
-                    ]
+                    create_directory(transfer_client, mapped_collection_id, collection_base_path)
 
-                if matching_guest_collections:  # Update existing guest collection
-                    print(f'Guest collection "{display_name}" already exists.')
-                    if len(matching_guest_collections) == 1:
-                        collection = matching_guest_collections[0]
-                    else:
-                        print(f'Unable to determine unique match for collection "{display_name}"')
-                        exit(1)
+                    matching_guest_collections = [
+                        collection for collection in collections
+                        if collection['collection_type'] == 'guest'
+                        and collection['storage_gateway_id'] == storage_gateway_id
+                        and collection['mapped_collection_id'] == mapped_collection_id
+                        and collection['display_name'] == display_name
+                        ]
 
-                    # Unable to update collection_base_path (immutable), so we can't change that
-                    collection_request = GuestCollectionDocument(
-                        **({key: value for key, value in guest_collection_config.items() if key not in ['collection_base_path', 'permissions']} | 
-                            {'mapped_collection_id': mapped_collection_id})
-                    )
-
-                    print(f'Updating existing guest collection "{display_name}" with collection ID {collection["id"]}')
-                    gcs_client.update_collection(collection['id'], collection_request)
-
-                else:  # Create new guest collection
-                    collection_request = GuestCollectionDocument(
-                        **({key: value for key, value in guest_collection_config.items() if key not in ['permissions']} | 
-                            {'mapped_collection_id': mapped_collection_id})
-                    )
-
-                    new_guest_collection = gcs_client.create_collection(collection_request)
-                    # print('new_guest_collection:')
-                    # pprint(new_guest_collection)
-                    print(f'Created new guest collection "{display_name}" with collection ID {new_guest_collection["id"]}')
-
-                for permission_config in guest_collection_config['permissions']:
-                    # Create guest collection subdirectory if it doesn't already exist
-                    if permission_config['path'] != '/':
-                        create_directory(transfer_client, mapped_collection_id, collection_base_path+permission_config['path'])
-
-                    try:
-                        result = transfer_client.add_endpoint_acl_rule(collection["id"], permission_config)
-                        print(f'Added "{permission_config["permissions"]}" permissions to "{permission_config["path"]}" for {permission_config["principal_type"]} {permission_config["principal"]}')
-                    except TransferAPIError as e:
-                        if e.code == 'Exists':
-                            print(f'Permissions already exist to "{permission_config["path"]}" for {permission_config["principal_type"]} {permission_config["principal"]}')
+                    if matching_guest_collections:  # Update existing guest collection
+                        print(f'Guest collection "{display_name}" already exists.')
+                        if len(matching_guest_collections) == 1:
+                            collection = matching_guest_collections[0]
                         else:
-                            raise e
+                            print(f'Unable to determine unique match for collection "{display_name}"')
+                            exit(1)
 
-            if purge_guest_collections:
-                for existing_guest_collection in [
-                    collection
-                    for collection in collections
-                    if collection['collection_type'] == 'guest'
-                    and collection['mapped_collection_id'] == mapped_collection_id
-                    ]:
-                        if existing_guest_collection['display_name'] not in [
-                            guest_collection_config['display_name']
-                            for guest_collection_config in mapped_collection_config['guest_collections']
-                            ]:
-                            try:
-                                print(f"Deleting collection {existing_guest_collection['display_name']} (ID: {existing_guest_collection['id']})...")
-                                response = gcs_client.delete_collection(existing_guest_collection['id'])
-                                print(f"{response['code']}: {response['message']}")
-                            except GCSAPIError as e:
-                                print(f"Error deleting collection {existing_guest_collection['display_name']}: {e.code} - {e.message}")
-                            except Exception as e:
-                                print(f"An unexpected error occurred: {e}")
+                        # Unable to update collection_base_path (immutable), so we can't change that
+                        collection_request = GuestCollectionDocument(
+                            **({key: value for key, value in host_guest_collection_config.items() if key not in ['collection_base_path', 'permissions']} | 
+                                {'mapped_collection_id': mapped_collection_id})
+                        )
+
+                        print(f'Updating existing guest collection "{display_name}" with collection ID {collection["id"]}')
+                        gcs_client.update_collection(collection['id'], collection_request)
+
+                    else:  # Create new guest collection
+                        collection_request = GuestCollectionDocument(
+                            **({key: value for key, value in host_guest_collection_config.items() if key not in ['permissions']} | 
+                                {'mapped_collection_id': mapped_collection_id})
+                        )
+
+                        new_guest_collection = gcs_client.create_collection(collection_request)
+                        # print('new_guest_collection:')
+                        # pprint(new_guest_collection)
+                        print(f'Created new guest collection "{display_name}" with collection ID {new_guest_collection["id"]}')
+
+                    for permission_config in host_guest_collection_config['permissions']:
+                        # Create guest collection subdirectory if it doesn't already exist
+                        if permission_config['path'] != '/':
+                            create_directory(transfer_client, mapped_collection_id, collection_base_path+permission_config['path'])
+
+                        try:
+                            result = transfer_client.add_endpoint_acl_rule(collection["id"], permission_config)
+                            print(f'Added "{permission_config["permissions"]}" permissions to "{permission_config["path"]}" for {permission_config["principal_type"]} {permission_config["principal"]}')
+                        except TransferAPIError as e:
+                            if e.code == 'Exists':
+                                print(f'Permissions already exist to "{permission_config["path"]}" for {permission_config["principal_type"]} {permission_config["principal"]}')
+                            else:
+                                raise e
+
+                if purge_guest_collections:
+                    for existing_guest_collection in [
+                        collection
+                        for collection in collections
+                        if collection['collection_type'] == 'guest'
+                        and collection['mapped_collection_id'] == mapped_collection_id
+                        ]:
+                            if existing_guest_collection['display_name'] not in [
+                                host_guest_collection_config['display_name']
+                                for host_guest_collection_config in mapped_collection_config['guest_collections']
+                                ]:
+                                try:
+                                    print(f"Deleting collection {existing_guest_collection['display_name']} (ID: {existing_guest_collection['id']})...")
+                                    response = gcs_client.delete_collection(existing_guest_collection['id'])
+                                    print(f"{response['code']}: {response['message']}")
+                                except GCSAPIError as e:
+                                    print(f"Error deleting collection {existing_guest_collection['display_name']}: {e.code} - {e.message}")
+                                except Exception as e:
+                                    print(f"An unexpected error occurred: {e}")
 
 
 def create_directory(

@@ -57,62 +57,64 @@ The path to a valid YAML or JSON guest collection configuration file needs to be
 
 ```yaml
 ---
-globus_host: <globus hostname (e.g. c4e1bc.e229.gaccess.io)>
-high_assurance: <true | false>
-storage_gateways:
-- mapped_collections:
-  - guest_collections:
-    - collection_base_path: <directory path with leading />
-      display_name: <guest collection name>
-      permissions:
-      - DATA_TYPE: access
-        path: <relative path under guest collection>
-        permissions: <r | rw>
-        principal: <principal UUID>
-        principal_type: <identity | group | all_authenticated_users>
-      ...
-      public: <true | false>
-    mapped_collection_id: <mapped collection UUID>"
+- globus_host: <globus hostname (e.g. c4e1bc.e229.gaccess.io)>
+  high_assurance: <true | false>
+  storage_gateways:
+  - mapped_collections:
+    - guest_collections:
+      - collection_base_path: <directory path with leading />
+        display_name: <guest collection name>
+        permissions:
+        - DATA_TYPE: access
+          path: <relative path under guest collection>
+          permissions: <r | rw>
+          principal: <principal UUID>
+          principal_type: <identity | group | all_authenticated_users>
+        ...
+        public: <true | false>
+      mapped_collection_id: <mapped collection UUID>"
+    ...
+    storage_gateway_id: <storage gateway UUID>
   ...
-  storage_gateway_id: <storage gateway UUID>
-...
 ```
 
 ### JSON
 
 ```json
-{
-	"globus_host": "<globus hostname (e.g. c4e1bc.e229.gaccess.io)>",
-	"high_assurance": <true | false>,
-	"storage_gateways": [
-		{
-			"storage_gateway_id": "<storage gateway UUID>",
-			"mapped_collections": [
-				{
-					"mapped_collection_id": "<mapped collection UUID>",
-					"guest_collections": [
-						{
-							"collection_base_path": "<directory path with leading />",
-							"display_name": "<guest collection name>",
-							"public": <true | false>,
-							"permissions": [
-								{
-									"DATA_TYPE": "access",
-									"path": "<relative path under guest collection>",
-									"permissions": "<r | rw>",
-									"principal": "<principal UUID>",
-									"principal_type": "<identity | group | all_authenticated_users>"
-								},
-								...
-							]
-						},
-                        ...
-					]
-				},
-                ...
-			]
-		},
-        ...
-	]
-}
+[
+  {
+    "globus_host": "<globus hostname (e.g. c4e1bc.e229.gaccess.io)>",
+    "high_assurance": <true | false>,
+    "storage_gateways": [
+      {
+        "storage_gateway_id": "<storage gateway UUID>",
+        "mapped_collections": [
+          {
+            "mapped_collection_id": "<mapped collection UUID>",
+            "guest_collections": [
+              {
+                "collection_base_path": "<directory path with leading />",
+                "display_name": "<guest collection name>",
+                "public": <true | false>,
+                "permissions": [
+                  {
+                    "DATA_TYPE": "access",
+                    "path": "<relative path under guest collection>",
+                    "permissions": "<r | rw>",
+                    "principal": "<principal UUID>",
+                    "principal_type": "<identity | group | all_authenticated_users>"
+                  },
+                  ...
+                ]
+              },
+                          ...
+            ]
+          },
+                  ...
+        ]
+      },
+          ...
+    ]
+  }
+]
 ```
