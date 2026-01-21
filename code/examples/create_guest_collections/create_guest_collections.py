@@ -52,7 +52,7 @@ def manage_guest_collections(
     # print('storage_gateways:')
     # pprint(storage_gateways)
 
-    # Get all collections on this host
+    # Get all collections on the specified host
     collections = [
         collection
         for collection in gcs_client.get_collection_list()
@@ -90,7 +90,7 @@ def manage_guest_collections(
                     collection for collection in collections
                     if collection['collection_type'] == 'guest'
                     and collection['storage_gateway_id'] == storage_gateway_id
-                    and collection['storage_gateway_id'] == storage_gateway_id
+                    and collection['mapped_collection_id'] == mapped_collection_id
                     and collection['display_name'] == display_name
                     ]
 

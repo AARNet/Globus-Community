@@ -29,7 +29,8 @@ The notebooks used in the AARNet Advanced Globus Workshop Jupyter Notebooks are 
 
 ### Create Guest Collections
 
-This is [an example script to create and configure Globus guest collections](https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_guest_collections). A variant of this script is used in the Globus Ansible
+This is [an example script to create and configure Globus guest collections](https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_guest_collections). 
+This script is used in the Globus Ansible to create guest collections.
 
 ### Create and Populate Groups
 

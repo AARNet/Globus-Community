@@ -43,6 +43,6 @@ If you have a valid subscription ID in your configuration, then The role functio
 If you have access to the Hashicorp Vault, you can use that for storing your secrets, including the ones created during the endpoint registration process.
 
 To enable the use of Hashicorp Vault, you will need to set the following configuration variables:
-- `use_vault` - set this to true
+- `use_vault` - set this to true to enable Hashicorp Vault
 - `globus_secret_path.deploy_svc` - set this to the vault path where Globus auto-deploy service user credentials are located
 - `globus_secret_path.deploy_key` - set this to the vault path where the Globus endpoint's `deployment-key.json` secret is stored

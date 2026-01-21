@@ -19,13 +19,17 @@ subitems:
   - title: Globus Community Code Examples
     url: ./code/
     subitems:
-    - title: Globus Flows on NCI Gardi
-      url: ./code/examples/flows_nci_gardi/
+    - title: Globus Flows on NCI Gadi
+      url: ./code/examples/flows_nci_gadi/
     - title: Bandwidth Throttling
       url: ./code/examples/bandwidth_throttling/
     - title: Folder Watcher
       url: ./code/examples/folder_watcher/
     - title: Globus Ansible
       url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_ansible
+    - title: Creating and Populating Globus Groups using the Globus SDK
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_and_populate_groups
+    - title: Creating and Managing Globus Guest Collections using the Globus SDK
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_guest_collections
     - title: Advanced Globus Workshop Jupyter Notebooks
       url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks
