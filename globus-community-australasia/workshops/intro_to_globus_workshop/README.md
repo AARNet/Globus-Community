@@ -136,18 +136,20 @@ a3f0c02a-866a-472e-8f13-248360e296f7
 ```
 These UUIDs are used by Globus to uniquely identify resources, so they are particularly important in the context of automation. They can also be used to search for endpoints or collections in the Web UI.
 
-### HANDS-ON EXERCISES
+# HANDS-ON EXERCISES
 These are the instructions for the hands-on exercises for the Globus workshop.
 
-#### USING GLOBUS CONNECT PERSONAL TO TRANSFER FILES TO YOUR LAPTOP (OPTIONAL)
+## USING GLOBUS CONNECT PERSONAL TO TRANSFER FILES TO YOUR LAPTOP (OPTIONAL)
 **NOTE: In order to install Globus Connect Personal (GCP) on your laptop, you will need to have the appropriate administrative privileges on your machine. If you are unable to install GCP software on your machine, then you will not be able to proceed with this particular hands-on exercise and will have to watch the workshop demonstration instead.**
 
-##### INSTALLING GLOBUS CONNECT PERSONAL (GCP)
-Use your web browser to navigate to https://www.globus.org/globus-connect-personal. Choose the download for your operating system (i.e. MacOS, Windows or Linux). Follow the instructions there to download, install and configure GCP.
+### INSTALLING GLOBUS CONNECT PERSONAL (GCP)
+Use your web browser to navigate to the Globus GCP page at [https://www.globus.org/globus-connect-personal](https://www.globus.org/globus-connect-personal).
+Choose the download for your operating system (i.e. MacOS, Windows or Linux). Follow the instructions there to download, install and configure GCP.
+Further documentation on GCP is available at [https://docs.globus.org/globus-connect-personal/](https://docs.globus.org/globus-connect-personal/)
 
 **Note: Make sure you remember the name or UUID you use for your local collection. You will need it to select the collection later.**
 
-##### USING GLOBUS FOR SIMPLE FILE TRANSFERS
+### USING GLOBUS FOR SIMPLE FILE TRANSFERS
 In this exercise, you will use the Globus web application to transfer files between two collections. In order to do this, you will need to have write access to the destination collection, so we will use the writable collection on your laptop accessible through the previously installed Globus Connect Personal software.
 
 To proceed, you must have a working installation of Globus Connect Personal with a writable collection configured. Make sure your GCP instance is running.
@@ -180,7 +182,7 @@ Enter "AARNet" into the search box as follows. You will see up to nine AARNet co
 
 <img src="../resources/globus_aarnet_collection_list.png" alt="Globus AARNet Collection List" width="1000"/>
 
-###### Globus test collections
+### Globus test collections
 You will need to select one of the read-only collections below as a source collection. Note that these test servers are experimental and are provided by AARNet on a best-effort basis only:
 
 - [AARNet Globus Endpoint NSW (ARTM) POSIX Gateway Public RO Guest Collection](https://app.globus.org/file-manager?origin_id=9e472d3a-ac18-42d0-bac8-3c9220801fbe&origin_path=%2Fstandard_test_files%2F&two_pane=true)
@@ -218,7 +220,7 @@ Click on the "View details" link to see the transfer status. You will need to do
 
 <img src="../resources/globus_transfer_details.png" alt="Globus Transfer Details" width="1000"/>
 
-#### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
+### HTTPS FILE TRANSFERS TO/FROM GLOBUS (Subscription-only Feature)
 Some users may wish to upload or download files via HTTPS rather than transferring files from collection to collection via Globus. HTTPS downloads have been enabled on all of the AARNet  read-only and read-write collections for all users, so these files are all downloadable by anyone using HTTPS, i.e. without needing to have GCP installed. Note that HTTPS downloads will not have the same "set-and-forget" facility: the upload/download will fail if there is an interruption to the network connection.
 
 You can upload to a collection using HTTPS only if the endpoint is associated with a subscription and you have been given write access to all or part of the collection. You will be able to test the HTTPS upload feature with your own collection later in the workshop.
