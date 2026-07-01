@@ -11,6 +11,12 @@ The community aims to help advance the effective use of Globus and drive innovat
 
 If you have any questions, please contact us at globus@aarnet.edu.au.
 
+## Registry of Australian Globus services
+
+Need access to Globus to move your data? A list of the Globus services available at Australian universities and national scientific facilities can be found on the AARNet website.
+
+Find out more at [Globus data transfer nodes in Australia](http://bit.ly/GlobusAUNodes).
+
 
 ## Community events
 
