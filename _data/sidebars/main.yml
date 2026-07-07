@@ -31,5 +31,7 @@ subitems:
       url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_and_populate_groups
     - title: Creating and Managing Globus Guest Collections using the Globus SDK
       url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_guest_collections
+    - title: Download, process, and upload files via HTTPS
+      url: https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_https_download_process_upload
     - title: Advanced Globus Workshop Jupyter Notebooks
       url: https://github.com/AARNet/Globus-Community/tree/main/globus-community-australasia/workshops/jupyter_notebooks

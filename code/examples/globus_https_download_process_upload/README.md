@@ -1,21 +1,20 @@
----
-title: Download, Process, and Upload files using HTTPS with Globus collections
-permalink: /code/examples/globus_https_download_process_upload/
----
 # globus_https_download_process_upload
 
-This is an example script to download, process, and upload files using HTTPS.
+This is an example script to download, process, and upload files via HTTPS instead of via Globus transfers. 
+This solution can be run anywhere and does not require a Globus Connect Endpoint or a Globus Compute Endpoint on the host.
 
-It was written to help with a task where a subscription manager needed to automate the download of a GLobus usage report
+It was written to help with a task where a subscription manager needed to automate the download of a Globus usage report
 CSV file (`Globus_Usage_Transfer_Detail.csv`) from their subscription subdirectory in the Globus Secure Usage Data Guest 
 Collection run a custom anonymisation script on it, and then upload the resulting file to their subdirectory in the 
 AARNet Secure Guest Collection.
 
+__Please note that the HTTPS download/upload is not as robust as the Globus transfer mechanism, but it is generally fine 
+for smaller files (say, less than 1GB).__ You may wish to implement retries around the upload/download calls.
+
 The script is shared in the Globus Community Australasia site because it may be useful in other scenarios. In particular,
 you may find the derivation of the URLs and access tokens interesting.
 
-Please note that the HTTPS download/upload is not as robust as the Globus transfer mechanism, but it is generally fine 
-for smaller files (say, less than 1GB).
+Please contact AARNet if you have any questions, feedback, or suggestions.
 
 ## Prerequisites
 You will need to define a service user with appropriate read/write permissions on the download/upload collections. For
@@ -56,7 +55,7 @@ The script is invoked using:
 ```bash
 python -m globus_https_download_process_upload 
 ```
-If your permissions and file paths are correct, then you will see output something like this when you run the script:
+If your service user permissions and file paths are correct, then you will see output something like this when you run the script:
 ```
 > python -m globus_https_download_process_upload 
 Remote file /Australian Academic and Research Network (AARNet)-56107c7a-679f-11ea-960d-0afc9e7dd773/Globus_Usage_Transfer_Detail.csv is 86.938 MB in size

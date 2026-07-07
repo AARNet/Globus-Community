@@ -36,6 +36,6 @@ This script is used in the Globus Ansible to create guest collections.
 
 This is [an example script to create and populate Globus groups](https://github.com/AARNet/Globus-Community/tree/main/code/examples/create_and_populate_groups).
 
-### Download, Process, and Upload files using HTTPS in Globus collections
+### Download, Process, and Upload files via HTTPS
 
-This is [an example script to download, process, and upload files using HTTPS](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_https_download_process_upload).
+This is [an example script to download, process, and upload files via HTTPS](https://github.com/AARNet/Globus-Community/tree/main/code/examples/globus_https_download_process_upload).
