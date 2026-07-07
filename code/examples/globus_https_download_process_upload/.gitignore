@@ -1,0 +1,72 @@
+/.venv/
+_site/
+temp/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+
+# Django migrations
+**/migrations/*.pyc
+
+# IDEs
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+
+# Coverage reports
+.coverage
+htmlcov/
+*.cover
+
+# Testing
+.tox/
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Local environment settings
+.envrc
+.env
+secrets.env
+
+
+# Ignore compiled translation files
+*.mo
+.DS_Store
+
+src/aarbox/settings/custom*.py
+v*.tar.gz
+
+# Ignore pre-commit configuration
+.pre-commit-config.yaml
+
+# Ignore everything in tmp/ but keep the folder
+# tmp is used to store temporary files
+tmp/*
+!tmp/.gitkeep
+
+# Use logs to store logging files locally
+logs/*
+!logs/.gitkeep
+
+# Ignore node_modules anywhere in the project
+node_modules/
+
+# cache
+.cache/
+.mypy_cache/
+
+# store stuff here: envs, db, tmp files...
+/data/
+/sqlalchemy_cache/
+/tmp/
+/temp/
